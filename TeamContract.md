@@ -73,5 +73,5 @@ Team Member Signatures:
 Luca Piccone
 Denise Chang
 Can Liu
-Milekovic
+Kate Milekovic
 Jincheng Yang
