@@ -1,5 +1,9 @@
 package entity.user;
 
+import entity.location.Location;
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
     private final String name;
@@ -10,10 +14,9 @@ public class User {
     * Creates a new user with the given non-empty name and non-empty password.
     * @param name the username
     * @param password the password
-    * @param locations the saved locations
     * @throws IllegalArgumentException if the password or name are empty
     */
-    public User(String name, String password) {
+    public User(String name, String password, List<Location> locations) {
         if ("".equals(name)) {
             throw new IllegalArgumentException("Username cannot be empty");
         }
@@ -22,6 +25,7 @@ public class User {
         }
         this.name = name;
         this.password = password;
+        this.locations = locations;
     }
     public String getName() {
         return name;
