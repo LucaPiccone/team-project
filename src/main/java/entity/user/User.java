@@ -1,7 +1,6 @@
 package entity.user;
 
 import entity.location.Location;
-import java.util.ArrayList;
 import java.util.List;
 
 public class User {
