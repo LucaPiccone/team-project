@@ -13,7 +13,7 @@ import java.util.HashMap;
 public interface WeatherDataFetcher {
     // Define the method used to interact with the database.
     // Get weather(latitude, longitude)
-    JSONObject getWeather(HashMap<String, Double> coordinates) throws CityNotFoundException, IOException;
+    JSONObject getWeather(HashMap<String, Double> coordinates) throws CityNotFoundException;
     class CityNotFoundException extends Exception {
         public CityNotFoundException(HashMap<String, Double> coordinates) {
             super("City not found: ");
