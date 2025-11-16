@@ -11,15 +11,24 @@ import java.util.HashMap;
 public class OpenWeatherApiDataFetcher implements WeatherDataFetcher {
     private final OkHttpClient client = new OkHttpClient();
 
+    //loading token from env variables
+    public static String getAPIToken() {
+        return System.getenv("token");
+    }
+
     @Override
     public JSONObject getWeather(HashMap<String, Double> coordinates) throws CityNotFoundException{
-        String apiKey = "fb1fab6af13a72caf8c7e77866dd632e";
+        String apiKey = getAPIToken();
+        // Checks if there is an API key in env variables
+        if (apiKey == null || apiKey.isEmpty()) {
+            throw new RuntimeException("API token not set in environment variable");
+        }
+
         final Request request = new Request.Builder()
                 .url("https://pro.openweathermap.org/data/2.5/forecast/hourly?lat={"
                         + coordinates.get("lat") + "}&lon={" + coordinates.get("lon") + "}&appid={" + apiKey + "}").build();
-        final JSONObject responseBody;
         try (Response response = client.newCall(request).execute()) {
-            responseBody = new JSONObject(response.body().string());
+            final JSONObject responseBody = new JSONObject(response.body().string());
             if (responseBody.length() > 2) {
                 return responseBody;
             }
