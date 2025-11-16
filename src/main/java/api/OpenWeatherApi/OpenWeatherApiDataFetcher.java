@@ -32,11 +32,11 @@ public class OpenWeatherApiDataFetcher implements WeatherDataFetcher {
             if (responseBody.length() > 2) {
                 return responseBody;
             }
-            else {
-                throw new CityNotFoundException(coordinates);
+            else{
+                throw new CityNotFoundException(cityName);
             }
         } catch (IOException e) {
-            throw new CityNotFoundException(coordinates);
+            throw new CityNotFoundException(coordinates, e);
         }
 
     }
