@@ -8,11 +8,15 @@ public class LoggedInState {
 
     private String password = "";
     private String passwordError;
+    private Double todayTemperature;
+    private String todayCondition;
 
     public LoggedInState(LoggedInState copy) {
         username = copy.username;
         password = copy.password;
         passwordError = copy.passwordError;
+        todayTemperature = copy.todayTemperature;
+        todayCondition = copy.todayCondition;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -43,4 +47,10 @@ public class LoggedInState {
     public String getPasswordError() {
         return passwordError;
     }
+
+    public Double getTodayTemperature() { return todayTemperature; }
+    public void setTodayTemperature(Double todayTemperature) { this.todayTemperature = todayTemperature; }
+
+    public String getTodayCondition() { return todayCondition; }
+    public void setTodayCondition(String todayCondition) { this.todayCondition = todayCondition; }
 }
