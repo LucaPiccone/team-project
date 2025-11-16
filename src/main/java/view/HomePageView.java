@@ -1,12 +1,10 @@
 package view;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 
-public class HomePage {
+public class HomePageView {
 
-    public HomePage() {
+    public HomePageView() {
         SwingUtilities.invokeLater(() -> {
 
             //** WELCOME PANEL **//
