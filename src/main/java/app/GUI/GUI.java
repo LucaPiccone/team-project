@@ -3,7 +3,15 @@ package app.GUI;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.createAccount.CreateAccountViewModel;
+import interface_adapter.homepage.HomePageController;
+import interface_adapter.homepage.HomePagePresenter;
 import interface_adapter.homepage.HomePageViewModel;
+import use_case.homePage.HomePageInputBoundary;
+import use_case.homePage.HomePageInteractor;
+import use_case.homePage.HomePageOutputBoundary;
+import use_case.signup.SignupInputBoundary;
+import use_case.signup.SignupInteractor;
+import use_case.signup.SignupOutputBoundary;
 import view.CreateAccountView;
 import view.HomePageView;
 import view.ViewManager;
@@ -34,6 +42,16 @@ public class GUI {
         homePageViewModel = new HomePageViewModel();
         homePageView = new HomePageView(homePageViewModel);
         cardPanel.add(homePageView, homePageView.getViewName());
+        return this;
+    }
+
+    public GUI addHomePageUseCase() {
+        final HomePageOutputBoundary homePageOutputBoundary = new HomePagePresenter(homePageViewModel,
+                createAccountViewModel, viewManagerModel);
+        final HomePageInputBoundary homePageInputBoundary = new HomePageInteractor(homePageOutputBoundary);
+
+        HomePageController controller = new HomePageController(homePageInputBoundary);
+        homePageView.setHomePageController(controller);
         return this;
     }
 
