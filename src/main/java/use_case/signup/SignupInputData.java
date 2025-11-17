@@ -1,24 +1,22 @@
-package use_case.login;
+package use_case.signup;
 
 /**
  * The Input Data for the Login Use Case.
  */
-public class LoginInputData {
-
+public class SignupInputData {
     private final String username;
     private final String password;
 
-    public LoginInputData(String username, String password) {
+    public SignupInputData(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    String getUsername() {
+    public String getUsername() {
         return this.username;
     }
 
-    String getPassword() {
+    public String getPassword() {
         return this.password;
     }
-
 }

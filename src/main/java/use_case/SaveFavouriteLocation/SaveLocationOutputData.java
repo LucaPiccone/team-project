@@ -1,16 +1,16 @@
-package use_case.DeleteFavouriteLocation;
+package use_case.SaveFavouriteLocation;
 
 import entity.location.Location;
 
 import java.util.List;
 
 /**
- * Output Data for the DeleteLocation Use Case.
+ * Output Data for the SaveLocation Use Case.
  */
-public class DeleteLocationOutputData {
+public class SaveLocationOutputData {
     private final List<Location> remainingLocations;
 
-    public DeleteLocationOutputData(List<Location> remainingLocations) {
+    public SaveLocationOutputData(List<Location> remainingLocations) {
         this.remainingLocations = remainingLocations;
     }
 
@@ -18,4 +18,3 @@ public class DeleteLocationOutputData {
         return this.remainingLocations;
     }
 }
-
