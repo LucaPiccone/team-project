@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class GeocodingApiCoordinatesFetcher implements CoordinatesFetcher {
 
-    private static final String ENDPOINT_TEMPLATE = "https://api.openweathermap.org/geo/1.0/direct?q=%s&limit=1&appid=%s";
+    private static final String ENDPOINT_TEMPLATE = "https://api.openweathermap.org/geo/1.0/direct?q=%s&limit=5&appid=%s";
     private final OkHttpClient client = new OkHttpClient();
 
     // load token from env variable.
@@ -31,10 +31,11 @@ public class GeocodingApiCoordinatesFetcher implements CoordinatesFetcher {
         Request request = new Request.Builder().url(url).build();
 
         try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful() || response.body() == null) {
+            if (!response.isSuccessful()) {
                 throw new CityNotFoundException(cityName, true);
             }
 
+            assert response.body() != null;
             String body = response.body().string();
             JSONArray arr = new JSONArray(body);
 
