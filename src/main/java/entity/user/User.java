@@ -37,4 +37,12 @@ public class User {
     public List<Location> getLocations() {
         return locations;
     }
+
+    public void addLocation(Location location) {
+        this.locations.add(location);
+    }
+
+    public void removeLocation(Location location) {
+        this.locations.remove(location);
+    }
 }

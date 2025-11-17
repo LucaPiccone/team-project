@@ -24,7 +24,6 @@ public class WeatherReportFactory {
 
         JSONObject weatherData = fetcher.getWeather(coordinates);
 
-        JSONObject main = weatherData.getJSONObject("main");
         String temperature = weatherData.getString("temperature");
         String humidity = weatherData.getString("humidity");
         String feelsLike = weatherData.getString("feelsLike");
