@@ -25,8 +25,8 @@ public class OpenWeatherApiDataFetcher implements WeatherDataFetcher {
         }
 
         final Request request = new Request.Builder()
-                .url("https://pro.openweathermap.org/data/2.5/forecast/hourly?lat={"
-                        + coordinates.get("lat") + "}&lon={" + coordinates.get("lon") + "}&appid={" + apiKey + "}").build();
+                .url("https://pro.openweathermap.org/data/2.5/forecast/hourly?lat="
+                        + coordinates.get("lat") + "&lon=" + coordinates.get("lon") + "&appid=" + apiKey).build();
         try (Response response = client.newCall(request).execute()) {
             final JSONObject responseBody = new JSONObject(response.body().string());
             if (responseBody.length() > 2) {
