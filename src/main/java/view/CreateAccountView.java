@@ -1,65 +1,52 @@
 package view;
 
+import interface_adapter.createAccount.CreateAccountController;
+import interface_adapter.createAccount.CreateAccountState;
+import interface_adapter.createAccount.CreateAccountViewModel;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class CreateAccountView {
-    public CreateAccountView() {
-        SwingUtilities.invokeLater(() -> {
+public class CreateAccountView extends JPanel implements ActionListener, PropertyChangeListener {
+    private final String viewName = "create account";
 
-            //** Username Panel **//
-            JPanel userNamePanel = new JPanel();
-            JTextField userNameField = new JTextField(30);
-            userNamePanel.add(new JLabel("Email:"));
-            userNamePanel.add(userNameField);
+    private final CreateAccountViewModel createAccountViewModel;
+    private final JTextField usernameInputField = new JTextField(15);
+    private final JPasswordField passwordInputField = new JPasswordField(15);
+    private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
+    private CreateAccountController createAccountController = null;
 
-            //** Email Panel **//
-            JPanel emailPanel = new JPanel();
-            JTextField emailField = new JTextField(30);
-            emailPanel.add(new JLabel("Email:"));
-            emailPanel.add(emailField);
+    private final JButton goBack;
 
-            //** Password Panel **//
-            JPanel passwordPanel = new JPanel();
-            JTextField passwordField = new JTextField(30);
-            passwordPanel.add(new JLabel("Password:"));
-            passwordPanel.add(passwordField);
+    public CreateAccountView(CreateAccountViewModel createAccountViewModel) {
+        this.createAccountViewModel = createAccountViewModel;
+        createAccountViewModel.addPropertyChangeListener(this);
 
-            //** Confirm Password Panel **//
-            JPanel confirmPasswordPanel = new JPanel();
-            JTextField confirmPasswordField = new JTextField(30);
-            confirmPasswordPanel.add(new JLabel("Confirm Password:"));
-            confirmPasswordPanel.add(confirmPasswordField);
+        final JPanel buttons = new JPanel();
+        goBack = new JButton(createAccountViewModel.GO_BACK_BUTTON_LABEL);
+        buttons.add(goBack);
 
-            //** Submit Button Panel **//
-            JPanel submitButtonPanel = new JPanel();
-            JButton submit = new JButton("Sign In");
-            submitButtonPanel.add(submit);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(buttons);
+    }
 
-            //** Submit Button Event **//
-            submit.addActionListener(e -> {
-                String email = emailField.getText();
-                String password = passwordField.getText();
-                String confirmPassword = confirmPasswordField.getText();
 
-                // Call the controller.
+    public void setCreateController(CreateAccountController controller) {
+        this.createAccountController = controller;
+    }
 
-            });
+    public String getViewName() {return viewName;}
 
-            JPanel mainPanel = new JPanel();
-            mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-            mainPanel.add(userNamePanel);
-            mainPanel.add(emailPanel);
-            mainPanel.add(passwordPanel);
-            mainPanel.add(confirmPasswordPanel);
-            mainPanel.add(submit);
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-            JFrame frame = new JFrame("Sophisticated Weather Application");
-            frame.setContentPane(mainPanel);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);
-        });
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
     }
 }

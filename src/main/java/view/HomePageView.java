@@ -1,49 +1,50 @@
 package view;
 
+
+import interface_adapter.homepage.HomePageController;
+import interface_adapter.homepage.HomePageViewModel;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class HomePageView {
+public class HomePageView extends JPanel implements ActionListener, PropertyChangeListener {
+    private final String viewName = "home page";
+    private final HomePageViewModel homePageViewModel;
+    HomePageController homePageController = null;
 
-    public HomePageView() {
-        SwingUtilities.invokeLater(() -> {
+    private final JButton createAccount;
 
-            //** WELCOME PANEL **//
-            JPanel welcomePanel = new JPanel();
-            JLabel welcomeLabelText = new JLabel("Welcome");
-            welcomePanel.add(welcomeLabelText);
+    public HomePageView(HomePageViewModel homePageViewModel) {
+        this.homePageViewModel = homePageViewModel;
 
-            //** Sign In Button **//
-            JPanel signInButtonPanel = new JPanel();
-            JButton signInSubmit = new JButton("Sign In");
-            signInButtonPanel.add(signInSubmit);
+        final JPanel buttons = new JPanel();
+        createAccount = new JButton(HomePageViewModel.TO_CREATE_ACCOUNT_LABEL);
+        buttons.add(createAccount);
 
-            //** Sign In Button Event **//
-            signInSubmit.addActionListener(e -> {
-                // Call the controller.
-            });
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(buttons);
 
-            //** Create Account Button **//
-            JPanel createAccountButtonPanel = new JPanel();
-            JButton createAccountSubmit = new JButton("Create Account");
-            createAccountButtonPanel.add(createAccountSubmit);
-
-            //** Create Account Button Event **//
-            createAccountSubmit.addActionListener(e -> {
-                // Call the controller.
-            });
-
-
-            JPanel mainPanel = new JPanel();
-            mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-            mainPanel.add(welcomePanel);
-            mainPanel.add(signInButtonPanel);
-            mainPanel.add(createAccountButtonPanel);
-
-            JFrame frame = new JFrame("Sophisticated Weather Application");
-            frame.setContentPane(mainPanel);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);
-        });
+        createAccount.addActionListener(
+                e -> homePageController.switchToCreateAccountView()
+        );
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
+
+    public void setHomePageController(HomePageController controller) {
+        this.homePageController = controller;
+    }
+
+    public String getViewName() {return viewName;}
 }

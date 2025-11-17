@@ -1,5 +1,22 @@
-import app.GUI.GUI;
+package app;
 
-public static void main(String[] args) {
-    new GUI();
+
+import app.GUI.GUI;
+import view.CreateAccountView;
+import view.HomePageView;
+
+import javax.swing.*;
+
+public class Main {
+    public static void main(String[] args) {
+        GUI gui = new GUI();
+        JFrame application = gui
+                .addHomePageView()
+                .addCreateAccountView()
+                .build();
+
+        application.pack();
+        application.setLocationRelativeTo(null);
+        application.setVisible(true);
+    }
 }
