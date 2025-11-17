@@ -11,11 +11,14 @@ import use_case.login.LoginUserDataAccessInterface;
 public class SaveLocationInteractor implements SaveLocationInputBoundary {
     private final LoginUserDataAccessInterface userDataAccessObject;
     private final SaveLocationOutputBoundary presenter;
+    private final LocationFactory locationFactory;
 
     public SaveLocationInteractor(LoginUserDataAccessInterface userRepository,
-                                    SaveLocationOutputBoundary presenter) {
+                                    SaveLocationOutputBoundary presenter,
+                                  LocationFactory locationFactory) {
         this.userDataAccessObject = userRepository;
         this.presenter = presenter;
+        this.locationFactory = locationFactory;
     }
 
     @Override
@@ -36,7 +39,8 @@ public class SaveLocationInteractor implements SaveLocationInputBoundary {
         }
 
         // saves the update user with updated locations list
-        user.addLocation(LocationFactory.create(inputData.getCityName()));
+        user.addLocation(locationFactory.create(inputData.getCityName()));
+
         userDataAccessObject.save(user);
         SaveLocationOutputData outputData = new SaveLocationOutputData(user.getLocations());
         presenter.prepareSuccessView(outputData);

@@ -15,7 +15,7 @@ public class LocationFactory {
     /**
      * Create a Location object given a city name.
      */
-    public static Location create(String name) throws CoordinatesFetcher.CityNotFoundException {
+    public Location create(String name) throws CoordinatesFetcher.CityNotFoundException {
         HashMap<String, Double> coordinates = fetcher.getCoordinates(name);
 
         double longitude = coordinates.get("lon");
