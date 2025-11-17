@@ -4,6 +4,9 @@ import entity.location.Location;
 
 import java.util.List;
 
+/**
+ * Output Data for the DeleteLocation Use Case.
+ */
 public class DeleteLocationOutputData {
     private final List<Location> remainingLocations;
 
@@ -12,7 +15,7 @@ public class DeleteLocationOutputData {
     }
 
     public List<Location> getRemainingLocations() {
-        return remainingLocations;
+        return this.remainingLocations;
     }
 }
 

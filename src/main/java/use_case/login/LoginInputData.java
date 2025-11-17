@@ -14,11 +14,11 @@ public class LoginInputData {
     }
 
     String getUsername() {
-        return username;
+        return this.username;
     }
 
     String getPassword() {
-        return password;
+        return this.password;
     }
 
 }

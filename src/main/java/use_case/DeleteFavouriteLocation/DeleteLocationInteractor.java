@@ -3,6 +3,9 @@ package use_case.DeleteFavouriteLocation;
 import entity.user.User;
 import use_case.login.LoginUserDataAccessInterface;
 
+/**
+ * The DeleteLocation Interactor.
+ */
 public class DeleteLocationInteractor implements DeleteLocationInputBoundary{
     private final LoginUserDataAccessInterface userDataAccessObject;
     private final DeleteLocationOutputBoundary presenter;
