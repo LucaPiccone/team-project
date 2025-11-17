@@ -1,58 +1,58 @@
 package app.GUI;
 
+import entity.user.UserFactory;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.createAccount.CreateAccountViewModel;
+import interface_adapter.homepage.HomePageViewModel;
+import view.CreateAccountView;
+import view.HomePageView;
+import view.ViewManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-// **   TEMPORARILY SHOWING THE LOGGEDIN VIEW. **//
+// **  GUI  **//
 public class GUI {
+    private final JPanel cardPanel = new JPanel();
+    private final CardLayout cardLayout = new CardLayout();
+    final UserFactory userFactory = new UserFactory();
+    final ViewManagerModel viewManagerModel = new ViewManagerModel();
+    ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+
+    private HomePageView homePageView;
+    private HomePageViewModel homePageViewModel;
+
+    private CreateAccountView createAccountView;
+    private CreateAccountViewModel createAccountViewModel;
 
     public GUI() {
-        SwingUtilities.invokeLater(() -> {
+        cardPanel.setLayout(cardLayout);
+    }
 
-            //TODO insert the username of who is logged in next to welcome.
-            //** WELCOME PANEL **//
-            JPanel welcomePanel = new JPanel();
-            JLabel welcomeLabelText = new JLabel("Welcome NewTeam09");
-            welcomePanel.add(welcomeLabelText);
+    public GUI addHomePageView() {
+        homePageViewModel = new HomePageViewModel();
+        homePageView = new HomePageView(homePageViewModel);
+        cardPanel.add(homePageView, homePageView.getViewName());
+        return this;
+    }
 
-            //TODO auto complete inputs with a drop down menu.
-            //** Search Panel **//
-            JPanel searchPanel = new JPanel();
-            JTextField searchField = new JTextField(30);
-            searchPanel.add(new JLabel("Search:"));
-            searchPanel.add(searchField);
+    public GUI addCreateAccountView() {
+        createAccountViewModel = new CreateAccountViewModel();
+        createAccountView = new CreateAccountView(createAccountViewModel);
+        cardPanel.add(createAccountView, createAccountView.getViewName());
+        return this;
+    }
 
-            //** Submit Button Panel **//
-            JPanel searchButtonPanel = new JPanel();
-            JButton search = new JButton("Search Location");
-            searchButtonPanel.add(search);
+    public JFrame build() {
+        final JFrame application = new JFrame("Sophisticated Weather App");
+        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-            //** Submit Button Event **//
-            search.addActionListener(e -> {
-                String location = searchField.getText();
+        application.add(cardPanel);
 
-                // Call the controller.
-            });
+        viewManagerModel.setState(homePageView.getViewName());
+        viewManagerModel.firePropertyChanged();
 
-            //TODO Insert a list of saved locations.
-            //** Saved location panel  **//
-            JPanel locationsPanel = new JPanel();
-            JLabel locationLabelText = new JLabel("Saved Locations");
-            locationsPanel.add(locationLabelText);
-
-            JPanel mainPanel = new JPanel();
-            mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-            mainPanel.add(welcomePanel);
-            mainPanel.add(searchPanel);
-            mainPanel.add(searchButtonPanel);
-            mainPanel.add(locationsPanel);
-
-            JFrame frame = new JFrame("Sophisticated Weather Application");
-            frame.setContentPane(mainPanel);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);
-        });
+        return application;
     }
 }
