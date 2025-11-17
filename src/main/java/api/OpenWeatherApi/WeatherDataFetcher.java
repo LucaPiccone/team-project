@@ -3,7 +3,6 @@ package api.OpenWeatherApi;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -15,7 +14,7 @@ public interface WeatherDataFetcher {
     // Get weather(latitude, longitude)
     JSONObject getWeather(HashMap<String, Double> coordinates) throws CityNotFoundException;
     class CityNotFoundException extends Exception {
-        public CityNotFoundException(HashMap<String, Double> coordinates) {
+        public CityNotFoundException(String coordinates) {
             super("City not found: ");
         }
     }

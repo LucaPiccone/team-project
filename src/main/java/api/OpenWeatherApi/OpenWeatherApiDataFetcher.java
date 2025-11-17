@@ -33,10 +33,10 @@ public class OpenWeatherApiDataFetcher implements WeatherDataFetcher {
                 return responseBody;
             }
             else{
-                throw new CityNotFoundException(cityName);
+                throw new CityNotFoundException("New response in OpenWeatherApiDataFetcher");
             }
         } catch (IOException e) {
-            throw new CityNotFoundException(coordinates, e);
+            throw new CityNotFoundException("IO EXCEPTION IN OpenWeatherApiDataFetcher");
         }
 
     }
