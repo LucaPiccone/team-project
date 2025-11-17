@@ -13,6 +13,7 @@ public class Main {
         JFrame application = gui
                 .addHomePageView()
                 .addCreateAccountView()
+                .addHomePageUseCase()
                 .build();
 
         application.pack();

@@ -16,7 +16,9 @@ public class HomePagePresenter implements HomePageOutputBoundary {
     private final CreateAccountViewModel createAccountViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public HomePagePresenter(HomePageViewModel homePageViewModel, CreateAccountViewModel createAccountViewModel ,ViewManagerModel viewManagerModel) {
+    public HomePagePresenter(HomePageViewModel homePageViewModel,
+                             CreateAccountViewModel createAccountViewModel ,
+                             ViewManagerModel viewManagerModel) {
         this.homePageViewModel = homePageViewModel;
         this.createAccountViewModel = createAccountViewModel;
         this.viewManagerModel = viewManagerModel;
