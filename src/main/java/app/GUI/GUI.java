@@ -1,82 +1,58 @@
 package app.GUI;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
 
+// **   TEMPORARILY SHOWING THE LOGGEDIN VIEW. **//
 public class GUI {
 
-    public GUI(String[] args) {
+    public GUI() {
         SwingUtilities.invokeLater(() -> {
-            JPanel countryPanel = new JPanel();
-            List<String> languageCodes = jsonTranslator.getLanguageCodes();
-            JComboBox<String> comboBox = new JComboBox<>();
-            for (String languageCode : languageCodes)
-                comboBox.addItem(languageCodeConverter.fromLanguageCode(languageCode));
-            countryPanel.add(new JLabel("Language:"));
-            countryPanel.add(comboBox);
 
-            JPanel languagePanel = new JPanel();
-            List<String> countryCodes = jsonTranslator.getCountryCodes();
-            List<String> countries = new ArrayList<>();
-            for (String countryCode: countryCodes)
-                countries.add(countryCodeConverter.fromCountryCode(countryCode));
-            JList<String> jlist = new JList<>(countries.toArray(new String[0]));
-            JScrollPane scrollPane = new JScrollPane(jlist);
-            languagePanel.add(scrollPane);
+            //TODO insert the username of who is logged in next to welcome.
+            //** WELCOME PANEL **//
+            JPanel welcomePanel = new JPanel();
+            JLabel welcomeLabelText = new JLabel("Welcome NewTeam09");
+            welcomePanel.add(welcomeLabelText);
 
-            JPanel translationPanel = new JPanel();
-            JLabel resultLabelText = new JLabel("Translation:");
-            translationPanel.add(resultLabelText);
-            JLabel resultLabel = new JLabel("\t\t\t\t\t\t\t");
-            translationPanel.add(resultLabel);
+            //TODO auto complete inputs with a drop down menu.
+            //** Search Panel **//
+            JPanel searchPanel = new JPanel();
+            JTextField searchField = new JTextField(30);
+            searchPanel.add(new JLabel("Search:"));
+            searchPanel.add(searchField);
 
-            comboBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String language = (String) comboBox.getSelectedItem();
-                    String country = jlist.getSelectedValue();
-                    String result = jsonTranslator.translate(
-                            countryCodeConverter.fromCountry(country),
-                            languageCodeConverter.fromLanguage(language));
-                    if (result == null) {
-                        result = "no translation found!";
-                    }
-                    resultLabel.setText(result);
-                }
+            //** Submit Button Panel **//
+            JPanel searchButtonPanel = new JPanel();
+            JButton search = new JButton("Search Location");
+            searchButtonPanel.add(search);
+
+            //** Submit Button Event **//
+            search.addActionListener(e -> {
+                String location = searchField.getText();
+
+                // Call the controller.
             });
 
-            jlist.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    String language = (String) comboBox.getSelectedItem();
-                    String country = jlist.getSelectedValue();
-                    String result = jsonTranslator.translate(
-                            countryCodeConverter.fromCountry(country),
-                            languageCodeConverter.fromLanguage(language));
-                    if (result == null) {
-                        result = "no translation found!";
-                    }
-                    resultLabel.setText(result);
-                }
-            });
+            //TODO Insert a list of saved locations.
+            //** Saved location panel  **//
+            JPanel locationsPanel = new JPanel();
+            JLabel locationLabelText = new JLabel("Saved Locations");
+            locationsPanel.add(locationLabelText);
 
             JPanel mainPanel = new JPanel();
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-            mainPanel.add(countryPanel);
-            mainPanel.add(translationPanel);
-            mainPanel.add(languagePanel);
+            mainPanel.add(welcomePanel);
+            mainPanel.add(searchPanel);
+            mainPanel.add(searchButtonPanel);
+            mainPanel.add(locationsPanel);
 
-            JFrame frame = new JFrame("Country Name Translator");
+            JFrame frame = new JFrame("Sophisticated Weather Application");
             frame.setContentPane(mainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
-
-
         });
     }
 }
