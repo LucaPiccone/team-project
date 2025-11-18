@@ -17,4 +17,6 @@ public class HomePageController {
     public void switchToCreateAccountView() {
         homePageInputBoundary.switchToCreateAccountView();
     }
+
+    public void switchToLoginView() {}
 }
