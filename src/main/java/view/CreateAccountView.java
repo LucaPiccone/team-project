@@ -21,6 +21,7 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
 
     private final JButton goBack;
 
+
     public CreateAccountView(CreateAccountViewModel createAccountViewModel) {
         this.createAccountViewModel = createAccountViewModel;
         createAccountViewModel.addPropertyChangeListener(this);
