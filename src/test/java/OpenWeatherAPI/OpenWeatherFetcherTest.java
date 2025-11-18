@@ -15,14 +15,55 @@ public class OpenWeatherFetcherTest {
 
     @Test
     void testValidLocationReturnsResults() throws WeatherDataFetcher.CityNotFoundException{
-        double v = 51.5085;
         HashMap<String, Double> coordinates = new  HashMap<>();
-        coordinates.put("lat", 51.5085);
-        coordinates.put("lon", -0.1257);
+        coordinates.put("lat", 0.0);
+        coordinates.put("lon", 0.0);
         WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
         JSONObject weather = fetcher.getWeather(coordinates);
-        weather.toString();
-        String expected = "{coord:{lon:-0.1257,lat:51.5085},weather: [{id:803,main:Clouds,description:broken clouds,icon:04d}],base:stations,main: {temp:280.85,feels_like:277.6,temp_min:280.1,temp_max:281.53,pressure:1024,humidity:69,sea_level: 1024,grnd_level:1019},visibility:10000,wind:{speed:5.66,deg:350},clouds:{all:75},dt: 1763391271,sys:{type:2,id:2075535,country:GB,sunrise:1763364130,sunset:1763395744},timezone:0, id:2643743,name:London,cod:200}";
-        assertEquals(expected, weather);
+        String jsonString = """
+                {
+                  "coord": {
+                    "lon": 0,
+                    "lat": 0
+                  },
+                  "weather": [
+                    {
+                      "id": 804,
+                      "main": "Clouds",
+                      "description": "overcast clouds",
+                      "icon": "04d"
+                    }
+                  ],
+                  "base": "stations",
+                  "main": {
+                    "temp": 298.92,
+                    "feels_like": 299.69,
+                    "temp_min": 298.92,
+                    "temp_max": 298.92,
+                    "pressure": 1010,
+                    "humidity": 82,
+                    "sea_level": 1010,
+                    "grnd_level": 1010
+                  },
+                  "visibility": 10000,
+                  "wind": {
+                    "speed": 6.26,
+                    "deg": 175,
+                    "gust": 6
+                  },
+                  "clouds": {
+                    "all": 86
+                  },
+                  "dt": 1763478561,
+                  "sys": {
+                    "sunrise": 1763444509,
+                    "sunset": 1763488131
+                  },
+                  "timezone": 0,
+                  "id": 6295630,
+                  "name": "Globe",
+                  "cod": 200
+                }""";
+        assertEquals(JSONObject(expected).toString(), weather.toString());
     }
 }
