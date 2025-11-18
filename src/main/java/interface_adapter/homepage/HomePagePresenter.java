@@ -29,5 +29,11 @@ public class HomePagePresenter implements HomePageOutputBoundary {
         viewManagerModel.setState(createAccountViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void switchToLoginView() {
+        viewManagerModel.setState(viewManagerModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
 }
 

@@ -15,4 +15,9 @@ public class HomePageInteractor implements HomePageInputBoundary {
         // The HomePagePresenter overrides this. usually it's called userPresenter
         userPresenter.switchToCreateAccountView();
     }
+
+    @Override
+    public void switchToLoginView() {
+        userPresenter.switchToLoginView();
+    }
 }
