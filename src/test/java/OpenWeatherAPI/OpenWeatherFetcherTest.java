@@ -20,7 +20,6 @@ public class OpenWeatherFetcherTest {
         coordinates.put("lon", 0.0);
         WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
         JSONObject weather = fetcher.getWeather(coordinates);
-        weather.toString();
         String jsonString = """
                 {
                   "coord": {
@@ -65,6 +64,6 @@ public class OpenWeatherFetcherTest {
                   "name": "Globe",
                   "cod": 200
                 }""";
-        assertEquals(JSONObject(expected).toString(), weather);
+        assertEquals(JSONObject(expected).toString(), weather.toString());
     }
 }
