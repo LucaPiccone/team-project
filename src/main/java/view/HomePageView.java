@@ -25,8 +25,10 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         this.homePageViewModel = homePageViewModel;
 
         final JPanel buttons = new JPanel();
+
         createAccountButton = new JButton(HomePageViewModel.TO_CREATE_ACCOUNT_LABEL);
         buttons.add(createAccountButton);
+
         logInButton = new JButton(HomePageViewModel.TO_LOGIN_LABEL);
         buttons.add(logInButton);
 
