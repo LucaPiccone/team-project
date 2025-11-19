@@ -15,8 +15,10 @@ public class Main {
                 .addCreateAccountView()
                 .addHomePageUseCase()
                 .addLoggedInHomePageView()
-                .addLoggedInSearchView()
-                .addLoggedInFavouriteView()
+                .addLoggedInSearchPageView()
+                .addLoggedInSearchPageUseCases()
+                .addLoggedInFavouritePageView()
+                .addLoggedInFavouritePageUseCases()
                 .addLoggedInHomePageUseCases()
                 .build();
 

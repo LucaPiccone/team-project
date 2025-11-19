@@ -4,6 +4,7 @@ import interface_adapter.loggedInHomePage.LoggedInHomePageController;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -22,6 +23,9 @@ public class LoggedInHomePageView extends JPanel implements ActionListener, Prop
     public LoggedInHomePageView(LoggedInHomePageViewModel loggedInHomePageViewModel) {
         this.loggedInHomePageViewModel = loggedInHomePageViewModel;
 
+        final JLabel title = new JLabel(LoggedInHomePageViewModel.WELCOME_LABEL);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         final JPanel buttons = new JPanel();
         //** Go to search page button **//
         toSearch = new JButton(LoggedInHomePageViewModel.TO_SEARCH_LABEL);
@@ -31,7 +35,9 @@ public class LoggedInHomePageView extends JPanel implements ActionListener, Prop
         buttons.add(toFavourites);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
         this.add(buttons);
+
 
         toSearch.addActionListener(
                 e -> loggedInHomePageController.switchToLoggedInSearchView()
