@@ -6,17 +6,28 @@ import interface_adapter.createAccount.CreateAccountViewModel;
 import interface_adapter.homepage.HomePageController;
 import interface_adapter.homepage.HomePagePresenter;
 import interface_adapter.homepage.HomePageViewModel;
+import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageController;
+import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPagePresenter;
+import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
 import interface_adapter.loggedInHomePage.LoggedInHomePageController;
 import interface_adapter.loggedInHomePage.LoggedInHomePagePresenter;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 import interface_adapter.loggedInFavourites.LoggedInFavouritesViewModel;
-import interface_adapter.loggedInSearch.LoggedInSearchViewModel;
+import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
+import interface_adapter.loggedInSearchPage.LoggedInSearchPagePresenter;
+import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import use_case.homePage.HomePageInputBoundary;
 import use_case.homePage.HomePageInteractor;
 import use_case.homePage.HomePageOutputBoundary;
+import use_case.loggedInFavouritesPage.LoggedInFavouritesPageInputBoundary;
+import use_case.loggedInFavouritesPage.LoggedInFavouritesPageInteractor;
+import use_case.loggedInFavouritesPage.LoggedInFavouritesPageOutputBoundary;
 import use_case.loggedInHomePage.LoggedInHomePageInputBoundary;
 import use_case.loggedInHomePage.LoggedInHomePageInteractor;
 import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;
+import use_case.loggedInSearchPage.LoggedInSearchPageInputBoundary;
+import use_case.loggedInSearchPage.LoggedInSearchPageInteractor;
+import use_case.loggedInSearchPage.LoggedInSearchPageOutputBoundary;
 import view.*;
 
 import javax.swing.*;
@@ -39,11 +50,11 @@ public class GUI {
     private LoggedInHomePageView loggedInHomePageView;
     private LoggedInHomePageViewModel loggedInHomePageViewModel;
 
-    private LoggedInSeachView loggedInSeachView;
-    private LoggedInSearchViewModel loggedInSearchViewModel;
+    private LoggedInSearchPageView loggedInSearchPageView;
+    private LoggedInSearchPageViewModel loggedInSearchPageViewModel;
 
-    private LoggedInFavouritesView loggedInFavouritesView;
-    private LoggedInFavouritesViewModel loggedInFavouritesViewModel;
+    private LoggedInFavouritesPageView loggedInFavouritesPageView;
+    private LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel;
 
     public GUI() {
         cardPanel.setLayout(cardLayout);
@@ -88,8 +99,8 @@ public class GUI {
     public GUI addLoggedInHomePageUseCases() {
         final LoggedInHomePageOutputBoundary loggedInHomePageOutputBoundary = new LoggedInHomePagePresenter(
                 loggedInHomePageViewModel,
-                loggedInSearchViewModel,
-                loggedInFavouritesViewModel,
+                loggedInSearchPageViewModel,
+                loggedInFavouritesPageViewModel,
                 viewManagerModel);
         final LoggedInHomePageInputBoundary loggedInHomePageInputBoundary = new LoggedInHomePageInteractor(loggedInHomePageOutputBoundary);
 
@@ -99,18 +110,44 @@ public class GUI {
     }
 
     // **LOGGED IN SEARCH PAGE **//
-    public GUI addLoggedInSearchView() {
-        loggedInSearchViewModel = new LoggedInSearchViewModel();
-        loggedInSeachView = new LoggedInSeachView(loggedInSearchViewModel);
-        cardPanel.add(loggedInSeachView, loggedInSeachView.getViewName());
+    public GUI addLoggedInSearchPageView() {
+        loggedInSearchPageViewModel = new LoggedInSearchPageViewModel();
+        loggedInSearchPageView = new LoggedInSearchPageView(loggedInSearchPageViewModel);
+        cardPanel.add(loggedInSearchPageView, loggedInSearchPageView.getViewName());
+        return this;
+    }
+
+    public GUI addLoggedInSearchPageUseCases() {
+        final LoggedInSearchPageOutputBoundary loggedInSearchPageOutputBoundary = new LoggedInSearchPagePresenter(
+                loggedInSearchPageViewModel,
+                loggedInHomePageViewModel,
+                viewManagerModel
+        );
+        final LoggedInSearchPageInputBoundary loggedInSearchPageInputBoundary = new LoggedInSearchPageInteractor(loggedInSearchPageOutputBoundary);
+
+        LoggedInSearchPageController controller = new LoggedInSearchPageController(loggedInSearchPageInputBoundary);
+        loggedInSearchPageView.setSearchPageController(controller);
         return this;
     }
 
     //**LOGGED IN FAVOURITES PAGE **//
-    public GUI addLoggedInFavouriteView() {
-        loggedInFavouritesViewModel = new LoggedInFavouritesViewModel();
-        loggedInFavouritesView = new LoggedInFavouritesView(loggedInFavouritesViewModel);
-        cardPanel.add(loggedInFavouritesView, loggedInFavouritesView.getViewName());
+    public GUI addLoggedInFavouritePageView() {
+        loggedInFavouritesPageViewModel = new LoggedInFavouritesPageViewModel();
+        loggedInFavouritesPageView = new LoggedInFavouritesPageView(loggedInFavouritesPageViewModel);
+        cardPanel.add(loggedInFavouritesPageView, loggedInFavouritesPageView.getViewName());
+        return this;
+    }
+
+    public GUI addLoggedInFavouritePageUseCases() {
+        final LoggedInFavouritesPageOutputBoundary loggedInFavouritesPageOutputBoundary = new LoggedInFavouritesPagePresenter(
+                loggedInFavouritesPageViewModel,
+                loggedInHomePageViewModel,
+                viewManagerModel
+        );
+        final LoggedInFavouritesPageInputBoundary loggedInFavouritesPageInputBoundary = new LoggedInFavouritesPageInteractor(loggedInFavouritesPageOutputBoundary);
+
+        LoggedInFavouritesPageController controller = new LoggedInFavouritesPageController(loggedInFavouritesPageInputBoundary);
+        loggedInFavouritesPageView.setFavouritesPageController(controller);
         return this;
     }
 
@@ -120,7 +157,7 @@ public class GUI {
 
         application.add(cardPanel);
         //** View on Start Up. **//
-        viewManagerModel.setState(homePageView.getViewName());
+        viewManagerModel.setState(loggedInHomePageView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
