@@ -120,7 +120,7 @@ public class GUI {
 
         application.add(cardPanel);
         //** View on Start Up. **//
-        viewManagerModel.setState(loggedInHomePageView.getViewName());
+        viewManagerModel.setState(homePageView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
