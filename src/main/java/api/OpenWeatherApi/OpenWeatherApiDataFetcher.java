@@ -23,10 +23,9 @@ public class OpenWeatherApiDataFetcher implements WeatherDataFetcher {
         if (apiKey == null || apiKey.isEmpty()) {
             throw new RuntimeException("API token not set in environment variable");
         }
-
-        final Request request = new Request.Builder()
-                .url("https://pro.openweathermap.org/data/2.5/forecast/hourly?lat="
-                        + coordinates.get("lat") + "&lon=" + coordinates.get("lon") + "&appid=" + apiKey).build();
+        String url = "https://api.openweathermap.org/data/2.5/weather?lat=" +
+                coordinates.get("lat").toString() + "&lon=" + coordinates.get("lon").toString() + "&appid=" + apiKey;
+        final Request request = new Request.Builder().url(url).build();
         try (Response response = client.newCall(request).execute()) {
             final JSONObject responseBody = new JSONObject(response.body().string());
             if (responseBody.length() > 2) {
