@@ -64,6 +64,7 @@ public class OpenWeatherFetcherTest {
                   "name": "Globe",
                   "cod": 200
                 }""";
-        assertEquals(JSONObject(expected).toString(), weather.toString());
+        JSONObject json = new JSONObject(jsonString);
+        assertEquals(json.toString(), weather.toString());
     }
 }
