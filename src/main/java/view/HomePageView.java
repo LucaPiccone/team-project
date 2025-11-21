@@ -3,7 +3,9 @@ package view;
 
 import interface_adapter.homepage.HomePageController;
 import interface_adapter.homepage.HomePageViewModel;
+import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 
+import javax.imageio.plugins.tiff.TIFFTag;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,18 +14,22 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class HomePageView extends JPanel implements PropertyChangeListener {
-    private final String viewName = "home page";
+    private final String viewName = "Home page";
+
     private final HomePageViewModel homePageViewModel;
     HomePageController homePageController = null;
 
-    private final JLabel welcomeLabel = new JLabel("Welcome!");
     private final JButton logInButton;
     private final JButton createAccountButton;
 
-
+    // ** CONSTRUCTOR ** //
     public HomePageView(HomePageViewModel homePageViewModel) {
         this.homePageViewModel = homePageViewModel;
 
+        final JLabel title = new JLabel(HomePageViewModel.WELCOME_LABEL);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        //** BUTTONS **//
         final JPanel buttons = new JPanel();
 
         createAccountButton = new JButton(HomePageViewModel.TO_CREATE_ACCOUNT_LABEL);
@@ -34,19 +40,16 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(title);
         this.add(buttons);
 
         createAccountButton.addActionListener(
                 e -> homePageController.switchToCreateAccountView()
         );
 
-        logInButton.addActionListener(e -> homePageController.switchToLoginView());
-
-        this.add(Box.createVerticalStrut(40));
-        this.add(welcomeLabel);
-        this.add(Box.createVerticalStrut(20));
-        this.add(buttons);
+        logInButton.addActionListener(
+                e -> homePageController.switchToSigninView()
+        );
     }
 
     @Override

@@ -13,22 +13,28 @@ import use_case.homePage.HomePageOutputBoundary;
 public class HomePagePresenter implements HomePageOutputBoundary {
     private final HomePageViewModel homePageViewModel;
     private final CreateAccountViewModel createAccountViewModel;
-    private final SignInViewModel loginViewMode;
+    private final SignInViewModel signInViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public HomePagePresenter(HomePageViewModel homePageViewModel,
-                             CreateAccountViewModel createAccountViewModel ,
-                             ViewManagerModel viewManagerModel,
-                             SignInViewModel loginViewMode) {
+                             CreateAccountViewModel createAccountViewModel,
+                             SignInViewModel signInViewModel,
+                             ViewManagerModel viewManagerModel) {
         this.homePageViewModel = homePageViewModel;
         this.createAccountViewModel = createAccountViewModel;
-        this.loginViewMode = loginViewMode;
+        this.signInViewModel = signInViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
     @Override
     public void switchToCreateAccountView() {
         viewManagerModel.setState(createAccountViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchToSigninView() {
+        viewManagerModel.setState(signInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 

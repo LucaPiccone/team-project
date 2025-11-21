@@ -2,14 +2,12 @@ package data_access;
 
 import entity.user.User;
 import entity.user.UserFactory;
-import use_case.login.LoginUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
+import use_case.createAccount.CreateAccountDataAccessInterface;
 
 import java.io.*;
 import java.util.*;
 
-public class FileUserDataAccessObjectWithLocations implements SignupUserDataAccessInterface,
-        LoginUserDataAccessInterface {
+public class FileUserDataAccessObjectWithLocations implements CreateAccountDataAccessInterface {
 
     // CSV header
     private static final String HEADER = "username,password,locations,token";
@@ -107,11 +105,11 @@ public class FileUserDataAccessObjectWithLocations implements SignupUserDataAcce
         accounts.put(user.getName(), user);
         this.save();
     }
-
-    @Override
-    public User get(String username) {
-        return accounts.get(username);
-    }
+// For LOGIN
+//    @Override
+//    public User get(String username) {
+//        return accounts.get(username);
+//    }
 
     @Override
     public boolean existsByName(String identifier) {
@@ -121,9 +119,9 @@ public class FileUserDataAccessObjectWithLocations implements SignupUserDataAcce
     public void setCurrentUsername(String name) {
         currentUsername = name;
     }
-
-    @Override
-    public String getCurrentUsername() {
-        return currentUsername;
-    }
+// FOR LOGIN
+//    @Override
+//    public String getCurrentUsername() {
+//        return currentUsername;
+//    }
 }

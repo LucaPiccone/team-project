@@ -1,21 +1,26 @@
 package interface_adapter.createAccount;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.homepage.HomePageViewModel;
 import interface_adapter.signin.SignInViewModel;
 import use_case.createAccount.CreateAccountOutputBoundary;
 import use_case.createAccount.CreateAccountOutputData;
+import view.HomePageView;
 
 public class CreateAccountPresenter implements CreateAccountOutputBoundary {
 
     private final CreateAccountViewModel createAccountViewModel;
-    private final SignInViewModel loginViewModel;
+    private final HomePageViewModel homePageViewModel;
+    private final SignInViewModel signInViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public CreateAccountPresenter(CreateAccountViewModel createAccountViewModel,
-                                  SignInViewModel loginViewModel,
+                                  HomePageViewModel homePageViewModel,
+                                  SignInViewModel signInViewModel,
                                   ViewManagerModel viewManagerModel) {
         this.createAccountViewModel = createAccountViewModel;
-        this.loginViewModel = loginViewModel;
+        this.homePageViewModel = homePageViewModel;
+        this.signInViewModel = signInViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
@@ -33,7 +38,7 @@ public class CreateAccountPresenter implements CreateAccountOutputBoundary {
         createAccountViewModel.setState(state);
 
         // switch to "login view"
-        viewManagerModel.setState(createAccountViewModel.getViewName());// need to change back to loginviewmodel
+        viewManagerModel.setState(signInViewModel.getViewName());// need to change back to loginviewmodel
         viewManagerModel.firePropertyChanged();
     }
 
@@ -51,8 +56,8 @@ public class CreateAccountPresenter implements CreateAccountOutputBoundary {
     }
 
     @Override
-    public void switchToLoginView() {
-        viewManagerModel.setActiveView(loginViewModel.getViewName());
+    public void switchToHomePage() {
+        viewManagerModel.setState(homePageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

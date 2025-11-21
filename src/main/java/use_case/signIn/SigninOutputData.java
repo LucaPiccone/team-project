@@ -1,13 +1,13 @@
-package use_case.login;
+package use_case.signIn;
 
 /**
  * Output Data for the Login Use Case.
  */
-public class LoginOutputData {
+public class SigninOutputData {
 
     private final String username;
 
-    public LoginOutputData(String username) {
+    public SigninOutputData(String username) {
         this.username = username;
     }
 

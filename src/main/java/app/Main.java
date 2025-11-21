@@ -13,11 +13,14 @@ public class Main {
         JFrame application = gui
                 .addHomePageView()
                 .addCreateAccountView()
-                .addHomePageUseCase()
+                .addSignInView()
+                .addLoggedInFavouritePageView()
                 .addLoggedInHomePageView()
                 .addLoggedInSearchPageView()
+                .addCreateAccountUseCases()
+                .addHomePageUseCase()
+                .addSignInViewUseCase()
                 .addLoggedInSearchPageUseCases()
-                .addLoggedInFavouritePageView()
                 .addLoggedInFavouritePageUseCases()
                 .addLoggedInHomePageUseCases()
                 .build();

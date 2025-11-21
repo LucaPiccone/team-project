@@ -17,7 +17,7 @@ public class HomePageInteractor implements HomePageInputBoundary {
     }
 
     @Override
-    public void switchToLoginView() {
-        userPresenter.switchToLoginView();
+    public void switchToSigninView() {
+        userPresenter.switchToSigninView();
     }
 }

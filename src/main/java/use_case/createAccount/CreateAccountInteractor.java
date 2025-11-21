@@ -2,20 +2,19 @@ package use_case.createAccount;
 
 import entity.user.User;
 import entity.user.UserFactory;
+import use_case.signup.SignupOutputData;
 import use_case.signup.SignupUserDataAccessInterface;
 
 public class CreateAccountInteractor implements CreateAccountInputBoundary {
 
-    private final SignupUserDataAccessInterface userDataAccessObject;
+    private final CreateAccountDataAccessInterface userDataAccessObject;
     private final UserFactory userFactory;
     private final CreateAccountOutputBoundary presenter;
 
-    public CreateAccountInteractor(SignupUserDataAccessInterface userDataAccessObject,
-                                   UserFactory userFactory,
-                                   CreateAccountOutputBoundary presenter) {
-        this.userDataAccessObject = userDataAccessObject;
-        this.userFactory = userFactory;
+    public CreateAccountInteractor(CreateAccountOutputBoundary presenter, CreateAccountDataAccessInterface createAccountDataAccessInterface, UserFactory userFactory) {
         this.presenter = presenter;
+        this.userDataAccessObject = createAccountDataAccessInterface;
+        this.userFactory = userFactory;
     }
 
     @Override
@@ -24,13 +23,12 @@ public class CreateAccountInteractor implements CreateAccountInputBoundary {
         String password = inputData.getPassword();
         String repeatPassword = inputData.getRepeatPassword();
 
+        //** CHECK IF THE USERNAME IS ALREADY TAKEN AND PASSWORDS MATCH **//
         if (userDataAccessObject.existsByName(username)) {
             presenter.prepareFailView("Username already exists",
                     null, null);
             return;
-        }
-
-        if (!password.equals(repeatPassword)) {
+        } else if (!password.equals(repeatPassword)) {
             presenter.prepareFailView(null,
                     "Passwords do not match",
                     "Passwords do not match");
@@ -47,7 +45,7 @@ public class CreateAccountInteractor implements CreateAccountInputBoundary {
     }
 
     @Override
-    public void switchToLoginView() {
-        presenter.switchToLoginView();
+    public void switchToHomePage() {
+        presenter.switchToHomePage();
     }
 }

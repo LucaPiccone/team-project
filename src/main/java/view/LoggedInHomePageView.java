@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.loggedInHomePage.LoggedInHomePageController;
+import interface_adapter.loggedInHomePage.LoggedInHomePageState;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class LoggedInHomePageView extends JPanel implements ActionListener, Prop
     public LoggedInHomePageView(LoggedInHomePageViewModel loggedInHomePageViewModel) {
         this.loggedInHomePageViewModel = loggedInHomePageViewModel;
 
+        //** TITLE **//
         final JLabel title = new JLabel(LoggedInHomePageViewModel.WELCOME_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -46,6 +48,13 @@ public class LoggedInHomePageView extends JPanel implements ActionListener, Prop
         toFavourites.addActionListener(
                 e -> loggedInHomePageController.switchToLoggedInFavouritesView()
         );
+
+        loggedInHomePageViewModel.addPropertyChangeListener(evt -> {
+            LoggedInHomePageState state = loggedInHomePageViewModel.getState();
+            // Update the text of the JLabel directly
+            title.setText(LoggedInHomePageViewModel.WELCOME_LABEL + " " + state.getUsername());
+        });
+
     }
 
     //** CREATE AN INSTANCE OF THE CONTROLLER **//

@@ -7,5 +7,5 @@ public interface CreateAccountOutputBoundary {
                          String repeatPasswordError);
 
     //  goBack / interactor.switchToLoginView()
-    void switchToLoginView();
+    void switchToHomePage();
 }

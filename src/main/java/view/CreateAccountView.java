@@ -55,8 +55,8 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
         buttons.add(goBack);
         buttons.add(createAccountButton);
 
-        createAccountButton.addActionListener(this); //need implement
-        goBack.addActionListener(this);//need implement
+        createAccountButton.addActionListener(this);
+        goBack.addActionListener(this);
 
         this.add(Box.createVerticalStrut(30));
         this.add(title);
@@ -95,20 +95,13 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
             createAccountViewModel.setState(state);
 
             //  Controller
-            if (createAccountController != null) {
-                createAccountController.execute(
-                        state.getUsername(),
-                        state.getPassword(),
-                        state.getRepeatPassword()
+            createAccountController.execute(
+                    state.getUsername(),
+                    state.getPassword(),
+                    state.getRepeatPassword()
                 );
-            }
-
-            // go back button
         } else if (source == goBack) {
-            if (createAccountController != null) {
-
-                createAccountController.switchToLoginView();
-            }
+            createAccountController.switchToHomePage();
         }
     }
 

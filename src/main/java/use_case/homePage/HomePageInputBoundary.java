@@ -4,5 +4,5 @@ public interface HomePageInputBoundary {
 
     void switchToCreateAccountView();
 
-    void switchToLoginView();
+    void switchToSigninView();
 }
