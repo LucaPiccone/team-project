@@ -2,6 +2,8 @@ package app.GUI;
 
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.createAccount.CreateAccountController;
+import interface_adapter.createAccount.CreateAccountPresenter;
 import interface_adapter.createAccount.CreateAccountViewModel;
 import interface_adapter.homepage.HomePageController;
 import interface_adapter.homepage.HomePagePresenter;
@@ -12,11 +14,15 @@ import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
 import interface_adapter.loggedInHomePage.LoggedInHomePageController;
 import interface_adapter.loggedInHomePage.LoggedInHomePagePresenter;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
-import interface_adapter.loggedInFavourites.LoggedInFavouritesViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPagePresenter;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
+import interface_adapter.signin.SignInController;
+import interface_adapter.signin.SignInPresenter;
 import interface_adapter.signin.SignInViewModel;
+import use_case.createAccount.CreateAccountInputBoundary;
+import use_case.createAccount.CreateAccountInteractor;
+import use_case.createAccount.CreateAccountOutputBoundary;
 import use_case.homePage.HomePageInputBoundary;
 import use_case.homePage.HomePageInteractor;
 import use_case.homePage.HomePageOutputBoundary;
@@ -29,6 +35,10 @@ import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;
 import use_case.loggedInSearchPage.LoggedInSearchPageInputBoundary;
 import use_case.loggedInSearchPage.LoggedInSearchPageInteractor;
 import use_case.loggedInSearchPage.LoggedInSearchPageOutputBoundary;
+import use_case.signIn.SignInInputBoundary;
+import use_case.signIn.SignInInteractor;
+import use_case.signIn.SignInOutputBoundary;
+//import use_case.signIn.LoginUserDataAccessInterface;
 import view.*;
 
 import javax.swing.*;
@@ -94,11 +104,37 @@ public class GUI {
         return this;
     }
 
+    public GUI addCreateAccountUseCases() {
+        final CreateAccountOutputBoundary createAccountOutputBoundary = new CreateAccountPresenter(
+                createAccountViewModel,
+                homePageViewModel,
+                viewManagerModel
+        );
+        final CreateAccountInputBoundary createAccountInputBoundary = new CreateAccountInteractor(createAccountOutputBoundary);
+
+        CreateAccountController controller = new CreateAccountController(createAccountInputBoundary);
+        createAccountView.setCreateController(controller);
+        return this;
+    }
+
     // ** SIGN IN VIEW PAGE ** //
     public GUI addSignInView() {
         signInViewModel = new SignInViewModel();
         signInView = new SignInView(signInViewModel);
         cardPanel.add(signInView, signInView.getViewName());
+        return this;
+    }
+
+    public GUI addSignInViewUseCase() {
+        final SignInOutputBoundary signInPresenter = new SignInPresenter(
+                signInViewModel,
+                homePageViewModel,
+                viewManagerModel
+        );
+        final SignInInputBoundary loginInputBoundary = new SignInInteractor(signInPresenter);
+
+        SignInController controller = new SignInController(loginInputBoundary);
+        signInView.setSignInController(controller);
         return this;
     }
 

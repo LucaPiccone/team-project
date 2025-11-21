@@ -15,6 +15,8 @@ public class Main {
                 .addCreateAccountView()
                 .addSignInView()
                 .addHomePageUseCase()
+                .addCreateAccountUseCases()
+                .addSignInViewUseCase()
                 .addLoggedInHomePageView()
                 .addLoggedInSearchPageView()
                 .addLoggedInSearchPageUseCases()

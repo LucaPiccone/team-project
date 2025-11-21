@@ -8,7 +8,7 @@ public class HomePageViewModel extends ViewModel<HomePageState> {
     public static final String TO_LOGIN_LABEL = "Log In";
 
     public HomePageViewModel() {
-        super("Home Page");
+        super("Home page");
         setState(new HomePageState());
     }
 }

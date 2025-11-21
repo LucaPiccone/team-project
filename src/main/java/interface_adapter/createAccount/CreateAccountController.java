@@ -18,7 +18,7 @@ public class CreateAccountController {
     }
 
     // “Go back”
-    public void switchToLoginView() {
-        interactor.switchToLoginView();
+    public void switchToHomePage() {
+        interactor.switchToHomePage();
     }
 }

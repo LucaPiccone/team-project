@@ -107,7 +107,7 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
         } else if (source == goBack) {
             if (createAccountController != null) {
 
-                createAccountController.switchToLoginView();
+                createAccountController.switchToHomePage();
             }
         }
     }

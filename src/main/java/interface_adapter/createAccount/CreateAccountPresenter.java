@@ -1,21 +1,23 @@
 package interface_adapter.createAccount;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.homepage.HomePageViewModel;
 import interface_adapter.signin.SignInViewModel;
 import use_case.createAccount.CreateAccountOutputBoundary;
 import use_case.createAccount.CreateAccountOutputData;
+import view.HomePageView;
 
 public class CreateAccountPresenter implements CreateAccountOutputBoundary {
 
     private final CreateAccountViewModel createAccountViewModel;
-    private final SignInViewModel signInViewModel;
+    private final HomePageViewModel homePageViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public CreateAccountPresenter(CreateAccountViewModel createAccountViewModel,
-                                  SignInViewModel signInViewModel,
+                                  HomePageViewModel homePageViewModel,
                                   ViewManagerModel viewManagerModel) {
         this.createAccountViewModel = createAccountViewModel;
-        this.signInViewModel = signInViewModel;
+        this.homePageViewModel = homePageViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
@@ -51,8 +53,8 @@ public class CreateAccountPresenter implements CreateAccountOutputBoundary {
     }
 
     @Override
-    public void switchToLoginView() {
-        viewManagerModel.setState(signInViewModel.getViewName());
+    public void switchToHomePage() {
+        viewManagerModel.setState(homePageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

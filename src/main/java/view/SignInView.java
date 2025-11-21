@@ -64,10 +64,13 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
 
         // ----- Buttons -----
         signInButton = new JButton("Sign in");
-        backToHomeButton = new JButton("Go back to homepage");
+        backToHomeButton = new JButton("Go back");
 
+        // -- BUTTON EVENT LISTENER.
         signInButton.addActionListener(this);
-        backToHomeButton.addActionListener(this);
+        backToHomeButton.addActionListener(
+                e -> signInController.switchToHomePage()
+        );
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.add(signInButton);

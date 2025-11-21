@@ -4,5 +4,5 @@ public interface CreateAccountInputBoundary {
 
     void execute(CreateAccountInputData inputData);
 
-    void switchToLoginView();
+    void switchToHomePage();
 }
