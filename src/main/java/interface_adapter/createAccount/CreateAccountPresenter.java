@@ -8,14 +8,14 @@ import use_case.createAccount.CreateAccountOutputData;
 public class CreateAccountPresenter implements CreateAccountOutputBoundary {
 
     private final CreateAccountViewModel createAccountViewModel;
-    private final SignInViewModel loginViewModel;
+    private final SignInViewModel signInViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public CreateAccountPresenter(CreateAccountViewModel createAccountViewModel,
-                                  SignInViewModel loginViewModel,
+                                  SignInViewModel signInViewModel,
                                   ViewManagerModel viewManagerModel) {
         this.createAccountViewModel = createAccountViewModel;
-        this.loginViewModel = loginViewModel;
+        this.signInViewModel = signInViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
@@ -52,7 +52,7 @@ public class CreateAccountPresenter implements CreateAccountOutputBoundary {
 
     @Override
     public void switchToLoginView() {
-        viewManagerModel.setActiveView(loginViewModel.getViewName());
+        viewManagerModel.setState(signInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

@@ -16,6 +16,7 @@ import interface_adapter.loggedInFavourites.LoggedInFavouritesViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPagePresenter;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
+import interface_adapter.signin.SignInViewModel;
 import use_case.homePage.HomePageInputBoundary;
 import use_case.homePage.HomePageInteractor;
 import use_case.homePage.HomePageOutputBoundary;
@@ -47,6 +48,9 @@ public class GUI {
     private CreateAccountView createAccountView;
     private CreateAccountViewModel createAccountViewModel;
 
+    private SignInView signInView;
+    private SignInViewModel signInViewModel;
+
     private LoggedInHomePageView loggedInHomePageView;
     private LoggedInHomePageViewModel loggedInHomePageViewModel;
 
@@ -71,7 +75,7 @@ public class GUI {
     //** HOME PAGE USE CASES **//
     public GUI addHomePageUseCase() {
         final HomePageOutputBoundary homePageOutputBoundary = new HomePagePresenter(homePageViewModel,
-                createAccountViewModel, viewManagerModel);
+                createAccountViewModel, signInViewModel, viewManagerModel);
         final HomePageInputBoundary homePageInputBoundary = new HomePageInteractor(homePageOutputBoundary);
 
         HomePageController controller = new HomePageController(homePageInputBoundary);
@@ -157,7 +161,7 @@ public class GUI {
 
         application.add(cardPanel);
         //** View on Start Up. **//
-        viewManagerModel.setState(loggedInHomePageView.getViewName());
+        viewManagerModel.setState(homePageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

@@ -13,7 +13,7 @@ import java.beans.PropertyChangeListener;
 
 public class SignInView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final String viewName = "sign in";
+    private final String viewName = "Sign in view";
 
     private final SignInViewModel signInViewModel;
     private SignInController signInController;
@@ -34,7 +34,7 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
 
     public SignInView(SignInViewModel signInViewModel) {
         this.signInViewModel = signInViewModel;
-        this.signInViewModel.addPropertyChangeListener(this);
+        // this.signInViewModel.addPropertyChangeListener(this);
 
         // ----- Title -----
         final JLabel title = new JLabel("Sign In");
