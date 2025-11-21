@@ -1,5 +1,6 @@
 package app.GUI;
 
+import data_access.DBUserDataAccessObject;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.createAccount.CreateAccountController;
@@ -51,6 +52,9 @@ public class GUI {
     final UserFactory userFactory = new UserFactory();
     final ViewManagerModel viewManagerModel = new ViewManagerModel();
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+
+    final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
+
 
     private HomePageView homePageView;
     private HomePageViewModel homePageViewModel;
@@ -108,9 +112,14 @@ public class GUI {
         final CreateAccountOutputBoundary createAccountOutputBoundary = new CreateAccountPresenter(
                 createAccountViewModel,
                 homePageViewModel,
+                signInViewModel,
                 viewManagerModel
         );
-        final CreateAccountInputBoundary createAccountInputBoundary = new CreateAccountInteractor(createAccountOutputBoundary);
+        final CreateAccountInputBoundary createAccountInputBoundary = new CreateAccountInteractor(
+                createAccountOutputBoundary,
+                userDataAccessObject,
+                userFactory
+                );
 
         CreateAccountController controller = new CreateAccountController(createAccountInputBoundary);
         createAccountView.setCreateController(controller);

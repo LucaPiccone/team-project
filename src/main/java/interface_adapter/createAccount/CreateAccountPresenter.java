@@ -11,13 +11,16 @@ public class CreateAccountPresenter implements CreateAccountOutputBoundary {
 
     private final CreateAccountViewModel createAccountViewModel;
     private final HomePageViewModel homePageViewModel;
+    private final SignInViewModel signInViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public CreateAccountPresenter(CreateAccountViewModel createAccountViewModel,
                                   HomePageViewModel homePageViewModel,
+                                  SignInViewModel signInViewModel,
                                   ViewManagerModel viewManagerModel) {
         this.createAccountViewModel = createAccountViewModel;
         this.homePageViewModel = homePageViewModel;
+        this.signInViewModel = signInViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
@@ -35,7 +38,7 @@ public class CreateAccountPresenter implements CreateAccountOutputBoundary {
         createAccountViewModel.setState(state);
 
         // switch to "login view"
-        viewManagerModel.setState(createAccountViewModel.getViewName());// need to change back to loginviewmodel
+        viewManagerModel.setState(signInViewModel.getViewName());// need to change back to loginviewmodel
         viewManagerModel.firePropertyChanged();
     }
 
