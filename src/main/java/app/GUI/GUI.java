@@ -138,9 +138,10 @@ public class GUI {
         final SignInOutputBoundary signInPresenter = new SignInPresenter(
                 signInViewModel,
                 homePageViewModel,
+                loggedInHomePageViewModel,
                 viewManagerModel
         );
-        final SignInInputBoundary loginInputBoundary = new SignInInteractor(signInPresenter);
+        final SignInInputBoundary loginInputBoundary = new SignInInteractor(signInPresenter, userDataAccessObject);
 
         SignInController controller = new SignInController(loginInputBoundary);
         signInView.setSignInController(controller);

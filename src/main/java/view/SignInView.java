@@ -25,9 +25,6 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JLabel passwordErrorLabel = new JLabel();
 
-    private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
-    private final JLabel repeatPasswordErrorLabel = new JLabel();
-
     // Buttons
     private final JButton signInButton;
     private final JButton backToHomeButton;
@@ -55,22 +52,13 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
         passwordPanel.add(passwordInputField);
         passwordErrorLabel.setForeground(Color.RED);
 
-        // ----- Repeat password row -----
-        JLabel repeatPasswordLabel = new JLabel("Repeat password: ");
-        JPanel repeatPasswordPanel = new JPanel();
-        repeatPasswordPanel.add(repeatPasswordLabel);
-        repeatPasswordPanel.add(repeatPasswordInputField);
-        repeatPasswordErrorLabel.setForeground(Color.RED);
-
         // ----- Buttons -----
         signInButton = new JButton("Sign in");
         backToHomeButton = new JButton("Go back");
 
         // -- BUTTON EVENT LISTENER.
         signInButton.addActionListener(this);
-        backToHomeButton.addActionListener(
-                e -> signInController.switchToHomePage()
-        );
+        backToHomeButton.addActionListener(this);
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.add(signInButton);
@@ -89,10 +77,6 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
         this.add(passwordPanel);
         this.add(passwordErrorLabel);
         this.add(Box.createVerticalStrut(10));
-
-        this.add(repeatPasswordPanel);
-        this.add(repeatPasswordErrorLabel);
-        this.add(Box.createVerticalStrut(15));
 
         this.add(buttonsPanel);
         this.add(Box.createVerticalGlue());
@@ -113,11 +97,10 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
         if (source == signInButton) {
             String username = usernameInputField.getText();
             String password = new String(passwordInputField.getPassword());
-            String repeatPassword = new String(repeatPasswordInputField.getPassword());
 
             if (signInController != null) {
                 // main sign in / create-account action
-                signInController.execute(username, password, repeatPassword);
+                signInController.execute(username, password);
             }
 
         } else if (source == backToHomeButton) {
@@ -141,6 +124,5 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
 
         usernameErrorLabel.setText(state.getUsernameError());
         passwordErrorLabel.setText(state.getPasswordError());
-        repeatPasswordErrorLabel.setText(state.getRepeatPasswordError());
     }
 }
