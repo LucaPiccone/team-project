@@ -1,6 +1,7 @@
 package app.GUI;
 
 import data_access.DBUserDataAccessObject;
+import data_access.FileUserDataAccessObjectWithLocations;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.createAccount.CreateAccountController;
@@ -53,7 +54,7 @@ public class GUI {
     final ViewManagerModel viewManagerModel = new ViewManagerModel();
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
+    final FileUserDataAccessObjectWithLocations userDataAccessObject = new FileUserDataAccessObjectWithLocations("src/main/resources/users.csv", userFactory);
 
 
     private HomePageView homePageView;
