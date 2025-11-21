@@ -1,50 +1,143 @@
 package view;
 
+import interface_adapter.signin.SignInViewModel;
+import interface_adapter.signin.SignInState;
+import interface_adapter.signin.SignInController;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class SignInView {
-    public SignInView() {
-        SwingUtilities.invokeLater(() -> {
+public class SignInView extends JPanel implements ActionListener, PropertyChangeListener {
 
-            //** Email Panel **//
-            JPanel emailPanel = new JPanel();
-            JTextField emailField = new JTextField(30);
-            emailPanel.add(new JLabel("Email:"));
-            emailPanel.add(emailField);
+    private final String viewName = "sign in";
 
-            //** Password Panel **//
-            JPanel passwordPanel = new JPanel();
-            JTextField passwordField = new JTextField(30);
-            passwordPanel.add(new JLabel("Password:"));
-            passwordPanel.add(passwordField);
+    private final SignInViewModel signInViewModel;
+    private SignInController signInController;
 
-            //** Submit Button Panel **//
-            JPanel submitButtonPanel = new JPanel();
-            JButton submit = new JButton("Sign In");
-            submitButtonPanel.add(submit);
+    // Fields
+    private final JTextField usernameInputField = new JTextField(15);
+    private final JLabel usernameErrorLabel = new JLabel();
 
-            //** Submit Button Event **//
-            submit.addActionListener(e -> {
-                String email = emailField.getText();;
-                String password = passwordField.getText();
+    private final JPasswordField passwordInputField = new JPasswordField(15);
+    private final JLabel passwordErrorLabel = new JLabel();
 
-                // Call the controller.
+    private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
+    private final JLabel repeatPasswordErrorLabel = new JLabel();
 
-            });
+    // Buttons
+    private final JButton signInButton;
+    private final JButton backToHomeButton;
 
-            JPanel mainPanel = new JPanel();
-            mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-            mainPanel.add(emailPanel);
-            mainPanel.add(passwordPanel);
-            mainPanel.add(submit);
+    public SignInView(SignInViewModel signInViewModel) {
+        this.signInViewModel = signInViewModel;
+        this.signInViewModel.addPropertyChangeListener(this);
 
-            JFrame frame = new JFrame("Sophisticated Weather Application");
-            frame.setContentPane(mainPanel);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);
-        });
+        // ----- Title -----
+        final JLabel title = new JLabel("Sign In");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
+
+        // ----- Username row -----
+        JLabel usernameLabel = new JLabel("Username: ");
+        JPanel usernamePanel = new JPanel();
+        usernamePanel.add(usernameLabel);
+        usernamePanel.add(usernameInputField);
+        usernameErrorLabel.setForeground(Color.RED);
+
+        // ----- Password row -----
+        JLabel passwordLabel = new JLabel("Password: ");
+        JPanel passwordPanel = new JPanel();
+        passwordPanel.add(passwordLabel);
+        passwordPanel.add(passwordInputField);
+        passwordErrorLabel.setForeground(Color.RED);
+
+        // ----- Repeat password row -----
+        JLabel repeatPasswordLabel = new JLabel("Repeat password: ");
+        JPanel repeatPasswordPanel = new JPanel();
+        repeatPasswordPanel.add(repeatPasswordLabel);
+        repeatPasswordPanel.add(repeatPasswordInputField);
+        repeatPasswordErrorLabel.setForeground(Color.RED);
+
+        // ----- Buttons -----
+        signInButton = new JButton("Sign in");
+        backToHomeButton = new JButton("Go back to homepage");
+
+        signInButton.addActionListener(this);
+        backToHomeButton.addActionListener(this);
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.add(signInButton);
+        buttonsPanel.add(backToHomeButton);
+
+        // ----- Layout -----
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(Box.createVerticalStrut(20));
+        this.add(title);
+        this.add(Box.createVerticalStrut(15));
+
+        this.add(usernamePanel);
+        this.add(usernameErrorLabel);
+        this.add(Box.createVerticalStrut(10));
+
+        this.add(passwordPanel);
+        this.add(passwordErrorLabel);
+        this.add(Box.createVerticalStrut(10));
+
+        this.add(repeatPasswordPanel);
+        this.add(repeatPasswordErrorLabel);
+        this.add(Box.createVerticalStrut(15));
+
+        this.add(buttonsPanel);
+        this.add(Box.createVerticalGlue());
+    }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    public void setSignInController(SignInController signInController) {
+        this.signInController = signInController;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+
+        if (source == signInButton) {
+            String username = usernameInputField.getText();
+            String password = new String(passwordInputField.getPassword());
+            String repeatPassword = new String(repeatPasswordInputField.getPassword());
+
+            if (signInController != null) {
+                // main sign in / create-account action
+                signInController.execute(username, password, repeatPassword);
+            }
+
+        } else if (source == backToHomeButton) {
+            if (signInController != null) {
+                // you implement this in controller (change view to homepage)
+                signInController.switchToHomePage();
+            }
+        }
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (!"state".equals(evt.getPropertyName())) {
+            return;
+        }
+
+        SignInState state = (SignInState) evt.getNewValue();
+
+        // If your state stores the text, you can sync them here (optional):
+        // usernameInputField.setText(state.getUsername());
+
+        usernameErrorLabel.setText(state.getUsernameError());
+        passwordErrorLabel.setText(state.getPasswordError());
+        repeatPasswordErrorLabel.setText(state.getRepeatPasswordError());
     }
 }
