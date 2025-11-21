@@ -31,6 +31,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### DATABASE ###
+src/main/resources/users.csv
+
 ### VS Code ###
 .vscode/
 
