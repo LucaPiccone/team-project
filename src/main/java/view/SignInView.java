@@ -16,7 +16,7 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
     private final String viewName = "Sign in view";
 
     private final SignInViewModel signInViewModel;
-    private SignInController signInController;
+    private SignInController signInController = null;
 
     // Fields
     private final JTextField usernameInputField = new JTextField(15);

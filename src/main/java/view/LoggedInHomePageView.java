@@ -23,6 +23,7 @@ public class LoggedInHomePageView extends JPanel implements ActionListener, Prop
     public LoggedInHomePageView(LoggedInHomePageViewModel loggedInHomePageViewModel) {
         this.loggedInHomePageViewModel = loggedInHomePageViewModel;
 
+        //** TITLE **//
         final JLabel title = new JLabel(LoggedInHomePageViewModel.WELCOME_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 

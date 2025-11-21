@@ -74,8 +74,11 @@ public class GUI {
 
     //** HOME PAGE USE CASES **//
     public GUI addHomePageUseCase() {
-        final HomePageOutputBoundary homePageOutputBoundary = new HomePagePresenter(homePageViewModel,
-                createAccountViewModel, signInViewModel, viewManagerModel);
+        final HomePageOutputBoundary homePageOutputBoundary = new HomePagePresenter(
+                homePageViewModel,
+                createAccountViewModel,
+                signInViewModel,
+                viewManagerModel);
         final HomePageInputBoundary homePageInputBoundary = new HomePageInteractor(homePageOutputBoundary);
 
         HomePageController controller = new HomePageController(homePageInputBoundary);
@@ -88,6 +91,14 @@ public class GUI {
         createAccountViewModel = new CreateAccountViewModel();
         createAccountView = new CreateAccountView(createAccountViewModel);
         cardPanel.add(createAccountView, createAccountView.getViewName());
+        return this;
+    }
+
+    // ** SIGN IN VIEW PAGE ** //
+    public GUI addSignInView() {
+        signInViewModel = new SignInViewModel();
+        signInView = new SignInView(signInViewModel);
+        cardPanel.add(signInView, signInView.getViewName());
         return this;
     }
 

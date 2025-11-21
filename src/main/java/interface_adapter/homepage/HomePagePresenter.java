@@ -33,7 +33,7 @@ public class HomePagePresenter implements HomePageOutputBoundary {
     }
 
     @Override
-    public void switchToLoginView() {
+    public void switchToSigninView() {
         viewManagerModel.setState(signInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
