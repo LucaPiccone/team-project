@@ -83,11 +83,52 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
 
+        // create account button
+        if (source == createAccountButton) {
+            // get value and update the state
+            CreateAccountState state = createAccountViewModel.getState();
+            state.setUsername(usernameInputField.getText());
+            state.setPassword(String.valueOf(passwordInputField.getPassword()));
+            state.setRepeatPassword(String.valueOf(repeatPasswordInputField.getPassword()));
+            createAccountViewModel.setState(state);
+
+            //  Controller
+            if (createAccountController != null) {
+                createAccountController.execute(
+                        state.getUsername(),
+                        state.getPassword(),
+                        state.getRepeatPassword()
+                );
+            }
+
+            // go back button
+        } else if (source == goBack) {
+            if (createAccountController != null) {
+
+                createAccountController.switchToLoginView();
+            }
+        }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (!"state".equals(evt.getPropertyName())) {
+            return;
+        }
 
+        CreateAccountState state = (CreateAccountState) evt.getNewValue();
+
+        // put the data of state
+        usernameInputField.setText(state.getUsername());
+        passwordInputField.setText(state.getPassword());
+        repeatPasswordInputField.setText(state.getRepeatPassword());
+
+        usernameErrorField.setText(state.getUsernameError());
+        passwordErrorField.setText(state.getPasswordError());
+        repeatPasswordErrorField.setText(state.getRepeatPasswordError());
     }
+
 }
+
