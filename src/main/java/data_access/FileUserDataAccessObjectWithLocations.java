@@ -11,7 +11,7 @@ import java.util.*;
 public class FileUserDataAccessObjectWithLocations implements CreateAccountDataAccessInterface, SigninUserDataAccessInterface {
 
     // CSV header
-    private static final String HEADER = "username,password,locations,token";
+    private static final String HEADER = "username,password,locations";
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -29,7 +29,6 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountDataA
         headers.put("username", 0);
         headers.put("password", 1);
         headers.put("locations", 2);
-        headers.put("token", 3);
 
         // if file is empty, just write header
         if (csvFile.length() == 0) {
@@ -59,10 +58,8 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountDataA
                         locations = new ArrayList<>(Arrays.asList(locationsStr.split(";")));
                     }
 
-                    // token
-                    final String token = col[headers.get("token")];
 
-                    final User user = userFactory.create(username, password, locations, token);
+                    final User user = userFactory.create(username, password, locations);
                     accounts.put(username, user);
                 }
 
@@ -78,19 +75,17 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountDataA
     private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))) {
 
-            // header: username,password,locations,token
+            // header: username,password,locations
             writer.write(String.join(",", headers.keySet()));
             writer.newLine();
 
             for (User user : accounts.values()) {
                 String locationsField = String.join(";", user.getLocations());
-                String tokenField = user.getToken();
 
-                final String line = String.format("%s,%s,%s,%s",
+                final String line = String.format("%s,%s,%s",
                         user.getName(),
                         user.getPassword(),
-                        locationsField,
-                        tokenField);
+                        locationsField);
 
                 writer.write(line);
                 writer.newLine();
