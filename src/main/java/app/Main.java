@@ -2,8 +2,6 @@ package app;
 
 
 import app.GUI.GUI;
-import view.CreateAccountView;
-import view.HomePageView;
 
 import javax.swing.*;
 
