@@ -24,7 +24,7 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
         this.loggedInSearchPageViewModel = loggedInSearchViewModel;
 
         //** Build Search bar **//
-        final LabelTextPanel searchInfo = new LabelTextPanel(
+        final LabelTextPanel searchInput = new LabelTextPanel(
                 new JLabel(LoggedInSearchPageViewModel.SEARCH_BAR_LABEL), searchInputField);
 
         //** Build buttons bar **//
@@ -36,7 +36,7 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
 
         //** Build View **//
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(searchInfo);
+        this.add(searchInput);
         this.add(buttons);
 
         goBack.addActionListener(
