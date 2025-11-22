@@ -19,13 +19,16 @@ public class OpenWeatherApiDataFetcher implements WeatherDataFetcher {
     @Override
     public JSONObject getWeather(HashMap<String, Double> coordinates) throws CityNotFoundException{
         String apiKey = getAPIToken();
-        // Checks if there is an API key in env variables
+
         if (apiKey == null || apiKey.isEmpty()) {
             throw new RuntimeException("API token not set in environment variable");
         }
+
         String url = "https://api.openweathermap.org/data/2.5/weather?lat=" +
                 coordinates.get("lat").toString() + "&lon=" + coordinates.get("lon").toString() + "&appid=" + apiKey;
+
         final Request request = new Request.Builder().url(url).build();
+
         try (Response response = client.newCall(request).execute()) {
             final JSONObject responseBody = new JSONObject(response.body().string());
             if (responseBody.length() > 2) {
