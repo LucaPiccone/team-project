@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.swing.Timer;
 
 public class LoggedInSearchPageView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "Logged In Search View";
@@ -29,9 +30,12 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
     private final JButton search;
     private final JButton goBack;
 
+    private Timer debounceTimer;
+
 
     public LoggedInSearchPageView(LoggedInSearchPageViewModel loggedInSearchViewModel) {
         this.loggedInSearchPageViewModel = loggedInSearchViewModel;
+        loggedInSearchPageViewModel.addPropertyChangeListener(this);
 
         //** Build Search bar **//
         final LabelTextPanel searchInput = new LabelTextPanel(
@@ -53,50 +57,74 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
                 e -> loggedInSearchPageController.switchToLoggedInHomePageView()
         );
 
+        search.addActionListener(
+                e -> loggedInSearchPageController.execute()
+        );
+
         searchInputField.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyReleased(java.awt.event.KeyEvent e) {
-                String query = searchInputField.getText().trim();
-                if (!query.isEmpty()) {
-                    try {
-                        loggedInSearchPageController.fetchSuggestions(query);
-                    } catch (PlaceFetcher.PlaceNotFoundException ex) {
-                        loggedInSearchPageController.clearSuggestions();
-                    }
+                if (debounceTimer == null) {
+                    return;
+                }
+
+
+                if (debounceTimer.isRunning()) {
+                    debounceTimer.restart();
                 } else {
-                    loggedInSearchPageController.clearSuggestions();
+                    debounceTimer.start();
                 }
             }
         });
 
-        loggedInSearchViewModel.addPropertyChangeListener(e -> {
-            LoggedInSearchPageState state = loggedInSearchViewModel.getState();
-            List<PlaceSuggestion> suggestions = state.getSuggestions();
-            SwingUtilities.invokeLater(() -> {
-                showSuggestions(suggestions);
-            });
-        });
 
+        debounceTimer = new Timer(1000, e -> {
+            if (loggedInSearchPageController == null) {
+                return;
+            }
+
+            String query = searchInputField.getText().trim();
+
+            if (query.isEmpty()) {
+
+                loggedInSearchPageController.clearSuggestions();
+                return;
+            }
+
+            new Thread(() -> {
+                try {
+                    loggedInSearchPageController.fetchSuggestions(query);
+                } catch (PlaceFetcher.PlaceNotFoundException ex) {
+                    loggedInSearchPageController.clearSuggestions();
+                }
+            }, "Suggestion-Fetcher-Thread").start();
+
+        });
+        debounceTimer.setRepeats(false);
     }
 
     private void showSuggestions(List<PlaceSuggestion> suggestions) {
+        suggestionsPopup.setVisible(false);
         suggestionsPopup.removeAll();
+
+        if (suggestions == null || suggestions.isEmpty()) {
+            return;
+        }
 
         for (PlaceSuggestion s : suggestions) {
             JMenuItem item = new JMenuItem(s.getMainText());
-            item.addActionListener(ae -> {
+            item.addActionListener(e -> {
+
                 searchInputField.setText(s.getMainText());
+                searchInputField.requestFocusInWindow();
+                searchInputField.setCaretPosition(searchInputField.getText().length());
                 suggestionsPopup.setVisible(false);
             });
             suggestionsPopup.add(item);
         }
 
-        if (!suggestions.isEmpty()) {
-            // Show popup just below the text field
-            suggestionsPopup.show(searchInputField, 0, searchInputField.getHeight());
-        } else {
-            suggestionsPopup.setVisible(false);
-        }
+
+        suggestionsPopup.show(searchInputField, 0, searchInputField.getHeight());
     }
 
     public void setSearchPageController(LoggedInSearchPageController controller) {
@@ -112,6 +140,12 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        LoggedInSearchPageState state = loggedInSearchPageViewModel.getState();
+        List<PlaceSuggestion> suggestions = state.getSuggestions();
+        SwingUtilities.invokeLater(() -> {
+            showSuggestions(suggestions);
+            searchInputField.requestFocusInWindow();
+            searchInputField.setCaretPosition(searchInputField.getText().length());
+        });
     }
 }
