@@ -1,5 +1,6 @@
 package app.GUI;
 
+import api.googlePlacesAPI.GooglePlacesFetcher;
 import data_access.DBUserDataAccessObject;
 import data_access.FileUserDataAccessObjectWithLocations;
 import entity.user.UserFactory;
@@ -60,9 +61,13 @@ public class GUI {
     final ViewManagerModel viewManagerModel = new ViewManagerModel();
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
+    // DATABASE
     final FileUserDataAccessObjectWithLocations userDataAccessObject = new FileUserDataAccessObjectWithLocations("src/main/resources/users.csv", userFactory);
 
+    //API
+    private final GooglePlacesFetcher googlePlacesFetcher = new GooglePlacesFetcher();
 
+    // VIEWS
     private HomePageView homePageView;
     private HomePageViewModel homePageViewModel;
 
@@ -192,9 +197,10 @@ public class GUI {
         final LoggedInSearchPageOutputBoundary loggedInSearchPageOutputBoundary = new LoggedInSearchPagePresenter(
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
+                weatherReportViewModel,
                 viewManagerModel
         );
-        final LoggedInSearchPageInputBoundary loggedInSearchPageInputBoundary = new LoggedInSearchPageInteractor(loggedInSearchPageOutputBoundary);
+        final LoggedInSearchPageInputBoundary loggedInSearchPageInputBoundary = new LoggedInSearchPageInteractor(loggedInSearchPageOutputBoundary, googlePlacesFetcher);
 
         LoggedInSearchPageController controller = new LoggedInSearchPageController(loggedInSearchPageInputBoundary);
         loggedInSearchPageView.setSearchPageController(controller);
@@ -219,6 +225,14 @@ public class GUI {
 
         LoggedInFavouritesPageController controller = new LoggedInFavouritesPageController(loggedInFavouritesPageInputBoundary);
         loggedInFavouritesPageView.setFavouritesPageController(controller);
+        return this;
+    }
+    
+    // ** WEATHER REPORT PAGE. **//
+    public GUI addWeatherReportPageView() {
+        weatherReportViewModel = new WeatherReportViewModel();
+        weatherReportView =  new WeatherReportView(weatherReportViewModel);
+        cardPanel.add(weatherReportView, weatherReportView.getViewName());
         return this;
     }
 

@@ -135,5 +135,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
             feelsLike.setText("Feels like: " + report.getFeelsLike());
             humidity.setText("Humidity: " + report.getHumidity());
         }
+
     }
 }
