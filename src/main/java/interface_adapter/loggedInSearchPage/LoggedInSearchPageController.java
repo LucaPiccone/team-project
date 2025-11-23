@@ -22,5 +22,7 @@ public class LoggedInSearchPageController {
 
     }
 
-    public void executeSearch(String query) throws PlaceFetcher.PlaceNotFoundException {}
+    public void execute(String query) {
+        loggedInSearchPageInputBoundary.execute(query);
+    }
 }

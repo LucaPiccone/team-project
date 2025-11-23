@@ -6,4 +6,6 @@ public interface LoggedInSearchPageInputBoundary {
     void switchToLoggedInHomePageView();
 
     void fetchSuggestions(String query) throws PlaceFetcher.PlaceNotFoundException;
+
+    void execute(String query);
 }

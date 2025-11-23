@@ -23,6 +23,7 @@ import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import interface_adapter.signin.SignInController;
 import interface_adapter.signin.SignInPresenter;
 import interface_adapter.signin.SignInViewModel;
+import interface_adapter.weatherReport.WeatherReportViewModel;
 import use_case.createAccount.CreateAccountInputBoundary;
 import use_case.createAccount.CreateAccountInteractor;
 import use_case.createAccount.CreateAccountOutputBoundary;
@@ -79,6 +80,9 @@ public class GUI {
 
     private LoggedInFavouritesPageView loggedInFavouritesPageView;
     private LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel;
+
+    private WeatherReportView weatherReportView;
+    private WeatherReportViewModel weatherReportViewModel;
 
     public GUI() {
         cardPanel.setLayout(cardLayout);
@@ -188,6 +192,7 @@ public class GUI {
         final LoggedInSearchPageOutputBoundary loggedInSearchPageOutputBoundary = new LoggedInSearchPagePresenter(
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
+                weatherReportViewModel,
                 viewManagerModel
         );
         final LoggedInSearchPageInputBoundary loggedInSearchPageInputBoundary = new LoggedInSearchPageInteractor(loggedInSearchPageOutputBoundary, googlePlacesFetcher);
@@ -215,6 +220,14 @@ public class GUI {
 
         LoggedInFavouritesPageController controller = new LoggedInFavouritesPageController(loggedInFavouritesPageInputBoundary);
         loggedInFavouritesPageView.setFavouritesPageController(controller);
+        return this;
+    }
+    
+    // ** WEATHER REPORT PAGE. **//
+    public GUI addWeatherReportPageView() {
+        weatherReportViewModel = new WeatherReportViewModel();
+        weatherReportView =  new WeatherReportView(weatherReportViewModel);
+        cardPanel.add(weatherReportView, weatherReportView.getViewName());
         return this;
     }
 
