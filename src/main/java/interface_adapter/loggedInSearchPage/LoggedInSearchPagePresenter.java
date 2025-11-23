@@ -1,11 +1,12 @@
 package interface_adapter.loggedInSearchPage;
 
+import entity.placeSuggestions.PlaceSuggestion;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
-import use_case.loggedInSearchPage.LoggedInSearchPageAutoCompletedOutputData;
 import use_case.loggedInSearchPage.LoggedInSearchPageOutputBoundary;
 
-import java.util.Collections;
+import javax.swing.*;
+import java.util.List;
 
 public class LoggedInSearchPagePresenter implements LoggedInSearchPageOutputBoundary {
     private final LoggedInSearchPageViewModel loggedInSearchPageViewModel;
@@ -27,19 +28,10 @@ public class LoggedInSearchPagePresenter implements LoggedInSearchPageOutputBoun
     }
 
     @Override
-    public void showSuggestionsToUser(LoggedInSearchPageAutoCompletedOutputData data) {
-        LoggedInSearchPageState state = loggedInSearchPageViewModel.getState();
-        state.setErrorMessage("");
-        state.setSuggestions(data.getSuggestions());
-        loggedInSearchPageViewModel.setState(state);
-        loggedInSearchPageViewModel.firePropertyChanged();
-    }
-
-    @Override
-    public void presentError(String message) {
-        LoggedInSearchPageState state = loggedInSearchPageViewModel.getState();
-        state.setErrorMessage(message);
-        state.setSuggestions(Collections.emptyList());
+    public void showSuggestionsToUser(List<PlaceSuggestion> suggestions) {
+        System.out.println(suggestions);
+        final LoggedInSearchPageState state = loggedInSearchPageViewModel.getState();
+        state.setSuggestions(suggestions);
         loggedInSearchPageViewModel.setState(state);
         loggedInSearchPageViewModel.firePropertyChanged();
     }

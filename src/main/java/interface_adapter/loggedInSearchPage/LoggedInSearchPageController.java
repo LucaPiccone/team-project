@@ -1,7 +1,6 @@
 package interface_adapter.loggedInSearchPage;
 
 import api.googlePlacesAPI.PlaceFetcher;
-import use_case.loggedInSearchPage.LoggedInSearchPageAutoCompletedInputData;
 import use_case.loggedInSearchPage.LoggedInSearchPageInputBoundary;
 
 public class LoggedInSearchPageController {
@@ -16,9 +15,7 @@ public class LoggedInSearchPageController {
     }
 
     public void fetchSuggestions(String query) throws PlaceFetcher.PlaceNotFoundException {
-        LoggedInSearchPageAutoCompletedInputData inputData =
-                new LoggedInSearchPageAutoCompletedInputData(query);
-        loggedInSearchPageInputBoundary.fetchSuggestions(inputData);
+        loggedInSearchPageInputBoundary.fetchSuggestions(query);
     }
 
     public void clearSuggestions() {

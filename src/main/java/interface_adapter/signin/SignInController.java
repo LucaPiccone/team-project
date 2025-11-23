@@ -1,7 +1,7 @@
 package interface_adapter.signin;
 
-import use_case.signin.SignInInputBoundary;
-import use_case.signin.SigninInputData;
+import use_case.signIn.SignInInputBoundary;
+import use_case.signIn.SigninInputData;
 
 
 public class SignInController {

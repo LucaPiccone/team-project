@@ -5,5 +5,5 @@ import api.googlePlacesAPI.PlaceFetcher;
 public interface LoggedInSearchPageInputBoundary {
     void switchToLoggedInHomePageView();
 
-    void fetchSuggestions(LoggedInSearchPageAutoCompletedInputData inputData) throws PlaceFetcher.PlaceNotFoundException;
+    void fetchSuggestions(String query) throws PlaceFetcher.PlaceNotFoundException;
 }
