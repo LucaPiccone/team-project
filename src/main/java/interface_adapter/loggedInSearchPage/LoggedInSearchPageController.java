@@ -21,4 +21,6 @@ public class LoggedInSearchPageController {
     public void clearSuggestions() {
 
     }
+
+    public void executeSearch(String query) throws PlaceFetcher.PlaceNotFoundException {}
 }
