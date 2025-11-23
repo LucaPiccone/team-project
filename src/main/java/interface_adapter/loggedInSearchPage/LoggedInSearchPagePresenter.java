@@ -4,8 +4,8 @@ import entity.placeSuggestions.PlaceSuggestion;
 import entity.weatherReport.WeatherReport;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
-import interface_adapter.weatherReport.WeatherReportState;
-import interface_adapter.weatherReport.WeatherReportViewModel;
+import interface_adapter.weatherReportPage.WeatherReportPageState;
+import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
 import use_case.loggedInSearchPage.LoggedInSearchPageOutputBoundary;
 
 import javax.swing.*;
@@ -14,15 +14,15 @@ import java.util.List;
 public class LoggedInSearchPagePresenter implements LoggedInSearchPageOutputBoundary {
     private final LoggedInSearchPageViewModel loggedInSearchPageViewModel;
     private final LoggedInHomePageViewModel loggedInHomePageViewModel;
-    private final WeatherReportViewModel weatherReportViewModel;
+    private final WeatherReportPageViewModel weatherReportPageViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public LoggedInSearchPagePresenter(LoggedInSearchPageViewModel loggedInSearchPageViewModel,
-                                       LoggedInHomePageViewModel loggedInHomePageViewModel, WeatherReportViewModel weatherReportViewModel,
+                                       LoggedInHomePageViewModel loggedInHomePageViewModel, WeatherReportPageViewModel weatherReportPageViewModel,
                                        ViewManagerModel viewManagerModel) {
         this.loggedInSearchPageViewModel = loggedInSearchPageViewModel;
         this.loggedInHomePageViewModel = loggedInHomePageViewModel;
-        this.weatherReportViewModel = weatherReportViewModel;
+        this.weatherReportPageViewModel = weatherReportPageViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
@@ -44,11 +44,7 @@ public class LoggedInSearchPagePresenter implements LoggedInSearchPageOutputBoun
     @Override
     public void switchToWeatherReportView(WeatherReport weatherReport) {
         // This function should be complete. The WeatherReportState will have all the information in weather report.
-        final WeatherReportState state = weatherReportViewModel.getState();
-        state.setWeatherReport(weatherReport);
-        weatherReportViewModel.setState(state);
-        weatherReportViewModel.firePropertyChanged();
-        viewManagerModel.setState(weatherReportViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+        final WeatherReportPageState state = weatherReportPageViewModel.getState();
+
     }
 }

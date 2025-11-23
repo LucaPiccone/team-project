@@ -197,7 +197,7 @@ public class GUI {
         final LoggedInSearchPageOutputBoundary loggedInSearchPageOutputBoundary = new LoggedInSearchPagePresenter(
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
-                weatherReportViewModel,
+                weatherReportPageViewModel,
                 viewManagerModel
         );
         final LoggedInSearchPageInputBoundary loggedInSearchPageInputBoundary = new LoggedInSearchPageInteractor(loggedInSearchPageOutputBoundary, googlePlacesFetcher);
@@ -225,14 +225,6 @@ public class GUI {
 
         LoggedInFavouritesPageController controller = new LoggedInFavouritesPageController(loggedInFavouritesPageInputBoundary);
         loggedInFavouritesPageView.setFavouritesPageController(controller);
-        return this;
-    }
-    
-    // ** WEATHER REPORT PAGE. **//
-    public GUI addWeatherReportPageView() {
-        weatherReportViewModel = new WeatherReportViewModel();
-        weatherReportView =  new WeatherReportView(weatherReportViewModel);
-        cardPanel.add(weatherReportView, weatherReportView.getViewName());
         return this;
     }
 

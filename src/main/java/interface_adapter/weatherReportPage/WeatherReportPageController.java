@@ -4,7 +4,7 @@ import use_case.currentWeather.CurrentWeatherInputBoundary;
 
 public class WeatherReportPageController {
     private WeatherReportPageViewModel weatherReportPageViewModel;
-    private currentWeatherInputBoundary currentWeatherInputBoundary;
+    private CurrentWeatherInputBoundary currentWeatherInputBoundary;
 
     public WeatherReportPageController(CurrentWeatherInputBoundary currentWeatherInputBoundary) {
         this.currentWeatherInputBoundary = currentWeatherInputBoundary;
