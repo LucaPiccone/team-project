@@ -38,9 +38,9 @@ import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;
 import use_case.loggedInSearchPage.LoggedInSearchPageInputBoundary;
 import use_case.loggedInSearchPage.LoggedInSearchPageInteractor;
 import use_case.loggedInSearchPage.LoggedInSearchPageOutputBoundary;
-import use_case.signIn.SignInInputBoundary;
-import use_case.signIn.SignInInteractor;
-import use_case.signIn.SignInOutputBoundary;
+import use_case.signin.SignInInputBoundary;
+import use_case.signin.SignInInteractor;
+import use_case.signin.SignInOutputBoundary;
 //import use_case.signIn.LoginUserDataAccessInterface;
 import view.*;
 

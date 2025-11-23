@@ -3,9 +3,9 @@ package use_case.loggedInSearchPage;
 import api.googlePlacesAPI.GooglePlacesFetcher;
 import api.googlePlacesAPI.PlaceFetcher;
 import entity.placeSuggestions.PlaceSuggestion;
-import use_case.loggedInHomePage.LoggedInHomePageInputBoundary;
-import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LoggedInSearchPageInteractor implements LoggedInSearchPageInputBoundary {
@@ -23,8 +23,33 @@ public class LoggedInSearchPageInteractor implements LoggedInSearchPageInputBoun
     }
 
     @Override
-    public void fetchSuggestions(String query) throws PlaceFetcher.PlaceNotFoundException {
-        List<PlaceSuggestion> suggestions = fetcher.getPlace(query);
-        userPresenter.showSuggestionsToUser(suggestions);
+    public void fetchSuggestions(LoggedInSearchPageAutoCompletedInputData inputData) throws PlaceFetcher.PlaceNotFoundException {
+        String query = inputData.getUserInput();
+        if (query == null || query.trim().isEmpty()) {
+            // query is null
+            userPresenter.showSuggestionsToUser(
+                    new LoggedInSearchPageAutoCompletedOutputData(Collections.emptyList()));
+            return;
+        }
+
+        try {
+            List<PlaceSuggestion> entities = fetcher.getPlace(query.trim());
+
+            List<LoggedInSearchPageAutoCompletedOutputData.SuggestionDTO> dtos = new ArrayList<>();
+            for (PlaceSuggestion s : entities) {
+                dtos.add(new LoggedInSearchPageAutoCompletedOutputData.SuggestionDTO(
+                        s.getPlaceId(),
+                        s.getMainText(),
+                        s.getSecondaryText()
+                ));
+            }
+
+            userPresenter.showSuggestionsToUser(new LoggedInSearchPageAutoCompletedOutputData(dtos));
+
+        } catch (PlaceFetcher.PlaceNotFoundException e) {
+            userPresenter.presentError("No suggestions found.");
+        } catch (RuntimeException e) {
+            userPresenter.presentError("Autocomplete service unavailable.");
+        }
     }
 }

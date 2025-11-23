@@ -1,4 +1,4 @@
-package use_case.signIn;
+package use_case.signin;
 
 import entity.user.User;
 
@@ -6,10 +6,10 @@ import entity.user.User;
  * The Login Interactor.
  */
 public class SignInInteractor implements SignInInputBoundary {
-    private final SigninUserDataAccessInterface userDataAccessObject;
+    private final use_case.signIn.SigninUserDataAccessInterface userDataAccessObject;
     private final SignInOutputBoundary signInPresenter;
 
-    public SignInInteractor(SignInOutputBoundary signInPresenter, SigninUserDataAccessInterface userDataAccessObject) {
+    public SignInInteractor(SignInOutputBoundary signInPresenter, use_case.signIn.SigninUserDataAccessInterface userDataAccessObject) {
         this.userDataAccessObject = userDataAccessObject;
         this.signInPresenter = signInPresenter;
     }

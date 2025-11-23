@@ -6,11 +6,11 @@ import org.json.JSONObject;
 import java.util.List;
 
 public interface PlaceFetcher {
-    List<PlaceSuggestion> getPlace(String placeId) throws PlaceNotFoundException;
+    List<PlaceSuggestion> getPlace(String place) throws PlaceNotFoundException;
 
     class PlaceNotFoundException extends Exception {
-        public PlaceNotFoundException(String placeId) {
-            super("Place not found: " + placeId);
+        public PlaceNotFoundException(String place) {
+            super("Place not found: " + place);
         }
     }
 

@@ -1,12 +1,12 @@
 package view;
 
 import api.googlePlacesAPI.PlaceFetcher;
-import entity.placeSuggestions.PlaceSuggestion;
 import interface_adapter.loggedInHomePage.LoggedInHomePageState;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageState;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import jdk.jshell.SourceCodeAnalysis;
+import use_case.loggedInSearchPage.LoggedInSearchPageAutoCompletedOutputData;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -17,7 +17,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-public class LoggedInSearchPageView extends JPanel implements ActionListener, PropertyChangeListener {
+public class LoggedInSearchPageView extends JPanel implements PropertyChangeListener {
     private final String viewName = "Logged In Search View";
     private final LoggedInSearchPageViewModel loggedInSearchPageViewModel;
     LoggedInSearchPageController loggedInSearchPageController = null;
@@ -61,7 +61,7 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
                     try {
                         loggedInSearchPageController.fetchSuggestions(query);
                     } catch (PlaceFetcher.PlaceNotFoundException ex) {
-                        loggedInSearchPageController.clearSuggestions();
+                        throw new RuntimeException(ex);
                     }
                 } else {
                     loggedInSearchPageController.clearSuggestions();
@@ -69,20 +69,16 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
             }
         });
 
-        loggedInSearchViewModel.addPropertyChangeListener(e -> {
-            LoggedInSearchPageState state = loggedInSearchViewModel.getState();
-            List<PlaceSuggestion> suggestions = state.getSuggestions();
-            SwingUtilities.invokeLater(() -> {
-                showSuggestions(suggestions);
-            });
-        });
+        this.loggedInSearchPageViewModel.addPropertyChangeListener(this);
 
     }
 
-    private void showSuggestions(List<PlaceSuggestion> suggestions) {
+    private void showSuggestions(
+            List<LoggedInSearchPageAutoCompletedOutputData.SuggestionDTO> suggestions) {
+
         suggestionsPopup.removeAll();
 
-        for (PlaceSuggestion s : suggestions) {
+        for (LoggedInSearchPageAutoCompletedOutputData.SuggestionDTO s : suggestions) {
             JMenuItem item = new JMenuItem(s.getMainText());
             item.addActionListener(ae -> {
                 searchInputField.setText(s.getMainText());
@@ -92,7 +88,6 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
         }
 
         if (!suggestions.isEmpty()) {
-            // Show popup just below the text field
             suggestionsPopup.show(searchInputField, 0, searchInputField.getHeight());
         } else {
             suggestionsPopup.setVisible(false);
@@ -106,12 +101,11 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
     public String getViewName() {return viewName;}
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
-    @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (!"state".equals(evt.getPropertyName())) return;
 
+        LoggedInSearchPageState state = loggedInSearchPageViewModel.getState();
+        List<LoggedInSearchPageAutoCompletedOutputData.SuggestionDTO> suggestions = state.getSuggestions();
+        SwingUtilities.invokeLater(() -> showSuggestions(suggestions));
     }
 }
