@@ -1,9 +1,11 @@
 package use_case.loggedInSearchPage;
 
+import entity.placeSuggestions.PlaceSuggestion;
+
+import java.util.List;
+
 public interface LoggedInSearchPageOutputBoundary {
     void switchToLoggedInHomePageView();
 
-    void showSuggestionsToUser(LoggedInSearchPageAutoCompletedOutputData outputData);
-
-    void presentError(String message);
+    void showSuggestionsToUser(List<PlaceSuggestion> suggestions);
 }

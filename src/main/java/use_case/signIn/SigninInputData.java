@@ -1,4 +1,4 @@
-package use_case.signin;
+package use_case.signIn;
 
 /**
  * The Input Data for the Login Use Case.

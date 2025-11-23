@@ -4,8 +4,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.homepage.HomePageViewModel;
 import interface_adapter.loggedInHomePage.LoggedInHomePageState;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
-import use_case.signin.SignInOutputBoundary;
-import use_case.signin.SigninOutputData;
+import use_case.signIn.SignInOutputBoundary;
+import use_case.signIn.SigninOutputData;
 
 public class SignInPresenter implements SignInOutputBoundary {
     private final SignInViewModel signInViewModel;

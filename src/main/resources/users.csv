@@ -1,5 +1,3 @@
-username,password,locations
-test,test,
-luca,test,
-yang,1,
-jim,050609,
+username,password,locations,token
+test,test,,
+luca,test,,

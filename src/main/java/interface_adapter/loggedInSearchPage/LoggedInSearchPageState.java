@@ -1,28 +1,23 @@
 package interface_adapter.loggedInSearchPage;
 
-import use_case.loggedInSearchPage.LoggedInSearchPageAutoCompletedOutputData;
+import entity.placeSuggestions.PlaceSuggestion;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoggedInSearchPageState {
     // Current list of autocomplete suggestions
-    private List<LoggedInSearchPageAutoCompletedOutputData.SuggestionDTO> suggestions = new ArrayList<>();
-    private String errorMessage = "";
+    private List<PlaceSuggestion> suggestions = new ArrayList<>();
 
-    public List<LoggedInSearchPageAutoCompletedOutputData.SuggestionDTO> getSuggestions() {
+    public List<PlaceSuggestion> getSuggestions() {
         return suggestions;
     }
 
-    public void setSuggestions(List<LoggedInSearchPageAutoCompletedOutputData.SuggestionDTO> suggestions) {
+    public void setSuggestions(List<PlaceSuggestion> suggestions) {
         this.suggestions = suggestions;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void clearSuggestions() {
+        this.suggestions.clear();
     }
 }

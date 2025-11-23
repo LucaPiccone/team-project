@@ -36,7 +36,7 @@ public class CreateAccountInteractor implements CreateAccountInputBoundary {
         }
 
         User user = userFactory.create(username, password,
-                new java.util.ArrayList<>()); // or some token
+                new java.util.ArrayList<>(), ""); // or some token
 
         userDataAccessObject.save(user);
 
