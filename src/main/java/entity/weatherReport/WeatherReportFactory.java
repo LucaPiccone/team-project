@@ -17,19 +17,17 @@ public class WeatherReportFactory {
     /**
      * Create a Weather report object given a location.
      */
-    public WeatherReport create(String name) throws CoordinatesFetcher.CityNotFoundException, WeatherDataFetcher.CityNotFoundException {
-        HashMap<String, Double> coordinates = fetcher1.getCoordinates(name);
+    public WeatherReport create(String location) throws CoordinatesFetcher.CityNotFoundException, WeatherDataFetcher.CityNotFoundException {
+        HashMap<String, Double> coordinates = fetcher1.getCoordinates(location);
         coordinates.put("lat", coordinates.get("lat"));
         coordinates.put("lon", coordinates.get("lon"));
 
         JSONObject weatherData = fetcher.getWeather(coordinates);
 
-        String temperature = weatherData.getString("temperature");
-        String humidity = weatherData.getString("humidity");
-        String feelsLike = weatherData.getString("feelsLike");
-        JSONArray weatherArray = weatherData.getJSONArray("weather");
-        JSONObject currentWeather = weatherArray.getJSONObject(0);
-        String weather = currentWeather.getString("main");
+        double temp = weatherData.getJSONObject("main").getDouble("temp");
+        int humidity = weatherData.getJSONObject("main").getInt("humidity");
+        double feelsLike = weatherData.getJSONObject("main").getDouble("feels_like");
+        String weather = weatherData.getJSONArray("weather").getJSONObject(0).getString("main");
 
         /**
          * {
@@ -77,6 +75,7 @@ public class WeatherReportFactory {
          * }
          */
 
-        return new WeatherReport(name, weather, temperature, feelsLike, humidity);
+        return new WeatherReport(location, weather, Double.toString(temp), Integer.toString(humidity),
+                Double.toString(feelsLike));
     }
 }
