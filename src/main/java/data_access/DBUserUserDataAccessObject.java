@@ -6,7 +6,7 @@ import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 //import use_case.change_password.ChangePasswordUserDataAccessInterface;
-import use_case.createAccount.CreateAccountDataAccessInterface;
+import use_case.createAccount.CreateAccountUserDataAccessInterface;
 import use_case.signIn.SignInUserDataAccessInterface;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * The DAO for user data.
  */
-public class DBUserDataAccessObject implements CreateAccountDataAccessInterface, SignInUserDataAccessInterface {
+public class DBUserUserDataAccessObject implements CreateAccountUserDataAccessInterface, SignInUserDataAccessInterface {
     private static final int SUCCESS_CODE = 200;
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
     private static final String CONTENT_TYPE_JSON = "application/json";
@@ -26,7 +26,7 @@ public class DBUserDataAccessObject implements CreateAccountDataAccessInterface,
 
     private String currentUsername;
 
-    public DBUserDataAccessObject(UserFactory userFactory) {
+    public DBUserUserDataAccessObject(UserFactory userFactory) {
         this.userFactory = userFactory;
         // No need to do anything to reinitialize a user list! The data is the cloud that may be miles away.
     }

@@ -1,8 +1,8 @@
 package data_access;
 
 import entity.user.User;
+import use_case.createAccount.CreateAccountUserDataAccessInterface;
 import use_case.signIn.SignInUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.Map;
  * In-memory implementation of the DAO for storing user data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterface,
+public class InMemoryUserDataAccessObject implements CreateAccountUserDataAccessInterface,
         SignInUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();

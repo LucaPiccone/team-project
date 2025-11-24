@@ -2,13 +2,13 @@ package data_access;
 
 import entity.user.User;
 import entity.user.UserFactory;
-import use_case.createAccount.CreateAccountDataAccessInterface;
+import use_case.createAccount.CreateAccountUserDataAccessInterface;
 import use_case.signIn.SignInUserDataAccessInterface;
 
 import java.io.*;
 import java.util.*;
 
-public class FileUserDataAccessObjectWithLocations implements CreateAccountDataAccessInterface, SignInUserDataAccessInterface {
+public class FileUserUserDataAccessObjectWithLocations implements CreateAccountUserDataAccessInterface, SignInUserDataAccessInterface {
 
     // CSV header
     private static final String HEADER = "username,password,locations,token";
@@ -21,7 +21,7 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountDataA
 
     private String currentUsername = null;
 
-    public FileUserDataAccessObjectWithLocations(String csvPath, UserFactory userFactory) {
+    public FileUserUserDataAccessObjectWithLocations(String csvPath, UserFactory userFactory) {
         this.userFactory = userFactory;
         this.csvFile = new File(csvPath);
 

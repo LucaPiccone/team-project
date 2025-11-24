@@ -1,8 +1,7 @@
 package app.GUI;
 
 import api.googlePlacesAPI.GooglePlacesFetcher;
-import data_access.DBUserDataAccessObject;
-import data_access.FileUserDataAccessObjectWithLocations;
+import data_access.FileUserUserDataAccessObjectWithLocations;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.createAccount.CreateAccountController;
@@ -62,7 +61,7 @@ public class GUI {
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // DATABASE
-    final FileUserDataAccessObjectWithLocations userDataAccessObject = new FileUserDataAccessObjectWithLocations("src/main/resources/users.csv", userFactory);
+    final FileUserUserDataAccessObjectWithLocations userDataAccessObject = new FileUserUserDataAccessObjectWithLocations("src/main/resources/users.csv", userFactory);
 
     //API
     private final GooglePlacesFetcher googlePlacesFetcher = new GooglePlacesFetcher();
