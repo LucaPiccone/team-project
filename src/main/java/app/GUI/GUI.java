@@ -1,7 +1,6 @@
 package app.GUI;
 
 import api.googlePlacesAPI.GooglePlacesFetcher;
-import data_access.DBUserDataAccessObject;
 import data_access.FileUserDataAccessObjectWithLocations;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;

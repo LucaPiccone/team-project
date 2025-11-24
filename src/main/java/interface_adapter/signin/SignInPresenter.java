@@ -5,7 +5,7 @@ import interface_adapter.homepage.HomePageViewModel;
 import interface_adapter.loggedInHomePage.LoggedInHomePageState;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 import use_case.signIn.SignInOutputBoundary;
-import use_case.signIn.SigninOutputData;
+import use_case.signIn.SignInOutputData;
 
 public class SignInPresenter implements SignInOutputBoundary {
     private final SignInViewModel signInViewModel;
@@ -21,7 +21,7 @@ public class SignInPresenter implements SignInOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(SigninOutputData outputData) {
+    public void prepareSuccessView(SignInOutputData outputData) {
         final LoggedInHomePageState loggedInHomePageState = loggedInHomePageViewModel.getState();
         loggedInHomePageState.setUsername(outputData.getUsername());
         this.loggedInHomePageViewModel.setState(loggedInHomePageState);

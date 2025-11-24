@@ -6,10 +6,10 @@ import entity.user.User;
  * The Login Interactor.
  */
 public class SignInInteractor implements SignInInputBoundary {
-    private final SigninUserDataAccessInterface userDataAccessObject;
+    private final SignInUserDataAccessInterface userDataAccessObject;
     private final SignInOutputBoundary signInPresenter;
 
-    public SignInInteractor(SignInOutputBoundary signInPresenter, SigninUserDataAccessInterface userDataAccessObject) {
+    public SignInInteractor(SignInOutputBoundary signInPresenter, SignInUserDataAccessInterface userDataAccessObject) {
         this.userDataAccessObject = userDataAccessObject;
         this.signInPresenter = signInPresenter;
     }
@@ -35,9 +35,9 @@ public class SignInInteractor implements SignInInputBoundary {
 
                 final User user = userDataAccessObject.get(signinInputData.getUsername());
 
-                // userDataAccessObject.setCurrentUsername(username);
+                userDataAccessObject.setCurrentUsername(username);
 
-                final SigninOutputData signinOutputData = new SigninOutputData(user.getName());
+                final SignInOutputData signinOutputData = new SignInOutputData(user.getName());
                 signInPresenter.prepareSuccessView(signinOutputData);
             }
         }
