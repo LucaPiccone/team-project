@@ -25,8 +25,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     private final String viewName = "Weather Report View";
     private final WeatherReportPageViewModel weatherReportViewModel;
     private WeatherReportPageController weatherReportController = null;
-    private LoggedInHomePageController loggedInHomePageController = null;
-    private LoggedInSearchPageController loggedInSearchPageController = null;
 
     //JLabels
     private final JLabel cityName;
@@ -65,12 +63,8 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         mainPanel.add(humidity);
 
         // ----- Buttons -----
-        backToSearchButton = new JButton("Back to Search");
-        backToHomeButton = new JButton("Home");
-
-        // -- BUTTON EVENT LISTENER.
-        backToSearchButton.addActionListener(this);
-        backToHomeButton.addActionListener(this);
+        backToSearchButton = new JButton(WeatherReportPageViewModel.TO_SEARCH_LABEL);
+        backToHomeButton = new JButton(WeatherReportPageViewModel.TO_HOME_LABEL);
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.add(backToSearchButton);
@@ -89,30 +83,33 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         this.add(Box.createVerticalStrut(10));
 
         this.add(Box.createVerticalGlue());
+
+        backToHomeButton.addActionListener(
+                e -> weatherReportController.switchToLoggedInHomePageView()
+        );
+        backToSearchButton.addActionListener(
+                e -> weatherReportController.switchToLoggedInSearchView()
+        );
+        weatherReportViewModel.addPropertyChangeListener(evt -> {
+            WeatherReportPageState state = weatherReportViewModel.getState();
+            cityName.setText(state.getCityName());
+            weather.setText(state.getWeather());
+            temperature.setText(state.getTemperature());
+            feelsLike.setText(state.getFeelsLike());
+            humidity.setText(state.getHumidity());
+        });
+    }
+
+    public void setWeatherReportController(WeatherReportPageController weatherReportController) {
+        this.weatherReportController = weatherReportController;
     }
 
     public String getViewName() {
         return viewName;
     }
 
-    public void setWeatherReportController(WeatherReportPageController weatherReportController) {
-    }
-
     @Override
-    public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-
-        if (source == backToSearchButton) {
-            if (weatherReportController != null) {
-                weatherReportController.switchToLoggedInSearchView();
-            }
-        } else if (source == backToHomeButton) {
-            if (weatherReportController != null) {
-                // you implement this in controller (change view to homepage)
-                weatherReportController.switchToLoggedInHomePageView();
-            }
-        }
-    }
+    public void actionPerformed(ActionEvent e) {}
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
