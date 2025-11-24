@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * The DAO for user data.
  */
-public class DBUserUserDataAccessObject implements CreateAccountUserDataAccessInterface, SignInUserDataAccessInterface {
+public class DBUserDataAccessObject implements CreateAccountUserDataAccessInterface, SignInUserDataAccessInterface {
     private static final int SUCCESS_CODE = 200;
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
     private static final String CONTENT_TYPE_JSON = "application/json";
@@ -26,7 +26,7 @@ public class DBUserUserDataAccessObject implements CreateAccountUserDataAccessIn
 
     private String currentUsername;
 
-    public DBUserUserDataAccessObject(UserFactory userFactory) {
+    public DBUserDataAccessObject(UserFactory userFactory) {
         this.userFactory = userFactory;
         // No need to do anything to reinitialize a user list! The data is the cloud that may be miles away.
     }

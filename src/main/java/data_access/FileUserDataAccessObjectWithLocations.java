@@ -8,7 +8,7 @@ import use_case.signIn.SignInUserDataAccessInterface;
 import java.io.*;
 import java.util.*;
 
-public class FileUserUserDataAccessObjectWithLocations implements CreateAccountUserDataAccessInterface, SignInUserDataAccessInterface {
+public class FileUserDataAccessObjectWithLocations implements CreateAccountUserDataAccessInterface, SignInUserDataAccessInterface {
 
     // CSV header
     private static final String HEADER = "username,password,locations,token";
@@ -21,7 +21,7 @@ public class FileUserUserDataAccessObjectWithLocations implements CreateAccountU
 
     private String currentUsername = null;
 
-    public FileUserUserDataAccessObjectWithLocations(String csvPath, UserFactory userFactory) {
+    public FileUserDataAccessObjectWithLocations(String csvPath, UserFactory userFactory) {
         this.userFactory = userFactory;
         this.csvFile = new File(csvPath);
 
