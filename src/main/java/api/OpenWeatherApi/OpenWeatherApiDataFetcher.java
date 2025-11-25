@@ -25,7 +25,7 @@ public class OpenWeatherApiDataFetcher implements WeatherDataFetcher {
         }
 
         String url = "https://api.openweathermap.org/data/2.5/weather?lat=" +
-                coordinates.get("lat").toString() + "&lon=" + coordinates.get("lon").toString() + "&appid=" + apiKey;
+                coordinates.get("lat").toString() + "&lon=" + coordinates.get("lon").toString() + "&appid=" + apiKey + "&units=metric";
 
         final Request request = new Request.Builder().url(url).build();
 

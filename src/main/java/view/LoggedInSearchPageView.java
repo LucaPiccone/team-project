@@ -125,7 +125,7 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
             JMenuItem item = new JMenuItem(s.getMainText() + " " + s.getSecondaryText());
             item.addActionListener(e -> {
 
-                searchInputField.setText(s.getMainText());
+                searchInputField.setText(s.getMainText() + ", " + s.getSecondaryText());
                 searchInputField.requestFocusInWindow();
                 searchInputField.setCaretPosition(searchInputField.getText().length());
                 suggestionsPopup.setVisible(false);
