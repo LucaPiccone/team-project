@@ -1,4 +1,4 @@
-package use_case.DeleteFavouriteLocation;
+package use_case.deleteFavouriteLocation;
 
 /**
  * The output boundary for the Delete Favourite Location Use Case.

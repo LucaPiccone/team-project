@@ -1,19 +1,13 @@
-package use_case.DeleteFavouriteLocation;
+package use_case.deleteFavouriteLocation;
 
 /**
  * The Input Data for the DeleteLocation Use Case.
  */
 public class DeleteLocationInputData {
-    private final String username;
     private final String cityName;
 
-    public DeleteLocationInputData(String username, String cityName) {
+    public DeleteLocationInputData(String cityName) {
         this.cityName = cityName;
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return this.username;
     }
 
     public String getCityName() {
