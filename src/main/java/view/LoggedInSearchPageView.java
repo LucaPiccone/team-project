@@ -57,9 +57,6 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
                 e -> loggedInSearchPageController.switchToLoggedInHomePageView()
         );
 
-        search.addActionListener(
-                e -> loggedInSearchPageController.execute()
-        );
 
         searchInputField.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
