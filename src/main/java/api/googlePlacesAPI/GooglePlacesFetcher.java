@@ -30,8 +30,14 @@ public class GooglePlacesFetcher implements PlaceFetcher {
             throw new RuntimeException("Google Places API key not set in environment variable");
         }
 
+
         JSONObject bodyJson = new JSONObject();
-        bodyJson.put("input", place);
+
+        JSONArray typesArray = new JSONArray();
+        typesArray.put("(cities)");
+
+        bodyJson.put("input", ADDRESS_COMPONENTS);
+        bodyJson.put("includedPrimaryTypes", typesArray);
         RequestBody body = RequestBody.create(
                 bodyJson.toString(),
                 MediaType.parse("application/json")
