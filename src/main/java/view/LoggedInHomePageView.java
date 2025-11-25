@@ -28,6 +28,7 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
         //** TITLE **//
         final JLabel title = new JLabel(LoggedInHomePageViewModel.WELCOME_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
 
         final JPanel buttons = new JPanel();
         //** Go to search page button **//
@@ -41,7 +42,9 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
         buttons.add(logout);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(Box.createVerticalStrut(20));
         this.add(title);
+        this.add(Box.createVerticalStrut(20));
         this.add(buttons);
 
 

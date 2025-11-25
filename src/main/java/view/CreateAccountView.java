@@ -33,8 +33,9 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
         this.createAccountViewModel = createAccountViewModel;
         createAccountViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel(createAccountViewModel.TITLE_LABEL);
+        final JLabel title = new JLabel(CreateAccountViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
 
         final LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel(createAccountViewModel.USERNAME_LABEL), usernameInputField);
@@ -58,6 +59,7 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
         createAccountButton.addActionListener(this);
         goBack.addActionListener(this);
 
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(Box.createVerticalStrut(30));
         this.add(title);
         this.add(Box.createVerticalStrut(20));

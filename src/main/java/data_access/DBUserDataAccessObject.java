@@ -6,15 +6,16 @@ import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 //import use_case.change_password.ChangePasswordUserDataAccessInterface;
-import use_case.createAccount.CreateAccountDataAccessInterface;
-import use_case.signIn.SigninUserDataAccessInterface;
+import use_case.createAccount.CreateAccountUserDataAccessInterface;
+import use_case.signIn.SignInUserDataAccessInterface;
+import use_case.deleteFavouriteLocation.DeleteLocationUserDataAccessInterface;
 
 import java.io.IOException;
 
 /**
  * The DAO for user data.
  */
-public class DBUserDataAccessObject implements CreateAccountDataAccessInterface, SigninUserDataAccessInterface {
+public class DBUserDataAccessObject implements CreateAccountUserDataAccessInterface, SignInUserDataAccessInterface, DeleteLocationUserDataAccessInterface {
     private static final int SUCCESS_CODE = 200;
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
     private static final String CONTENT_TYPE_JSON = "application/json";
@@ -24,9 +25,21 @@ public class DBUserDataAccessObject implements CreateAccountDataAccessInterface,
     private static final String MESSAGE = "message";
     private final UserFactory userFactory;
 
+    private String currentUsername;
+
     public DBUserDataAccessObject(UserFactory userFactory) {
         this.userFactory = userFactory;
         // No need to do anything to reinitialize a user list! The data is the cloud that may be miles away.
+    }
+
+    @Override
+    public String getCurrentUsername() {
+        // return the currently logged-in username, or null if none
+        return currentUsername;
+    }
+
+    public void setCurrentUsername(String currentUsername) {
+        this.currentUsername = currentUsername;
     }
 
     @Override

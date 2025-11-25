@@ -21,12 +21,14 @@ public class Main {
                 .addLoggedInFavouritePageView()
                 .addLoggedInHomePageView()
                 .addLoggedInSearchPageView()
+                .addWeatherReportView()
                 .addCreateAccountUseCases()
                 .addHomePageUseCase()
                 .addSignInViewUseCase()
                 .addLoggedInSearchPageUseCases()
                 .addLoggedInFavouritePageUseCases()
                 .addLoggedInHomePageUseCases()
+                .addCurrentWeatherUseCases()
                 .build();
 
         application.pack();

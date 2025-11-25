@@ -28,6 +28,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
         final JLabel title = new JLabel(HomePageViewModel.WELCOME_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
 
         //** BUTTONS **//
         final JPanel buttons = new JPanel();
@@ -40,7 +41,9 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(Box.createVerticalStrut(20));
         this.add(title);
+        this.add(Box.createVerticalStrut(20)); // spacing under title
         this.add(buttons);
 
         createAccountButton.addActionListener(
@@ -62,4 +65,5 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     }
 
     public String getViewName() {return viewName;}
+
 }

@@ -2,18 +2,16 @@ package use_case.createAccount;
 
 import entity.user.User;
 import entity.user.UserFactory;
-import use_case.signup.SignupOutputData;
-import use_case.signup.SignupUserDataAccessInterface;
 
 public class CreateAccountInteractor implements CreateAccountInputBoundary {
 
-    private final CreateAccountDataAccessInterface userDataAccessObject;
+    private final CreateAccountUserDataAccessInterface userDataAccessObject;
     private final UserFactory userFactory;
     private final CreateAccountOutputBoundary presenter;
 
-    public CreateAccountInteractor(CreateAccountOutputBoundary presenter, CreateAccountDataAccessInterface createAccountDataAccessInterface, UserFactory userFactory) {
+    public CreateAccountInteractor(CreateAccountOutputBoundary presenter, CreateAccountUserDataAccessInterface createAccountUserDataAccessInterface, UserFactory userFactory) {
         this.presenter = presenter;
-        this.userDataAccessObject = createAccountDataAccessInterface;
+        this.userDataAccessObject = createAccountUserDataAccessInterface;
         this.userFactory = userFactory;
     }
 

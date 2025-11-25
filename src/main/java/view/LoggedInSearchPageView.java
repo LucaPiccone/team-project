@@ -11,6 +11,7 @@ import jdk.jshell.SourceCodeAnalysis;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -37,11 +38,15 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
         this.loggedInSearchPageViewModel = loggedInSearchViewModel;
         loggedInSearchPageViewModel.addPropertyChangeListener(this);
 
+        final JLabel title = new JLabel(LoggedInSearchPageViewModel.TITLE_LABEL);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
+
         //** Build Search bar **//
         final LabelTextPanel searchInput = new LabelTextPanel(
                 new JLabel(LoggedInSearchPageViewModel.SEARCH_BAR_LABEL), searchInputField);
 
-        //** Build buttons bar **//
+        //** Build buttons **//
         final JPanel buttons = new JPanel();
         search = new JButton(LoggedInSearchPageViewModel.SEARCH_BUTTON_LABEL);
         buttons.add(search);
@@ -49,14 +54,27 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
         buttons.add(goBack);
 
         //** Build View **//
+        JPanel row = new JPanel();
+        row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
+        row.add(searchInput);
+        row.add(buttons);
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(searchInput);
-        this.add(buttons);
+        this.add(Box.createVerticalStrut(20));
+        this.add(title);
+        this.add(Box.createVerticalStrut(20)); // spacing under title
+        this.add(row);
 
         goBack.addActionListener(
                 e -> loggedInSearchPageController.switchToLoggedInHomePageView()
         );
 
+        search.addActionListener(
+                e -> {
+                    String query = searchInputField.getText();
+                    loggedInSearchPageController.execute(query);
+                }
+        );
 
         searchInputField.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
@@ -64,8 +82,6 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
                 if (debounceTimer == null) {
                     return;
                 }
-
-
                 if (debounceTimer.isRunning()) {
                     debounceTimer.restart();
                 } else {
@@ -79,11 +95,8 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
             if (loggedInSearchPageController == null) {
                 return;
             }
-
             String query = searchInputField.getText().trim();
-
             if (query.isEmpty()) {
-
                 loggedInSearchPageController.clearSuggestions();
                 return;
             }
@@ -109,7 +122,7 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
         }
 
         for (PlaceSuggestion s : suggestions) {
-            JMenuItem item = new JMenuItem(s.getMainText());
+            JMenuItem item = new JMenuItem(s.getMainText() + " " + s.getSecondaryText());
             item.addActionListener(e -> {
 
                 searchInputField.setText(s.getMainText());

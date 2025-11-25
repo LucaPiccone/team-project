@@ -1,7 +1,6 @@
 package app.GUI;
 
 import api.googlePlacesAPI.GooglePlacesFetcher;
-import data_access.DBUserDataAccessObject;
 import data_access.FileUserDataAccessObjectWithLocations;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
@@ -23,6 +22,8 @@ import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import interface_adapter.signin.SignInController;
 import interface_adapter.signin.SignInPresenter;
 import interface_adapter.signin.SignInViewModel;
+import interface_adapter.weatherReportPage.WeatherReportPageController;
+import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
 import use_case.createAccount.CreateAccountInputBoundary;
 import use_case.createAccount.CreateAccountInteractor;
 import use_case.createAccount.CreateAccountOutputBoundary;
@@ -41,6 +42,10 @@ import use_case.loggedInSearchPage.LoggedInSearchPageOutputBoundary;
 import use_case.signIn.SignInInputBoundary;
 import use_case.signIn.SignInInteractor;
 import use_case.signIn.SignInOutputBoundary;
+import use_case.currentWeather.CurrentWeatherInputBoundary;
+import use_case.currentWeather.CurrentWeatherInteractor;
+import use_case.currentWeather.CurrentWeatherOutputBoundary;
+import interface_adapter.weatherReportPage.WeatherReportPagePresenter;
 //import use_case.signIn.LoginUserDataAccessInterface;
 import view.*;
 
@@ -79,6 +84,9 @@ public class GUI {
 
     private LoggedInFavouritesPageView loggedInFavouritesPageView;
     private LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel;
+
+    private WeatherReportView weatherReportView;
+    private WeatherReportPageViewModel weatherReportPageViewModel;
 
     public GUI() {
         cardPanel.setLayout(cardLayout);
@@ -169,7 +177,8 @@ public class GUI {
                 loggedInSearchPageViewModel,
                 loggedInFavouritesPageViewModel,
                 viewManagerModel);
-        final LoggedInHomePageInputBoundary loggedInHomePageInputBoundary = new LoggedInHomePageInteractor(loggedInHomePageOutputBoundary);
+        final LoggedInHomePageInputBoundary loggedInHomePageInputBoundary = new LoggedInHomePageInteractor(userDataAccessObject,
+                loggedInHomePageOutputBoundary);
 
         LoggedInHomePageController controller = new LoggedInHomePageController(loggedInHomePageInputBoundary);
         loggedInHomePageView.setHomePageController(controller);
@@ -188,6 +197,7 @@ public class GUI {
         final LoggedInSearchPageOutputBoundary loggedInSearchPageOutputBoundary = new LoggedInSearchPagePresenter(
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
+                weatherReportPageViewModel,
                 viewManagerModel
         );
         final LoggedInSearchPageInputBoundary loggedInSearchPageInputBoundary = new LoggedInSearchPageInteractor(loggedInSearchPageOutputBoundary, googlePlacesFetcher);
@@ -209,6 +219,7 @@ public class GUI {
         final LoggedInFavouritesPageOutputBoundary loggedInFavouritesPageOutputBoundary = new LoggedInFavouritesPagePresenter(
                 loggedInFavouritesPageViewModel,
                 loggedInHomePageViewModel,
+                weatherReportPageViewModel,
                 viewManagerModel
         );
         final LoggedInFavouritesPageInputBoundary loggedInFavouritesPageInputBoundary = new LoggedInFavouritesPageInteractor(loggedInFavouritesPageOutputBoundary);
@@ -218,6 +229,28 @@ public class GUI {
         return this;
     }
 
+    //**Weather Report Page**//
+    public GUI addWeatherReportView() {
+        weatherReportPageViewModel = new WeatherReportPageViewModel();
+        weatherReportView = new WeatherReportView(weatherReportPageViewModel);
+        cardPanel.add(weatherReportView, weatherReportView.getViewName());
+        return this;
+    }
+    public GUI addCurrentWeatherUseCases() {
+        final CurrentWeatherOutputBoundary currentWeatherOutputBoundary = new WeatherReportPagePresenter(
+                weatherReportPageViewModel,
+                loggedInSearchPageViewModel,
+                loggedInHomePageViewModel,
+                viewManagerModel);
+        final CurrentWeatherInputBoundary currentWeatherInputBoundary = new CurrentWeatherInteractor(
+                userDataAccessObject, currentWeatherOutputBoundary);
+
+        WeatherReportPageController controller = new WeatherReportPageController(currentWeatherInputBoundary);
+        weatherReportView.setWeatherReportController(controller);
+        return this;
+    }
+
+    //** Build JFrame **//
     public JFrame build() {
         final JFrame application = new JFrame("Sophisticated Weather App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
