@@ -73,7 +73,7 @@ public class WeatherReport {
         }
 
         public WeatherReportBuilder weather(String weather) {
-            this.location = weather;
+            this.weather = weather;
             return this;
         }
 
