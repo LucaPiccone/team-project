@@ -122,7 +122,7 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
         }
 
         for (PlaceSuggestion s : suggestions) {
-            JMenuItem item = new JMenuItem(s.getMainText());
+            JMenuItem item = new JMenuItem(s.getMainText() + " " + s.getSecondaryText());
             item.addActionListener(e -> {
 
                 searchInputField.setText(s.getMainText());
