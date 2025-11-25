@@ -60,7 +60,7 @@ public class DBUserDataAccessObject implements CreateAccountUserDataAccessInterf
                 final String name = userJSONObject.getString(USERNAME);
                 final String password = userJSONObject.getString(PASSWORD);
 
-                return userFactory.create(name, password, new java.util.ArrayList<>(), "");
+                return userFactory.create(name, password, new java.util.ArrayList<>());
             }
             else {
                 throw new RuntimeException(responseBody.getString(MESSAGE));
