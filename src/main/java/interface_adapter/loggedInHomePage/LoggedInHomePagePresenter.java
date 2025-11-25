@@ -1,9 +1,13 @@
 package interface_adapter.loggedInHomePage;
 
+import entity.weatherReport.WeatherReport;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageState;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;
+
+import java.util.List;
 
 public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary {
     private final LoggedInHomePageViewModel loggedInHomePageViewModel;
@@ -28,7 +32,11 @@ public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary
     }
 
     @Override
-    public void switchToLoggedInFavouritesView() {
+    public void switchToLoggedInFavouritesView(List<WeatherReport> weatherReports) {
+        LoggedInFavouritesPageState state = loggedInFavouritesPageViewModel.getState();
+        state.setWeatherReports(weatherReports);
+        loggedInFavouritesPageViewModel.setState(state);
+        loggedInFavouritesPageViewModel.firePropertyChanged();
         viewManagerModel.setState(loggedInFavouritesPageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
