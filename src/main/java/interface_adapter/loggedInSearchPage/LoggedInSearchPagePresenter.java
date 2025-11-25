@@ -34,7 +34,6 @@ public class LoggedInSearchPagePresenter implements LoggedInSearchPageOutputBoun
 
     @Override
     public void showSuggestionsToUser(List<PlaceSuggestion> suggestions) {
-        System.out.println(suggestions);
         final LoggedInSearchPageState state = loggedInSearchPageViewModel.getState();
         state.setSuggestions(suggestions);
         loggedInSearchPageViewModel.setState(state);
@@ -51,7 +50,8 @@ public class LoggedInSearchPagePresenter implements LoggedInSearchPageOutputBoun
         state.setHumidity(weatherReport.getHumidity());
         state.setFeelsLike(weatherReport.getFeelsLike());
         weatherReportPageViewModel.setState(state);
-        viewManagerModel.setState(weatherReportPageViewModel.getViewName());
         weatherReportPageViewModel.firePropertyChanged();
+        viewManagerModel.setState(weatherReportPageViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }
