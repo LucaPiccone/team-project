@@ -1,7 +1,6 @@
 package interface_adapter.loggedInHomePage;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.loggedInFavourites.LoggedInFavouritesViewModel;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;

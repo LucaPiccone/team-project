@@ -1,10 +1,7 @@
 package view;
 
-import interface_adapter.loggedInFavourites.LoggedInFavouritesController;
-import interface_adapter.loggedInFavourites.LoggedInFavouritesViewModel;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageController;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
-import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -240,7 +240,8 @@ public class GUI {
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
                 viewManagerModel);
-        final CurrentWeatherInputBoundary currentWeatherInputBoundary = new CurrentWeatherInteractor(currentWeatherOutputBoundary);
+        final CurrentWeatherInputBoundary currentWeatherInputBoundary = new CurrentWeatherInteractor(
+                userDataAccessObject, currentWeatherOutputBoundary);
 
         WeatherReportPageController controller = new WeatherReportPageController(currentWeatherInputBoundary);
         weatherReportView.setWeatherReportController(controller);

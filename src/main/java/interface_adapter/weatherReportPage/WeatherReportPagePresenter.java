@@ -1,9 +1,11 @@
 package interface_adapter.weatherReportPage;
 
+import entity.weatherReport.WeatherReport;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import use_case.currentWeather.CurrentWeatherOutputBoundary;
+import use_case.currentWeather.CurrentWeatherOutputData;
 
 public class WeatherReportPagePresenter implements CurrentWeatherOutputBoundary {
     private final WeatherReportPageViewModel weatherReportPageViewModel;
@@ -31,5 +33,25 @@ public class WeatherReportPagePresenter implements CurrentWeatherOutputBoundary 
     public void switchToLoggedInHomePageView() {
         viewManagerModel.setState(loggedInHomePageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void addToFavouriteSuccess(CurrentWeatherOutputData outputData) {
+        WeatherReportPageState state = weatherReportPageViewModel.getState();
+        state.setPopUpMessage(outputData.getCityName() + " Successfully added to favourites.");
+        weatherReportPageViewModel.firePropertyChanged();
+    }
+
+    @Override
+    public void addToFavouriteFail(CurrentWeatherOutputData outputData) {
+        WeatherReportPageState state = weatherReportPageViewModel.getState();
+        state.setPopUpMessage(outputData.getCityName() + " is already saved to your favourites.");
+        weatherReportPageViewModel.firePropertyChanged();
+    }
+
+    @Override
+    public void resetPopUpMessage() {
+        WeatherReportPageState state = weatherReportPageViewModel.getState();
+        state.setPopUpMessage("");
     }
 }
