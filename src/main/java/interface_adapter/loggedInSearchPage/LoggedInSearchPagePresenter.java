@@ -45,6 +45,13 @@ public class LoggedInSearchPagePresenter implements LoggedInSearchPageOutputBoun
     public void switchToWeatherReportView(WeatherReport weatherReport) {
         // This function should be complete. The WeatherReportState will have all the information in weather report.
         final WeatherReportPageState state = weatherReportPageViewModel.getState();
-
+        state.setCityName(weatherReport.getLocation());
+        state.setWeather(weatherReport.getWeather());
+        state.setTemperature(weatherReport.getTemperature());
+        state.setHumidity(weatherReport.getHumidity());
+        state.setFeelsLike(weatherReport.getFeelsLike());
+        weatherReportPageViewModel.setState(state);
+        viewManagerModel.setState(weatherReportPageViewModel.getViewName());
+        weatherReportPageViewModel.firePropertyChanged();
     }
 }

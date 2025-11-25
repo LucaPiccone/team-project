@@ -113,25 +113,5 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("state")) {
-            final WeatherReportPageState state = (WeatherReportPageState) evt.getNewValue();
-            cityName.setText("Location: " + state.getCityName());
-            CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
-            WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
-            WeatherReportFactory factory = new WeatherReportFactory(fetcher, coordinatesFetcher);
-            WeatherReport report = null;
-            try {
-                report = factory.create(state.getCityName());
-            } catch (CityNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (CoordinatesFetcher.CityNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            weather.setText("Weather: " + report.getWeather());
-            temperature.setText("Temperature: " + report.getTemperature());
-            feelsLike.setText("Feels like: " + report.getFeelsLike());
-            humidity.setText("Humidity: " + report.getHumidity());
-        }
-
     }
 }
