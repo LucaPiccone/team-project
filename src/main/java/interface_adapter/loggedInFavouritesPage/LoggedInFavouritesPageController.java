@@ -13,4 +13,8 @@ public class LoggedInFavouritesPageController {
     public void switchToLoggedInHomePageView() {
         loggedInFavouritesPageInputBoundary.switchToLoggedInHomePageView();
     }
+
+    public void execute(String location) {
+        loggedInFavouritesPageInputBoundary.execute(location);
+    }
 }

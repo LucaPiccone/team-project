@@ -8,7 +8,8 @@ import use_case.signIn.SignInUserDataAccessInterface;
 import java.io.*;
 import java.util.*;
 
-public class FileUserDataAccessObjectWithLocations implements CreateAccountUserDataAccessInterface, SignInUserDataAccessInterface {
+public class FileUserDataAccessObjectWithLocations implements CreateAccountUserDataAccessInterface,
+        SignInUserDataAccessInterface, UserDataAccessInterface {
 
     // CSV header
     private static final String HEADER = "username,password,locations,token";
@@ -124,5 +125,37 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountUserD
     @Override
     public String getCurrentUsername() {
         return currentUsername;
+    }
+
+    @Override
+    public void addLocation(String location) {
+        if (currentUsername == null) {
+            throw new IllegalStateException("No user is signed in.");
+        }
+
+        User user = accounts.get(currentUsername);
+        if (user == null) {
+            throw new RuntimeException("Current user not found.");
+        }
+        user.addLocation(location);
+
+        // save back to map + CSV
+        accounts.put(currentUsername, user);
+        save();
+    }
+
+    @Override
+    public List<String> getLocations() {
+        if (currentUsername == null) {
+            throw new IllegalStateException("No user is signed in.");
+        }
+
+        User user = accounts.get(currentUsername);
+        if (user == null) {
+            throw new RuntimeException("Current user not found.");
+        }
+
+        // Return a copy to protect domain state
+        return new ArrayList<>(user.getLocations());
     }
 }

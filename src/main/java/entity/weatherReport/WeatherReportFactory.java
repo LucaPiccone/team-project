@@ -7,9 +7,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class WeatherReportFactory {
-
     private final WeatherDataFetcher fetcher;
     private final CoordinatesFetcher fetcher1;
+
     public WeatherReportFactory(WeatherDataFetcher fetcher, CoordinatesFetcher fetcher1) {
         this.fetcher = fetcher;
         this.fetcher1 = fetcher1;
@@ -17,6 +17,7 @@ public class WeatherReportFactory {
     /**
      * Create a Weather report object given a location.
      */
+
     public WeatherReport create(String location) throws CoordinatesFetcher.CityNotFoundException, WeatherDataFetcher.CityNotFoundException {
         HashMap<String, Double> coordinates = fetcher1.getCoordinates(location);
         coordinates.put("lat", coordinates.get("lat"));

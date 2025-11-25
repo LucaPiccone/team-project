@@ -177,7 +177,8 @@ public class GUI {
                 loggedInSearchPageViewModel,
                 loggedInFavouritesPageViewModel,
                 viewManagerModel);
-        final LoggedInHomePageInputBoundary loggedInHomePageInputBoundary = new LoggedInHomePageInteractor(loggedInHomePageOutputBoundary);
+        final LoggedInHomePageInputBoundary loggedInHomePageInputBoundary = new LoggedInHomePageInteractor(userDataAccessObject,
+                loggedInHomePageOutputBoundary);
 
         LoggedInHomePageController controller = new LoggedInHomePageController(loggedInHomePageInputBoundary);
         loggedInHomePageView.setHomePageController(controller);
@@ -218,6 +219,7 @@ public class GUI {
         final LoggedInFavouritesPageOutputBoundary loggedInFavouritesPageOutputBoundary = new LoggedInFavouritesPagePresenter(
                 loggedInFavouritesPageViewModel,
                 loggedInHomePageViewModel,
+                weatherReportPageViewModel,
                 viewManagerModel
         );
         final LoggedInFavouritesPageInputBoundary loggedInFavouritesPageInputBoundary = new LoggedInFavouritesPageInteractor(loggedInFavouritesPageOutputBoundary);
@@ -240,7 +242,8 @@ public class GUI {
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
                 viewManagerModel);
-        final CurrentWeatherInputBoundary currentWeatherInputBoundary = new CurrentWeatherInteractor(currentWeatherOutputBoundary);
+        final CurrentWeatherInputBoundary currentWeatherInputBoundary = new CurrentWeatherInteractor(
+                userDataAccessObject, currentWeatherOutputBoundary);
 
         WeatherReportPageController controller = new WeatherReportPageController(currentWeatherInputBoundary);
         weatherReportView.setWeatherReportController(controller);

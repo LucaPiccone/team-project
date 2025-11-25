@@ -36,6 +36,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     // Buttons
     private final JButton backToHomeButton;
     private final JButton backToSearchButton;
+    private final JButton addToFavouritesButton;
 
     public WeatherReportView(WeatherReportPageViewModel weatherReportViewModel) {
         this.weatherReportViewModel = weatherReportViewModel;
@@ -65,10 +66,12 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         // ----- Buttons -----
         backToSearchButton = new JButton(WeatherReportPageViewModel.TO_SEARCH_LABEL);
         backToHomeButton = new JButton(WeatherReportPageViewModel.TO_HOME_LABEL);
+        addToFavouritesButton = new JButton(WeatherReportPageViewModel.FAVOURITE_LABEL);
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.add(backToSearchButton);
         buttonsPanel.add(backToHomeButton);
+        buttonsPanel.add(addToFavouritesButton);
 
         // ----- Layout -----
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -90,6 +93,18 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         backToSearchButton.addActionListener(
                 e -> weatherReportController.switchToLoggedInSearchView()
         );
+        addToFavouritesButton.addActionListener(
+                e -> {
+                    WeatherReportPageState state = weatherReportViewModel.getState();
+                    try {
+                        weatherReportController.addToFavourites(state);
+                    } catch (CoordinatesFetcher.CityNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (CityNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+        );
 
         weatherReportViewModel.addPropertyChangeListener(evt -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
@@ -98,6 +113,10 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
             temperature.setText("Temperature: " + state.getTemperature());
             feelsLike.setText("Feels Like: " + state.getFeelsLike());
             humidity.setText("Humidity: " +state.getHumidity());
+            if (state.getPopUpMessage() != "") {
+                JOptionPane.showMessageDialog(null, state.getPopUpMessage());
+                weatherReportController.resetPopUpMessage();
+            }
         });
     }
 
