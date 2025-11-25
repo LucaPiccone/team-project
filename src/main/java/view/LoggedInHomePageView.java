@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class LoggedInHomePageView extends JPanel implements ActionListener, PropertyChangeListener {
+public class LoggedInHomePageView extends JPanel implements PropertyChangeListener {
     //** DEFINING VARIABLES **//
     private final String viewName = "logged in home page";
     private final LoggedInHomePageViewModel loggedInHomePageViewModel;
@@ -19,6 +19,7 @@ public class LoggedInHomePageView extends JPanel implements ActionListener, Prop
 
     private final JButton toSearch;
     private final JButton toFavourites;
+    private final JButton logout;
 
     //** CONSTRUCTOR **//
     public LoggedInHomePageView(LoggedInHomePageViewModel loggedInHomePageViewModel) {
@@ -36,6 +37,9 @@ public class LoggedInHomePageView extends JPanel implements ActionListener, Prop
         //** Go to Favourites page button **//
         toFavourites = new JButton(LoggedInHomePageViewModel.TO_FAVOURITES_LABEL);
         buttons.add(toFavourites);
+        //** Log out
+        logout =  new JButton(LoggedInHomePageViewModel.LOGOUT_LABEL);
+        buttons.add(logout);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(Box.createVerticalStrut(20));
@@ -50,6 +54,10 @@ public class LoggedInHomePageView extends JPanel implements ActionListener, Prop
 
         toFavourites.addActionListener(
                 e -> loggedInHomePageController.switchToLoggedInFavouritesView()
+        );
+
+        logout.addActionListener(
+                e -> loggedInHomePageController.logout()
         );
 
         loggedInHomePageViewModel.addPropertyChangeListener(evt -> {
@@ -67,11 +75,6 @@ public class LoggedInHomePageView extends JPanel implements ActionListener, Prop
 
     //** RETURNS NAME OF THIS VIEW **//
     public String getViewName() {return viewName;}
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
