@@ -1,4 +1,4 @@
-package use_case.DeleteFavouriteLocation;
+package use_case.deleteFavouriteLocation;
 
 /**
  * Input Boundary for actions which are related to deleting a favourite location.

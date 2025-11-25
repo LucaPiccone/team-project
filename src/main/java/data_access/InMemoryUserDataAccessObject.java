@@ -2,6 +2,7 @@ package data_access;
 
 import entity.user.User;
 import use_case.createAccount.CreateAccountUserDataAccessInterface;
+import use_case.deleteFavouriteLocation.DeleteLocationUserDataAccessInterface;
 import use_case.signIn.SignInUserDataAccessInterface;
 
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.Map;
  * NOT persist data between runs of the program.
  */
 public class InMemoryUserDataAccessObject implements CreateAccountUserDataAccessInterface,
-        SignInUserDataAccessInterface {
+        SignInUserDataAccessInterface, DeleteLocationUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
