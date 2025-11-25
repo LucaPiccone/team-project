@@ -49,19 +49,30 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
 
         // Labels
         cityName = new JLabel();
+        cityName.setAlignmentX(Component.CENTER_ALIGNMENT);
         weather = new  JLabel();
+        weather.setAlignmentX(Component.CENTER_ALIGNMENT);
         temperature = new JLabel();
+        temperature.setAlignmentX(Component.CENTER_ALIGNMENT);
         feelsLike = new JLabel();
+        feelsLike.setAlignmentX(Component.CENTER_ALIGNMENT);
         humidity = new JLabel();
+        humidity.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Main Panel
+        // Main Panel and Alignment
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(cityName);
+        mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(weather);
+        mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(temperature);
+        mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(feelsLike);
+        mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(humidity);
+        mainPanel.add(Box.createVerticalStrut(15));
 
         // ----- Buttons -----
         backToSearchButton = new JButton(WeatherReportPageViewModel.TO_SEARCH_LABEL);
@@ -75,6 +86,11 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
 
         // ----- Layout -----
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(mainPanel);
+        this.add(buttonsPanel);
+
+        /**
         this.add(Box.createVerticalStrut(20));
         this.add(title);
         this.add(Box.createVerticalStrut(15));
@@ -84,6 +100,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         this.add(Box.createVerticalStrut(10));
 
         this.add(Box.createVerticalStrut(10));
+        **/
 
         this.add(Box.createVerticalGlue());
 
