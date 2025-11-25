@@ -90,13 +90,14 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         backToSearchButton.addActionListener(
                 e -> weatherReportController.switchToLoggedInSearchView()
         );
+
         weatherReportViewModel.addPropertyChangeListener(evt -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
-            cityName.setText(state.getCityName());
-            weather.setText(state.getWeather());
-            temperature.setText(state.getTemperature());
-            feelsLike.setText(state.getFeelsLike());
-            humidity.setText(state.getHumidity());
+            cityName.setText("City Name: " + state.getCityName());
+            weather.setText("Weather: " + state.getWeather());
+            temperature.setText("Temperature: " + state.getTemperature());
+            feelsLike.setText("Feels Like: " + state.getFeelsLike());
+            humidity.setText("Humidity: " +state.getHumidity());
         });
     }
 

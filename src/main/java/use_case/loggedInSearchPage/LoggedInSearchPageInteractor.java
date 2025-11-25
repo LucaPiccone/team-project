@@ -48,11 +48,5 @@ public class LoggedInSearchPageInteractor implements LoggedInSearchPageInputBoun
             throw new RuntimeException(e);
         }
         userPresenter.switchToWeatherReportView(weatherReport);
-        //1. Call the api to change the location (query) to longitude and latitude.
-
-        //2. Call the api to change the get a weather report using the longitude and latitude
-
-        //3. send the weather report to the loggedinSearchPagePresenter with this below.
-        // userPresenter.switchToWeatherReportView(weatherReport)
     }
 }
