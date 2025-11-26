@@ -1,24 +1,23 @@
 package service;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-
+import javax.swing.*;
 
 public class NotificationService {
-
     public void showSuccess(String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Success");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        JOptionPane.showMessageDialog(
+                null,
+                message,
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
     public void showError(String message) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Failure");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        JOptionPane.showMessageDialog(
+                null,
+                message,
+                "Failure",
+                JOptionPane.ERROR_MESSAGE
+        );
     }
 }
