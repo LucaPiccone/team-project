@@ -15,20 +15,38 @@ public class WeatherReportPageState {
         humidity = copy.humidity;
         feelsLike = copy.feelsLike;
     }
-    public WeatherReportPageState() {
+    public WeatherReportPageState() {}
 
-    }
     public String getCityName() { return cityName;}
+
     public String getWeather() { return weather;}
+
     public String getTemperature() { return temperature;}
+
     public String getHumidity() { return humidity;}
+
     public String getFeelsLike() { return feelsLike;}
+
     public String getPopUpMessage() {return popUpMessage;}
 
     public void setCityName(String cityName) { this.cityName = cityName;}
+
     public void setWeather(String weather) { this.weather = weather;}
+
     public void setTemperature(String temperature) { this.temperature = temperature;}
+
     public void setHumidity(String humidity) { this.humidity = humidity;}
+
     public void setFeelsLike(String feelsLike) {this.feelsLike = feelsLike;}
+
     public void setPopUpMessage(String popUpMessage) {this.popUpMessage = popUpMessage;}
+
+    public void clearState(){
+        cityName = "";
+        weather = "";
+        temperature = "";
+        humidity = "";
+        feelsLike = "";
+        popUpMessage = "";
+    }
 }

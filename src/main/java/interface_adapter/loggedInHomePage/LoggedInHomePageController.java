@@ -17,5 +17,4 @@ public class LoggedInHomePageController {
         loggedInHomePageInputBoundary.switchToLoggedInFavouritesView();
     }
 
-    public void logout() {}
 }

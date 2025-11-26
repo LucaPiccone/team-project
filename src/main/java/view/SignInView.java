@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.logout.LogoutController;
 import interface_adapter.signin.SignInViewModel;
 import interface_adapter.signin.SignInState;
 import interface_adapter.signin.SignInController;
@@ -31,7 +32,7 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
 
     public SignInView(SignInViewModel signInViewModel) {
         this.signInViewModel = signInViewModel;
-        // this.signInViewModel.addPropertyChangeListener(this);
+        this.signInViewModel.addPropertyChangeListener(this);
 
         // ----- Title -----
         final JLabel title = new JLabel("Sign In");
@@ -90,6 +91,7 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
         this.signInController = signInController;
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -119,10 +121,23 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
 
         SignInState state = (SignInState) evt.getNewValue();
 
+        String newUsername = state.getUsername();
+
+        if (newUsername != null && !newUsername.equals(usernameInputField.getText())) {
+            usernameInputField.setText(newUsername);
+        }
+
+        String newPassword = state.getPassword();
+        if (newPassword != null) {
+            passwordInputField.setText(newPassword);
+        }
+
         // If your state stores the text, you can sync them here (optional):
         // usernameInputField.setText(state.getUsername());
-
-        usernameErrorLabel.setText(state.getUsernameError());
-        passwordErrorLabel.setText(state.getPasswordError());
+        String signinError = state.getSigninError();
+        if (!"".equals(signinError)) {
+            usernameErrorLabel.setText(state.getUsernameError());
+            passwordErrorLabel.setText(state.getPasswordError());
+        }
     }
 }

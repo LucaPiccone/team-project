@@ -29,6 +29,7 @@ public class Main {
                 .addLoggedInFavouritePageUseCases()
                 .addLoggedInHomePageUseCases()
                 .addCurrentWeatherUseCases()
+                .addLogoutUseCases()
                 .build();
 
         application.pack();

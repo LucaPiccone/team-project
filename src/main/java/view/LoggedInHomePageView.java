@@ -3,6 +3,7 @@ package view;
 import interface_adapter.loggedInHomePage.LoggedInHomePageController;
 import interface_adapter.loggedInHomePage.LoggedInHomePageState;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
+import interface_adapter.logout.LogoutController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
     private final String viewName = "logged in home page";
     private final LoggedInHomePageViewModel loggedInHomePageViewModel;
     LoggedInHomePageController loggedInHomePageController = null;
+    private LogoutController logoutController = null;
 
     private final JButton toSearch;
     private final JButton toFavourites;
@@ -57,7 +59,7 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
         );
 
         logout.addActionListener(
-                e -> loggedInHomePageController.logout()
+                e -> logoutController.execute()
         );
 
         loggedInHomePageViewModel.addPropertyChangeListener(evt -> {
@@ -71,6 +73,10 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
     //** CREATE AN INSTANCE OF THE CONTROLLER **//
     public void setHomePageController(LoggedInHomePageController controller) {
         this.loggedInHomePageController = controller;
+    }
+
+    public void setLogoutController(LogoutController logoutController) {
+        this.logoutController = logoutController;
     }
 
     //** RETURNS NAME OF THIS VIEW **//
