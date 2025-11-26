@@ -69,4 +69,15 @@ public class CreateAccountState {
     public void setRepeatPasswordError(String repeatPasswordError) {
         this.repeatPasswordError = repeatPasswordError;
     }
+
+    public void clearState() {
+        // reset user inputs
+        this.username = "";
+        this.password = "";
+        this.repeatPassword = "";
+
+        // reset errors
+        this.usernameError = null;
+        this.passwordError = null;
+        this.repeatPasswordError = null;}
 }

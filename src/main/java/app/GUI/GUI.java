@@ -19,6 +19,8 @@ import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPagePresenter;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
+import interface_adapter.logout.LogoutController;
+import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signin.SignInController;
 import interface_adapter.signin.SignInPresenter;
 import interface_adapter.signin.SignInViewModel;
@@ -39,6 +41,9 @@ import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;
 import use_case.loggedInSearchPage.LoggedInSearchPageInputBoundary;
 import use_case.loggedInSearchPage.LoggedInSearchPageInteractor;
 import use_case.loggedInSearchPage.LoggedInSearchPageOutputBoundary;
+import use_case.logout.LogoutInputBoundary;
+import use_case.logout.LogoutInteractor;
+import use_case.logout.LogoutOutputBoundary;
 import use_case.signIn.SignInInputBoundary;
 import use_case.signIn.SignInInteractor;
 import use_case.signIn.SignInOutputBoundary;
@@ -247,6 +252,20 @@ public class GUI {
 
         WeatherReportPageController controller = new WeatherReportPageController(currentWeatherInputBoundary);
         weatherReportView.setWeatherReportController(controller);
+        return this;
+    }
+
+    public GUI addLogoutUseCases() {
+        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
+                createAccountViewModel,
+                loggedInFavouritesPageViewModel,
+                loggedInHomePageViewModel,
+                loggedInSearchPageViewModel,
+                signInViewModel,
+                weatherReportPageViewModel);
+        final LogoutInputBoundary logoutInputBoundary= new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
+        LogoutController controller = new LogoutController(logoutInputBoundary);
+        loggedInHomePageView.setLogoutController(controller);
         return this;
     }
 

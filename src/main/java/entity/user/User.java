@@ -9,20 +9,18 @@ public class User {
     private final String name;
     private final String password;
     private final List<String> locations;
-    private final String token;
 
     /**
      * Creates a new user with the given non-empty name and non-empty password.
      * @param name the username
      * @param password the password
-     * @param token the token
      * @throws IllegalArgumentException if the password or name are empty
      */
-    public User(String name, String password, String token) {
-        this(name, password, new ArrayList<>(), token);
+    public User(String name, String password) {
+        this(name, password, new ArrayList<>());
     }
 
-    public User(String name, String password, List<String> locations, String token) {
+    public User(String name, String password, List<String> locations) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Username cannot be empty");
         }
@@ -34,7 +32,6 @@ public class User {
         this.password = password;
         // copy list to protect internal state
         this.locations = new ArrayList<>(locations);
-        this.token = token;
     }
 
     public String getName() {
@@ -58,7 +55,4 @@ public class User {
         this.locations.remove(location);
     }
 
-    public String getToken() {
-        return token;
-    }
 }

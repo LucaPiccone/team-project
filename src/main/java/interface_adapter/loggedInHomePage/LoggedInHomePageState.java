@@ -36,4 +36,11 @@ public class LoggedInHomePageState {
     public String getPassword() {
         return password;
     }
+
+    public void clearState() {
+        username = "";
+        password = "";
+        passwordError = "";
+    }
+
 }
