@@ -83,7 +83,7 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountUserD
             for (User user : accounts.values()) {
                 String locationsField = String.join(";", user.getLocations());
 
-                final String line = String.format("%s,%s,%s,%s",
+                final String line = String.format("%s,%s,%s",
                         user.getName(),
                         user.getPassword(),
                         locationsField);
