@@ -1,5 +1,6 @@
 username,password,locations
-test2,test,,
-test,test,Toronto;Niagara Falls,
-luca,test,Niagara Falls,
-jim,050609,Toronto;Niagara Falls, ON, Canada, ON
+test2,test,
+123,123,
+test,test,Toronto;Niagara Falls
+luca,test,Niagara Falls
+jim,050609,Toronto;Niagara Falls

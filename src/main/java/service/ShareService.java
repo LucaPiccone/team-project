@@ -13,16 +13,16 @@ public class ShareService {
 
     public void shareByEmail(WeatherData data) throws ShareAppNotFoundException {
         if (simulateNoShareApp) {
-            throw new ShareAppNotFoundException("未检测到可用邮箱应用，请安装后重试。");
+            throw new ShareAppNotFoundException("No available email app detected.Please install one and try again.");
         }
         // 真系统会调用系统共享，这里简单输出模拟
-        System.out.println("通过邮件共享天气数据：" + data.getSummary());
+        System.out.println("Share weather data by email：" + data.getSummary());
     }
 
     public void shareToFacebook(WeatherData data) throws ShareAppNotFoundException {
         if (simulateNoShareApp) {
-            throw new ShareAppNotFoundException("未检测到 Facebook 应用，请安装后重试。");
+            throw new ShareAppNotFoundException("No Facebook app detected.Please install one and try again.");
         }
-        System.out.println("分享到 Facebook：" + data.getSummary());
+        System.out.println("Share to Facebook：" + data.getSummary());
     }
 }

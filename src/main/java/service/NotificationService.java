@@ -8,7 +8,7 @@ public class NotificationService {
 
     public void showSuccess(String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("成功");
+        alert.setTitle("Success");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
@@ -16,7 +16,7 @@ public class NotificationService {
 
     public void showError(String message) {
         Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("错误");
+        alert.setTitle("Failure");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

@@ -14,10 +14,10 @@ public class WeatherDataService {
 
     public WeatherData loadWeatherData(Location location) throws WeatherDataLoadException {
         if (simulateLoadFail) {
-            throw new WeatherDataLoadException("网络错误，无法加载天气数据");
+            throw new WeatherDataLoadException("Network error.Failed to load weather data.");
         }
         // 这里模拟一下天气内容，真实系统应从接口获取
-        String summary = "location：" + location.getName() + "，晴 25°C，湿度 40%，风速 3m/s";
+        String summary = "location：" + location.getName() + "，clouds 5.02°C，humidity 68%，feels like 1.2°C ";
         return new WeatherData(location, summary);
     }
 }
