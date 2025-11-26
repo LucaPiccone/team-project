@@ -4,7 +4,7 @@ public class LoggedInHomePageState {
     private String username = "";
 
     private String password = "";
-    private String passwordError;
+    private String passwordError = "";
 
     public LoggedInHomePageState(LoggedInHomePageState copy) {
         username = copy.username;
@@ -32,6 +32,8 @@ public class LoggedInHomePageState {
     public void setPasswordError(String passwordError) {
         this.passwordError = passwordError;
     }
+
+    public String getPasswordError() {return passwordError;}
 
     public String getPassword() {
         return password;

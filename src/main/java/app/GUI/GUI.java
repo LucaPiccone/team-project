@@ -26,6 +26,7 @@ import interface_adapter.signin.SignInPresenter;
 import interface_adapter.signin.SignInViewModel;
 import interface_adapter.weatherReportPage.WeatherReportPageController;
 import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
+import use_case.changePassword.*;
 import use_case.createAccount.CreateAccountInputBoundary;
 import use_case.createAccount.CreateAccountInteractor;
 import use_case.createAccount.CreateAccountOutputBoundary;
@@ -170,7 +171,7 @@ public class GUI {
     //**LOGGED IN HOME PAGE **//
     public GUI addLoggedInHomePageView() {
         loggedInHomePageViewModel = new LoggedInHomePageViewModel();
-        loggedInHomePageView = new LoggedInHomePageView(loggedInHomePageViewModel);
+        loggedInHomePageView = new LoggedInHomePageView(loggedInHomePageViewModel, userDataAccessObject);
         cardPanel.add(loggedInHomePageView, loggedInHomePageView.getViewName());
         return this;
     }
@@ -185,7 +186,12 @@ public class GUI {
         final LoggedInHomePageInputBoundary loggedInHomePageInputBoundary = new LoggedInHomePageInteractor(userDataAccessObject,
                 loggedInHomePageOutputBoundary);
 
-        LoggedInHomePageController controller = new LoggedInHomePageController(loggedInHomePageInputBoundary);
+        final ChangePasswordInputBoundary changePasswordInputBoundary = new ChangePasswordInteractor((ChangePasswordUserDataAccessInterface) userDataAccessObject,
+                (ChangePasswordOutputBoundary)loggedInHomePageOutputBoundary,
+                userFactory,
+                (FileUserDataAccessObjectWithLocations) userDataAccessObject);
+
+        LoggedInHomePageController controller = new LoggedInHomePageController(loggedInHomePageInputBoundary, changePasswordInputBoundary);
         loggedInHomePageView.setHomePageController(controller);
         return this;
     }
