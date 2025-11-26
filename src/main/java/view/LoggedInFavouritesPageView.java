@@ -20,6 +20,7 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
     private final LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel;
     LoggedInFavouritesPageController loggedInFavouritesPageController  = null;
 
+    private final JPanel contentPanel;
     private final JButton goBack;
 
 
@@ -30,7 +31,14 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
 
-        //** Build buttons bar **//
+        //** build scrollable panel **//
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+
+        JScrollPane scrollPane = new JScrollPane(contentPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        //** Build buttons bar in panel**//
         final JPanel buttons = new JPanel();
         goBack = new JButton(LoggedInFavouritesPageViewModel.GO_BACK_LABEL);
         buttons.add(goBack);
@@ -40,6 +48,8 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
         this.add(Box.createVerticalStrut(20));
         this.add(title);
         this.add(Box.createVerticalStrut(20));
+        this.add(scrollPane, BorderLayout.CENTER);
+        this.add(Box.createVerticalStrut(20));
         this.add(buttons);
 
         goBack.addActionListener(
@@ -47,36 +57,32 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
         );
 
         loggedInFavouritesPageViewModel.addPropertyChangeListener(e -> {
-            this.removeAll();
-            this.add(Box.createVerticalStrut(20));
-            this.add(title);
-            this.add(Box.createVerticalStrut(20));
+            contentPanel.removeAll();
 
             List<WeatherReport> weatherReports = loggedInFavouritesPageViewModel.getState().getWeatherReports();
             if (weatherReports.isEmpty()) {
                 JLabel emptyLabel = new JLabel("You have no favourites.");
                 emptyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                this.add(Box.createVerticalGlue());
-                this.add(emptyLabel);
-                this.add(Box.createVerticalGlue());
-                this.add(buttons);
+                contentPanel.add(Box.createVerticalGlue());
+                contentPanel.add(emptyLabel);
+                contentPanel.add(Box.createVerticalGlue());
             } else {
                 for (WeatherReport report : weatherReports) {
-                    JPanel reportPanel = new JPanel();
-                    reportPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // <-- Center content
-                    JLabel reportLabel = new JLabel(report.getLocation() + ": " + report.getTemperature() + "°C");
+                    JPanel row = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+                    JLabel label = new JLabel(report.getLocation() + ": " + report.getTemperature() + "°C");
                     JButton viewButton = new JButton("View Details");
+
                     viewButton.addActionListener(ev ->
-                            loggedInFavouritesPageController.execute(report.getLocation())
-                    );
-                    reportPanel.add(reportLabel);
-                    reportPanel.add(viewButton);
-                    this.add(reportPanel);
-                    this.add(buttons);
+                            loggedInFavouritesPageController.execute(report.getLocation()));
+
+                    row.add(label);
+                    row.add(viewButton);
+
+                    contentPanel.add(row);
                 }
             }
-
-            this.revalidate();  // <-- Refresh the layout
+            this.revalidate();
             this.repaint();
         });
 
