@@ -51,6 +51,9 @@ public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary
         loggedInHomePageViewModel.getState().setPassword("");
         loggedInHomePageViewModel.getState().setPasswordError("");
         loggedInHomePageViewModel.firePropertyChanged("passwordError");
+
+        // popup
+        JOptionPane.showMessageDialog(null, "Account deleted: " + outputData.getUsername());
     }
 
     @Override

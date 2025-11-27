@@ -23,10 +23,8 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
     private FileUserDataAccessObjectWithLocations fileUserDataAccessObjectWithLocations;
 
     private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JLabel passwordErrorField = new JLabel();
 
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
-    private final JLabel repeatPasswordErrorField = new JLabel();
 
     private final JButton toSearch;
     private final JButton toFavourites;
@@ -79,15 +77,11 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
         changePasswordInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         repeatPasswordInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         changePasswordRow.setAlignmentX(Component.CENTER_ALIGNMENT);
-        passwordErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        repeatPasswordErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 // Prevent stretching full width (keeps visual centering)
         changePasswordInfo.setMaximumSize(changePasswordInfo.getPreferredSize());
         repeatPasswordInfo.setMaximumSize(repeatPasswordInfo.getPreferredSize());
         changePasswordRow.setMaximumSize(changePasswordRow.getPreferredSize());
-        passwordErrorField.setMaximumSize(passwordErrorField.getPreferredSize());
-        repeatPasswordErrorField.setMaximumSize(repeatPasswordErrorField.getPreferredSize());
 
 // ===== Outer centering + spacing =====
         this.removeAll();
@@ -128,12 +122,10 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
 
         content.add(changePasswordInfo);
         content.add(Box.createVerticalStrut(6));
-        content.add(passwordErrorField);
 
         content.add(Box.createVerticalStrut(12));
         content.add(repeatPasswordInfo);
         content.add(Box.createVerticalStrut(6));
-        content.add(repeatPasswordErrorField);
 
         content.add(Box.createVerticalStrut(14));
         content.add(changePasswordRow);
@@ -242,13 +234,18 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
 
         LoggedInHomePageState state = loggedInHomePageViewModel.getState();
 
-        passwordErrorField.setText(state.getPasswordError() == null ? "" : state.getPasswordError());
-        repeatPasswordErrorField.setText(state.getPasswordError() == null ? "" : state.getPasswordError());
+        String err = state.getPasswordError();
 
+        if (err != null && !err.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    err,
+                    "Change Password Failed",
+                    JOptionPane.ERROR_MESSAGE
+            );
 
-        if (state.getPasswordError() == null || state.getPasswordError().isEmpty()) {
-            passwordErrorField.setText("");
-            repeatPasswordErrorField.setText("");
+            state.setPasswordError("");
+            loggedInHomePageViewModel.setState(state);
         }
 
         revalidate();
