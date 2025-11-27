@@ -5,11 +5,13 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageState;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
+import use_case.changePassword.ChangePasswordOutputData;
 import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;
+import use_case.changePassword.ChangePasswordOutputBoundary;
 
 import java.util.List;
 
-public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary {
+public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary, ChangePasswordOutputBoundary {
     private final LoggedInHomePageViewModel loggedInHomePageViewModel;
     private final LoggedInSearchPageViewModel loggedInSearchPageViewModel;
     private final LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel;
@@ -39,5 +41,18 @@ public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary
         loggedInFavouritesPageViewModel.firePropertyChanged();
         viewManagerModel.setState(loggedInFavouritesPageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareSuccessView(ChangePasswordOutputData outputData) {
+        loggedInHomePageViewModel.getState().setPassword("");
+        loggedInHomePageViewModel.getState().setPasswordError("");
+        loggedInHomePageViewModel.firePropertyChanged("passwordError");
+    }
+
+    @Override
+    public void prepareFailView(String error) {
+        loggedInHomePageViewModel.getState().setPasswordError(error);
+        loggedInHomePageViewModel.firePropertyChanged("passwordError");
     }
 }
