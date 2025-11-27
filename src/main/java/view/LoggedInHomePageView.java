@@ -150,8 +150,23 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
                 e -> loggedInHomePageController.switchToLoggedInFavouritesView()
         );
 
-        logout.addActionListener(
-                e -> logoutController.execute());
+        logout.addActionListener(e -> {
+            Object[] options = {"Yes", "No"};
+            int result = JOptionPane.showOptionDialog(
+                    this,
+                    "Are you sure you want to logout?",
+                    "Confirm Logout",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]
+            );
+
+            if (result == JOptionPane.YES_OPTION) {
+                logoutController.execute();
+            }
+        });
 
         changePassword.addActionListener(
                 e ->  {
