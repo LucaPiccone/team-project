@@ -9,6 +9,7 @@ import java.util.List;
 public class LoggedInSearchPageState {
     // Current list of autocomplete suggestions
     private List<PlaceSuggestion> suggestions = new ArrayList<>();
+    private String popUpMessage = "";
 
     public void setSuggestions(List<PlaceSuggestion> suggestions) {
         this.suggestions = suggestions;
@@ -20,5 +21,13 @@ public class LoggedInSearchPageState {
 
     public void clearSuggestions() {
         this.suggestions.clear();
+    }
+
+    public String getPopUpMessage() {
+        return popUpMessage;
+    }
+
+    public void setPopUpMessage(String popUpMessage) {
+        this.popUpMessage = popUpMessage;
     }
 }

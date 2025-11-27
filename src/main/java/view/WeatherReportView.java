@@ -107,39 +107,31 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         buttonsPanel.add(backToSearchButton);
         buttonsPanel.add(backToHomeButton);
         buttonsPanel.add(addToFavouritesButton);
-        buttonsPanel.add(exportPdfButton);
-        buttonsPanel.add(exportExcelButton);
-        buttonsPanel.add(shareEmailButton);
-        buttonsPanel.add(shareFacebookButton);
+        JPanel exportButtonsPanel = new JPanel();
+        exportButtonsPanel.add(exportPdfButton);
+        exportButtonsPanel.add(exportExcelButton);
+        exportButtonsPanel.add(shareEmailButton);
+        exportButtonsPanel.add(shareFacebookButton);
 
         // -----Layout-----
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(mainPanel);
         this.add(buttonsPanel);
-
-        /**
-         this.add(Box.createVerticalStrut(20));
-         this.add(title);
-         this.add(Box.createVerticalStrut(15));
-
-         this.add(mainPanel);
-         this.add(buttonsPanel);
-         this.add(Box.createVerticalStrut(10));
-
-         this.add(Box.createVerticalStrut(10));
-         **/
-
-
+        this.add(exportButtonsPanel);
         this.add(Box.createVerticalGlue());
 
 
         backToHomeButton.addActionListener(e ->
                 weatherReportController.switchToLoggedInHomePageView()
         );
+
+
         backToSearchButton.addActionListener(e ->
                 weatherReportController.switchToLoggedInSearchView()
         );
+
+
         addToFavouritesButton.addActionListener(e -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
             try {
@@ -263,4 +255,4 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     @Override
     public void propertyChange(PropertyChangeEvent evt) {}
 }
-}
+

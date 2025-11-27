@@ -25,4 +25,8 @@ public class LoggedInSearchPageController {
     public void execute(String query) {
         loggedInSearchPageInputBoundary.execute(query);
     }
+
+    public void resetPopUpMessage() {
+        loggedInSearchPageInputBoundary.resetPopUpMessage();
+    }
 }
