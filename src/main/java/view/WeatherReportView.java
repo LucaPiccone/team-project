@@ -226,7 +226,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         });
     }
 
-
+    //for export summary
     private WeatherData buildWeatherDataFromState(WeatherReportPageState state) {
         if (state.getCityName() == null || state.getCityName().isEmpty()) {
             notificationService.showError("No weather data available!");
