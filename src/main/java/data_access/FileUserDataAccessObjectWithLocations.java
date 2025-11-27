@@ -1,5 +1,8 @@
 package data_access;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+import com.opencsv.exceptions.CsvValidationException;
 import entity.user.User;
 import entity.user.UserFactory;
 import use_case.changePassword.ChangePasswordUserDataAccessInterface;
@@ -13,7 +16,7 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountUserD
         SignInUserDataAccessInterface, UserDataAccessInterface, ChangePasswordUserDataAccessInterface {
 
     // CSV header
-    private static final String HEADER = "username,password,locations";
+    private static final String[] HEADER = {"username", "password", "locations"};
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -36,37 +39,30 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountUserD
         if (csvFile.length() == 0) {
             save();
         } else {
-            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-                final String header = reader.readLine();
+            try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
+                final String[] header = reader.readNext();
 
-                if (!HEADER.equals(header)) {
+                if (!Arrays.equals(HEADER, header)) {
                     throw new RuntimeException(String.format(
-                            "header should be%n: %s%n but was:%n%s", HEADER, header));
+                            "header should be: " + String.join(",", HEADER) +
+                                    " but was: " + String.join(",", header)));
                 }
 
-                String row;
-                while ((row = reader.readLine()) != null) {
-                    final String[] col = row.split(",", -1);
-
-                    final String username = col[headers.get("username")];
-                    final String password = col[headers.get("password")];
-
-                    // locations
-                    final String locationsStr = col[headers.get("locations")];
-                    List<String> locations;
-                    if (locationsStr == null || locationsStr.isEmpty()) {
-                        locations = new ArrayList<>();
-                    } else {
-                        locations = new ArrayList<>(Arrays.asList(locationsStr.split(";")));
-                    }
-
-
+                List<String[]> rows = reader.readAll();
+                for (String[] cols : rows.subList(0, rows.size())) {
+                    String username = cols[0];
+                    String password = cols[1];
+                    String locationsStr = cols[2];
+                    List<String> locations = Arrays.asList(locationsStr.split(";"));
                     final User user = userFactory.create(username, password, locations);
                     accounts.put(username, user);
                 }
-
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
+            } catch (CsvValidationException e) {
+                throw new RuntimeException(e);
+            } catch (CsvException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -83,6 +79,8 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountUserD
 
             for (User user : accounts.values()) {
                 String locationsField = String.join(";", user.getLocations());
+
+                locationsField = "\"" + locationsField + "\"";
 
                 final String line = String.format("%s,%s,%s",
                         user.getName(),
