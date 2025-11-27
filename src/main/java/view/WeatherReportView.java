@@ -149,6 +149,5 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     public void actionPerformed(ActionEvent e) {}
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-    }
+    public void propertyChange(PropertyChangeEvent evt) {}
 }
