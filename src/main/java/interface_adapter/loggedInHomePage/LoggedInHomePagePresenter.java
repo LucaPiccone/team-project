@@ -8,10 +8,13 @@ import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import use_case.changePassword.ChangePasswordOutputData;
 import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;
 import use_case.changePassword.ChangePasswordOutputBoundary;
+import use_case.deleteAccount.DeleteAccountOutputBoundary;
+import use_case.deleteAccount.DeleteAccountOutputData;
 
+import javax.swing.*;
 import java.util.List;
 
-public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary, ChangePasswordOutputBoundary {
+public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary, ChangePasswordOutputBoundary, DeleteAccountOutputBoundary {
     private final LoggedInHomePageViewModel loggedInHomePageViewModel;
     private final LoggedInSearchPageViewModel loggedInSearchPageViewModel;
     private final LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel;
@@ -55,4 +58,12 @@ public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary
         loggedInHomePageViewModel.getState().setPasswordError(error);
         loggedInHomePageViewModel.firePropertyChanged("passwordError");
     }
+
+    @Override
+    public void prepareSuccessView(DeleteAccountOutputData outputData) {
+        // popup
+        JOptionPane.showMessageDialog(null, "Account deleted: " + outputData.getUsername());
+
+    }
+
 }

@@ -30,6 +30,10 @@ import use_case.changePassword.*;
 import use_case.createAccount.CreateAccountInputBoundary;
 import use_case.createAccount.CreateAccountInteractor;
 import use_case.createAccount.CreateAccountOutputBoundary;
+import use_case.deleteAccount.DeleteAccountInputBoundary;
+import use_case.deleteAccount.DeleteAccountInteractor;
+import use_case.deleteAccount.DeleteAccountOutputBoundary;
+import use_case.deleteAccount.DeleteAccountUserDataInterface;
 import use_case.homePage.HomePageInputBoundary;
 import use_case.homePage.HomePageInteractor;
 import use_case.homePage.HomePageOutputBoundary;
@@ -191,7 +195,9 @@ public class GUI {
                 userFactory,
                 (FileUserDataAccessObjectWithLocations) userDataAccessObject);
 
-        LoggedInHomePageController controller = new LoggedInHomePageController(loggedInHomePageInputBoundary, changePasswordInputBoundary);
+        final DeleteAccountInputBoundary deleteAccountInputBoundary = new DeleteAccountInteractor((DeleteAccountUserDataInterface) userDataAccessObject, (DeleteAccountOutputBoundary) loggedInHomePageOutputBoundary);
+
+        LoggedInHomePageController controller = new LoggedInHomePageController(loggedInHomePageInputBoundary, changePasswordInputBoundary, deleteAccountInputBoundary);
         loggedInHomePageView.setHomePageController(controller);
         return this;
     }

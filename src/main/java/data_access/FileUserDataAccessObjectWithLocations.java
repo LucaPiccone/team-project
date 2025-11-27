@@ -4,13 +4,14 @@ import entity.user.User;
 import entity.user.UserFactory;
 import use_case.changePassword.ChangePasswordUserDataAccessInterface;
 import use_case.createAccount.CreateAccountUserDataAccessInterface;
+import use_case.deleteAccount.DeleteAccountUserDataInterface;
 import use_case.signIn.SignInUserDataAccessInterface;
 
 import java.io.*;
 import java.util.*;
 
 public class FileUserDataAccessObjectWithLocations implements CreateAccountUserDataAccessInterface,
-        SignInUserDataAccessInterface, UserDataAccessInterface, ChangePasswordUserDataAccessInterface {
+        SignInUserDataAccessInterface, UserDataAccessInterface, ChangePasswordUserDataAccessInterface, DeleteAccountUserDataInterface {
 
     // CSV header
     private static final String HEADER = "username,password,locations";
@@ -177,4 +178,21 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountUserD
         save();
 
     }
+
+    @Override
+    public void deleteByName(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty.");
+        }
+
+        accounts.remove(username);
+
+        // if the deleted one is currently signed in, clear current user
+        if (username.equals(currentUsername)) {
+            currentUsername = null;
+        }
+
+        save();
+    }
+
 }
