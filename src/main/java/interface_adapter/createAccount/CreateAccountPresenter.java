@@ -53,7 +53,6 @@ public class CreateAccountPresenter implements CreateAccountOutputBoundary {
                 JOptionPane.INFORMATION_MESSAGE
         );
 
-
         // switch to "login view"
         viewManagerModel.setState(signInViewModel.getViewName());// need to change back to loginviewmodel
         viewManagerModel.firePropertyChanged();
