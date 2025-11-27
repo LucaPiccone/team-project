@@ -28,18 +28,20 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     private final WeatherReportPageViewModel weatherReportViewModel;
     private WeatherReportPageController weatherReportController;
 
-    // 注入所有Service
+    // Service
     private final ExportService exportService;
     private final NotificationService notificationService;
     private final ShareService shareService;
     private final WeatherDataService weatherDataService;
 
-    // 界面组件
+    // JLabels
     private final JLabel cityName;
     private final JLabel weather;
     private final JLabel temperature;
     private final JLabel feelsLike;
     private final JLabel humidity;
+
+    // Buttons
     private final JButton backToHomeButton;
     private final JButton backToSearchButton;
     private final JButton addToFavouritesButton;
@@ -53,31 +55,30 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         this.weatherReportViewModel = weatherReportViewModel;
         this.weatherReportViewModel.addPropertyChangeListener(this);
 
-        // 初始化Service
+        // Initialize Service
         this.exportService = new ExportService(false, false);
         this.notificationService = new NotificationService();
         this.shareService = new ShareService(false);
         this.weatherDataService = new WeatherDataService(false);
 
-        // ---- 标题 ----
-        JLabel title = new JLabel("Weather Report");
+        // ---- Title ----
+        final JLabel title = new JLabel("Weather Report");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
 
-        // ---- 天气数据标签 ----
+        // ---- Labels ----
         cityName = new JLabel();
-        weather = new JLabel();
-        temperature = new JLabel();
-        feelsLike = new JLabel();
-        humidity = new JLabel();
-        // 统一对齐
         cityName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        weather = new JLabel();
         weather.setAlignmentX(Component.CENTER_ALIGNMENT);
+        temperature = new JLabel();
         temperature.setAlignmentX(Component.CENTER_ALIGNMENT);
+        feelsLike = new JLabel();
         feelsLike.setAlignmentX(Component.CENTER_ALIGNMENT);
+        humidity = new JLabel();
         humidity.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // ---- 按钮初始化 ----
+        // ---- Buttons ----
         backToHomeButton = new JButton(WeatherReportPageViewModel.TO_HOME_LABEL);
         backToSearchButton = new JButton(WeatherReportPageViewModel.TO_SEARCH_LABEL);
         addToFavouritesButton = new JButton(WeatherReportPageViewModel.FAVOURITE_LABEL);
@@ -87,23 +88,21 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         shareFacebookButton = new JButton("Share to Facebook");
 
 
-        // ---- 布局 ----
-        // 数据面板
-        JPanel dataPanel = new JPanel();
-        dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
-        dataPanel.add(Box.createVerticalStrut(10));
-        dataPanel.add(cityName);
-        dataPanel.add(Box.createVerticalStrut(10));
-        dataPanel.add(weather);
-        dataPanel.add(Box.createVerticalStrut(10));
-        dataPanel.add(temperature);
-        dataPanel.add(Box.createVerticalStrut(10));
-        dataPanel.add(feelsLike);
-        dataPanel.add(Box.createVerticalStrut(10));
-        dataPanel.add(humidity);
-        dataPanel.add(Box.createVerticalStrut(15));
+        //Main Panel and Alignment
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(cityName);
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(weather);
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(temperature);
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(feelsLike);
+        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(humidity);
+        mainPanel.add(Box.createVerticalStrut(15));
 
-        // 按钮面板
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.add(backToSearchButton);
         buttonsPanel.add(backToHomeButton);
@@ -113,26 +112,34 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         buttonsPanel.add(shareEmailButton);
         buttonsPanel.add(shareFacebookButton);
 
-        // 主布局
+        // -----Layout-----
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(dataPanel);
+        this.add(mainPanel);
         this.add(buttonsPanel);
+
+        /**
+         this.add(Box.createVerticalStrut(20));
+         this.add(title);
+         this.add(Box.createVerticalStrut(15));
+
+         this.add(mainPanel);
+         this.add(buttonsPanel);
+         this.add(Box.createVerticalStrut(10));
+
+         this.add(Box.createVerticalStrut(10));
+         **/
+
+
         this.add(Box.createVerticalGlue());
 
 
-        // ---- 按钮逻辑 ----
-        // 返回主页
         backToHomeButton.addActionListener(e ->
                 weatherReportController.switchToLoggedInHomePageView()
         );
-
-        // 返回搜索页
         backToSearchButton.addActionListener(e ->
                 weatherReportController.switchToLoggedInSearchView()
         );
-
-        // 收藏按钮（已修复参数不匹配）
         addToFavouritesButton.addActionListener(e -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
             try {
@@ -144,7 +151,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
             }
         });
 
-        // 导出PDF
+        // export PDF
         exportPdfButton.addActionListener(e -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
             WeatherData weatherData = buildWeatherDataFromState(state);
@@ -160,7 +167,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
             }
         });
 
-        // 导出Excel
+        // export Excel
         exportExcelButton.addActionListener(e -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
             WeatherData weatherData = buildWeatherDataFromState(state);
@@ -176,7 +183,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
             }
         });
 
-        // 分享到Email
+        // share via Email
         shareEmailButton.addActionListener(e -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
             WeatherData weatherData = buildWeatherDataFromState(state);
@@ -190,7 +197,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
             }
         });
 
-        // 分享到Facebook
+        // share to Facebook
         shareFacebookButton.addActionListener(e -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
             WeatherData weatherData = buildWeatherDataFromState(state);
@@ -205,7 +212,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         });
 
 
-        // ---- 监听ViewModel数据更新 ----
         weatherReportViewModel.addPropertyChangeListener(evt -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
             cityName.setText("City Name: " + state.getCityName());
@@ -213,8 +219,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
             temperature.setText("Temperature: " + state.getTemperature());
             feelsLike.setText("Feels Like: " + state.getFeelsLike());
             humidity.setText("Humidity: " + state.getHumidity());
-
-            // 弹窗提示
             if (state.getPopUpMessage() != null && !state.getPopUpMessage().isEmpty()) {
                 JOptionPane.showMessageDialog(null, state.getPopUpMessage());
                 weatherReportController.resetPopUpMessage();
@@ -223,7 +227,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     }
 
 
-    // 工具方法：从State构造WeatherData
     private WeatherData buildWeatherDataFromState(WeatherReportPageState state) {
         if (state.getCityName() == null || state.getCityName().isEmpty()) {
             notificationService.showError("No weather data available!");
@@ -248,14 +251,11 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     }
 
 
-    // 原有方法
     public void setWeatherReportController(WeatherReportPageController weatherReportController) {
         this.weatherReportController = weatherReportController;
     }
 
-    public String getViewName() {
-        return viewName;
-    }
+    public String getViewName() {return viewName; }
 
     @Override
     public void actionPerformed(ActionEvent e) {}

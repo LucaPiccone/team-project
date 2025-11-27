@@ -1,6 +1,6 @@
 username,password,locations
 test2,test,
-123,123,Toronto, ON, Canada
+123,123,Toronto;Toronto, ON, Canada
 test,test,Toronto;Niagara Falls
 luca,test,Niagara Falls
 jim,050609,Toronto;Niagara Falls
