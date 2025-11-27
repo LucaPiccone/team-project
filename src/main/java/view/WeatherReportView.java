@@ -263,3 +263,4 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     @Override
     public void propertyChange(PropertyChangeEvent evt) {}
 }
+}
