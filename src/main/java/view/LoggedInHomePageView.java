@@ -170,6 +170,22 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
 
         changePassword.addActionListener(
                 e ->  {
+                    Object[] options = {"Yes", "No"};
+                    int result = JOptionPane.showOptionDialog(
+                            this,
+                            "Are you sure you want to change the password? This cannot be undone.",
+                            "Confirm Change",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            options,
+                            options[1]
+                    );
+
+                    if (result != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+
                     String password = passwordInputField.getText();
                     String repeatPassword = repeatPasswordInputField.getText();
                     loggedInHomePageController.changePassword(password, repeatPassword);
