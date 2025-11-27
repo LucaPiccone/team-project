@@ -1,29 +1,27 @@
 package view;
 
+import api.OpenWeatherApi.OpenWeatherApiDataFetcher;
+import api.OpenWeatherApi.WeatherDataFetcher;
+import api.geocodingapi.CoordinatesFetcher;
+import api.geocodingapi.GeocodingApiCoordinatesFetcher;
+import entity.weatherReport.WeatherReport;
+import entity.weatherReport.WeatherReportFactory;
+import interface_adapter.loggedInHomePage.LoggedInHomePageController;
+import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
 import interface_adapter.weatherReportPage.WeatherReportPageController;
 import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
 import interface_adapter.weatherReportPage.WeatherReportPageState;
-import api.geocodingapi.CoordinatesFetcher;
-import api.OpenWeatherApi.WeatherDataFetcher;
-import model.Location;
-import model.WeatherData;
-import service.ExportService;
-import service.NotificationService;
-import service.ShareService;
-import service.WeatherDataService;
-import exception.StorageException;
-import exception.DownloadPermissionException;
-import exception.ShareAppNotFoundException;
-
+import api.OpenWeatherApi.WeatherDataFetcher.CityNotFoundException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 
 public class WeatherReportView extends JPanel implements ActionListener, PropertyChangeListener {
+
     private final String viewName = "Weather Report View";
     private final WeatherReportPageViewModel weatherReportViewModel;
     private WeatherReportPageController weatherReportController;
@@ -45,11 +43,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     private final JButton backToHomeButton;
     private final JButton backToSearchButton;
     private final JButton addToFavouritesButton;
-    private final JButton exportPdfButton;
-    private final JButton exportExcelButton;
-    private final JButton shareEmailButton;
-    private final JButton shareFacebookButton;
-
 
     public WeatherReportView(WeatherReportPageViewModel weatherReportViewModel) {
         this.weatherReportViewModel = weatherReportViewModel;
@@ -81,12 +74,8 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         // ---- Buttons ----
         backToHomeButton = new JButton(WeatherReportPageViewModel.TO_HOME_LABEL);
         backToSearchButton = new JButton(WeatherReportPageViewModel.TO_SEARCH_LABEL);
+        backToHomeButton = new JButton(WeatherReportPageViewModel.TO_HOME_LABEL);
         addToFavouritesButton = new JButton(WeatherReportPageViewModel.FAVOURITE_LABEL);
-        exportPdfButton = new JButton("Export as PDF");
-        exportExcelButton = new JButton("Export as Excel");
-        shareEmailButton = new JButton("Share via Email");
-        shareFacebookButton = new JButton("Share to Facebook");
-
 
         //Main Panel and Alignment
         JPanel mainPanel = new JPanel();
@@ -107,10 +96,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         buttonsPanel.add(backToSearchButton);
         buttonsPanel.add(backToHomeButton);
         buttonsPanel.add(addToFavouritesButton);
-        buttonsPanel.add(exportPdfButton);
-        buttonsPanel.add(exportExcelButton);
-        buttonsPanel.add(shareEmailButton);
-        buttonsPanel.add(shareFacebookButton);
 
         // -----Layout-----
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -189,13 +174,9 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
             WeatherData weatherData = buildWeatherDataFromState(state);
             if (weatherData == null) return;
 
-            try {
-                shareService.shareByEmail(weatherData);
-                notificationService.showSuccess("Shared via Email!");
-            } catch (ShareAppNotFoundException ex) {
-                notificationService.showError(ex.getMessage());
-            }
-        });
+        this.add(mainPanel);
+        this.add(buttonsPanel);
+        this.add(Box.createVerticalStrut(10));
 
         // share to Facebook
         shareFacebookButton.addActionListener(e -> {
@@ -203,14 +184,26 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
             WeatherData weatherData = buildWeatherDataFromState(state);
             if (weatherData == null) return;
 
-            try {
-                shareService.shareToFacebook(weatherData);
-                notificationService.showSuccess("Shared to Facebook!");
-            } catch (ShareAppNotFoundException ex) {
-                notificationService.showError(ex.getMessage());
-            }
-        });
+        this.add(Box.createVerticalGlue());
 
+        backToHomeButton.addActionListener(
+                e -> weatherReportController.switchToLoggedInHomePageView()
+        );
+        backToSearchButton.addActionListener(
+                e -> weatherReportController.switchToLoggedInSearchView()
+        );
+        addToFavouritesButton.addActionListener(
+                e -> {
+                    WeatherReportPageState state = weatherReportViewModel.getState();
+                    try {
+                        weatherReportController.addToFavourites(state);
+                    } catch (CoordinatesFetcher.CityNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (CityNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+        );
 
         weatherReportViewModel.addPropertyChangeListener(evt -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
@@ -261,5 +254,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     public void actionPerformed(ActionEvent e) {}
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {}
+    public void propertyChange(PropertyChangeEvent evt) {
+    }
 }
