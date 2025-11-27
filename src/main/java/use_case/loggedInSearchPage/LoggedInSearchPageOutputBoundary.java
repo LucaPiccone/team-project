@@ -11,4 +11,8 @@ public interface LoggedInSearchPageOutputBoundary {
     void showSuggestionsToUser(List<PlaceSuggestion> suggestions);
 
     void switchToWeatherReportView(WeatherReport weatherReport);
+
+    void prepareFailToExecute(String query);
+
+    void resetPopUpMessage();
 }

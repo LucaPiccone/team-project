@@ -151,6 +151,10 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LoggedInSearchPageState state = loggedInSearchPageViewModel.getState();
+        if (state.getPopUpMessage() != null && !state.getPopUpMessage().isEmpty()) {
+            JOptionPane.showMessageDialog(null, state.getPopUpMessage());
+            loggedInSearchPageController.resetPopUpMessage();
+        }
         List<PlaceSuggestion> suggestions = state.getSuggestions();
         SwingUtilities.invokeLater(() -> {
             showSuggestions(suggestions);
