@@ -26,7 +26,6 @@ public class LoggedInSearchPageInteractor implements LoggedInSearchPageInputBoun
 
     @Override
     public void switchToLoggedInHomePageView() {
-
         userPresenter.switchToLoggedInHomePageView();
     }
 
@@ -45,8 +44,13 @@ public class LoggedInSearchPageInteractor implements LoggedInSearchPageInputBoun
         try {
             weatherReport = factory.create(query);
         } catch (WeatherDataFetcher.CityNotFoundException | CoordinatesFetcher.CityNotFoundException e) {
+            userPresenter.prepareFailToExecute(query);
             throw new RuntimeException(e);
         }
         userPresenter.switchToWeatherReportView(weatherReport);
+    }
+
+    public void resetPopUpMessage() {
+        userPresenter.resetPopUpMessage();
     }
 }

@@ -9,4 +9,6 @@ public interface LoggedInSearchPageInputBoundary {
     void fetchSuggestions(String query) throws PlaceFetcher.PlaceNotFoundException;
 
     void execute(String query);
+
+    void resetPopUpMessage();
 }

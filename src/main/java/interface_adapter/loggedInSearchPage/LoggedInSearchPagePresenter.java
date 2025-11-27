@@ -54,4 +54,17 @@ public class LoggedInSearchPagePresenter implements LoggedInSearchPageOutputBoun
         viewManagerModel.setState(weatherReportPageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void prepareFailToExecute(String query) {
+        LoggedInSearchPageState state = loggedInSearchPageViewModel.getState();
+        state.setPopUpMessage(query + " City not found, please try a different city.");
+        loggedInSearchPageViewModel.firePropertyChanged();
+    }
+
+    @Override
+    public void resetPopUpMessage() {
+        LoggedInSearchPageState state = loggedInSearchPageViewModel.getState();
+        state.setPopUpMessage("");
+    }
 }
