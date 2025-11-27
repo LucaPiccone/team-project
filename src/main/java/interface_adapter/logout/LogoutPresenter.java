@@ -56,11 +56,22 @@ public class LogoutPresenter implements LogoutOutputBoundary {
         final LoggedInSearchPageState state4 = loggedInSearchPageViewModel.getState();
         final SignInState state5 = signInViewModel.getState();
         final WeatherReportPageState state6 = weatherReportPageViewModel.getState();
+
         state1.clearState();
+        createAccountViewModel.firePropertyChanged();
+
         state2.clearState();
+        loggedInFavouritesPageViewModel.firePropertyChanged();
+
         state3.clearState();
+        loggedInHomePageViewModel.firePropertyChanged();
+
         state4.clearSuggestions();
+        loggedInSearchPageViewModel.firePropertyChanged();
+
         state6.clearState();
+        loggedInFavouritesPageViewModel.firePropertyChanged();
+
         state5.setUsername(response.getUsername());
         state5.setPassword("");
         this.signInViewModel.firePropertyChanged();

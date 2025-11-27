@@ -32,6 +32,7 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
     private final JButton toFavourites;
     private final JButton logout;
     private final JButton changePassword;
+    private final JButton deleteAccount;
 
     //** CONSTRUCTOR **//
     public LoggedInHomePageView(LoggedInHomePageViewModel loggedInHomePageViewModel,
@@ -57,7 +58,7 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
         buttonsRow.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonsRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
 
-// ===== Change password section (CENTERED, no helper method) =====
+// ===== Change password section =====
         changePassword = new JButton(LoggedInHomePageViewModel.CHANGEPASSWORD_LABEL);
 
         final LabelTextPanel changePasswordInfo = new LabelTextPanel(
@@ -97,6 +98,24 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
         content.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
         content.setPreferredSize(new Dimension(560, 420));
 
+// ===== Delete account section =====
+        JLabel deleteHintLabel = new JLabel("don't want ur account anymore, then delete.");
+        deleteAccount = new JButton("Delete Account");
+
+// ===== Make deleting section centred =====
+        deleteHintLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        deleteAccount.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel deletePanel = new JPanel();
+        deletePanel.setLayout(new BoxLayout(deletePanel, BoxLayout.Y_AXIS));
+        deletePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        deletePanel.add(Box.createVerticalStrut(8));
+        deletePanel.add(deleteHintLabel);
+        deletePanel.add(Box.createVerticalStrut(8));
+        deletePanel.add(deleteAccount);
+        deletePanel.add(Box.createVerticalStrut(8));
+
 // ===== Add components (title -> last add) =====
         content.add(title);
         content.add(Box.createVerticalStrut(16));
@@ -118,7 +137,8 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
 
         content.add(Box.createVerticalStrut(14));
         content.add(changePasswordRow);
-
+        content.add(Box.createVerticalStrut(14));
+        content.add(deletePanel);
         this.add(content);
 
 
@@ -141,6 +161,27 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
 
                 }
         );
+
+        deleteAccount.addActionListener(e -> {
+            Object[] options = {"Yes", "No"};
+            int result = JOptionPane.showOptionDialog(
+                    this,
+                    "Are you sure you want to delete this account? This cannot be undone.",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]
+            );
+
+            if (result == JOptionPane.YES_OPTION) {
+                String currentUserName = fileUserDataAccessObjectWithLocations.getCurrentUsername();
+                loggedInHomePageController.deleteAccount(currentUserName);
+                logoutController.execute();
+            }
+        });
+
 
         loggedInHomePageViewModel.addPropertyChangeListener(evt -> {
             LoggedInHomePageState state = loggedInHomePageViewModel.getState();

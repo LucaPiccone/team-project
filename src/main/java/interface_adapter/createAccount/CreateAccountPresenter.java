@@ -2,10 +2,13 @@ package interface_adapter.createAccount;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.homepage.HomePageViewModel;
+import interface_adapter.signin.SignInState;
 import interface_adapter.signin.SignInViewModel;
 import use_case.createAccount.CreateAccountOutputBoundary;
 import use_case.createAccount.CreateAccountOutputData;
 import view.HomePageView;
+
+import javax.swing.*;
 
 public class CreateAccountPresenter implements CreateAccountOutputBoundary {
 
@@ -26,6 +29,7 @@ public class CreateAccountPresenter implements CreateAccountOutputBoundary {
 
     @Override
     public void prepareSuccessView(CreateAccountOutputData data) {
+        String name = data.getUsername();
         CreateAccountState state = createAccountViewModel.getState();
         state.setUsernameError(null);
         state.setPasswordError(null);
@@ -36,6 +40,18 @@ public class CreateAccountPresenter implements CreateAccountOutputBoundary {
         state.setRepeatPassword("");
 
         createAccountViewModel.setState(state);
+
+        SignInState state1 = signInViewModel.getState();
+        state1.setUsername(name);
+        signInViewModel.firePropertyChanged();
+
+        // popup
+        JOptionPane.showMessageDialog(
+                null,
+                "Account is created successfully!",
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE
+        );
 
         // switch to "login view"
         viewManagerModel.setState(signInViewModel.getViewName());// need to change back to loginviewmodel
