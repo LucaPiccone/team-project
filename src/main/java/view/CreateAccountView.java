@@ -60,9 +60,12 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
         goBack.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(Box.createVerticalStrut(30));
+        this.add(Box.createVerticalStrut(10));
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setMaximumSize(new Dimension(Integer.MAX_VALUE, title.getPreferredSize().height));
         this.add(title);
-        this.add(Box.createVerticalStrut(20));
+        this.add(Box.createVerticalStrut(10));
 
         this.add(usernameInfo);
         this.add(usernameErrorField);
@@ -73,7 +76,7 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
         this.add(repeatPasswordInfo);
         this.add(repeatPasswordErrorField);
 
-        this.add(Box.createVerticalStrut(20));
+        this.add(Box.createVerticalGlue());
         this.add(buttons);
     }
 

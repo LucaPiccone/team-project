@@ -2,6 +2,7 @@ package data_access;
 
 import entity.user.User;
 import entity.user.UserFactory;
+import use_case.changePassword.ChangePasswordUserDataAccessInterface;
 import use_case.createAccount.CreateAccountUserDataAccessInterface;
 import use_case.signIn.SignInUserDataAccessInterface;
 
@@ -9,7 +10,7 @@ import java.io.*;
 import java.util.*;
 
 public class FileUserDataAccessObjectWithLocations implements CreateAccountUserDataAccessInterface,
-        SignInUserDataAccessInterface, UserDataAccessInterface {
+        SignInUserDataAccessInterface, UserDataAccessInterface, ChangePasswordUserDataAccessInterface {
 
     // CSV header
     private static final String HEADER = "username,password,locations";
@@ -152,5 +153,28 @@ public class FileUserDataAccessObjectWithLocations implements CreateAccountUserD
 
         // Return a copy to protect domain state
         return new ArrayList<>(user.getLocations());
+    }
+
+    @Override
+    public void changePassword(User user) {
+        if (currentUsername == null) {
+            throw new IllegalStateException("No user is signed in.");
+        }
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null.");
+        }
+
+        final User existing = accounts.get(currentUsername);
+        if (existing == null) {
+            throw new RuntimeException("Current user not found.");
+        }
+
+        // Keep existing locations; only change password
+        final List<String> locationsCopy = new ArrayList<>(existing.getLocations());
+        final User updated = userFactory.create(currentUsername, user.getPassword(), locationsCopy);
+
+        accounts.put(currentUsername, updated);
+        save();
+
     }
 }
