@@ -18,6 +18,7 @@ import java.util.List;
 public class LoggedInFavouritesPageView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "Logged In Favourites View";
     private final LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel;
+
     LoggedInFavouritesPageController loggedInFavouritesPageController  = null;
 
     private final JPanel contentPanel;
@@ -27,6 +28,9 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
     public LoggedInFavouritesPageView(LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel) {
         this.loggedInFavouritesPageViewModel = loggedInFavouritesPageViewModel;
 
+        loggedInFavouritesPageViewModel.addPropertyChangeListener(this);
+
+        //** TITLE **//
         final JLabel title = new JLabel(LoggedInFavouritesPageViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
@@ -56,36 +60,6 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
                 e -> loggedInFavouritesPageController.switchToLoggedInHomePageView()
         );
 
-        loggedInFavouritesPageViewModel.addPropertyChangeListener(e -> {
-            contentPanel.removeAll();
-
-            List<WeatherReport> weatherReports = loggedInFavouritesPageViewModel.getState().getWeatherReports();
-            if (weatherReports.isEmpty()) {
-                JLabel emptyLabel = new JLabel("You have no favourites.");
-                emptyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                contentPanel.add(Box.createVerticalGlue());
-                contentPanel.add(emptyLabel);
-                contentPanel.add(Box.createVerticalGlue());
-            } else {
-                for (WeatherReport report : weatherReports) {
-                    JPanel row = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
-                    JLabel label = new JLabel(report.getLocation() + ": " + report.getTemperature() + "°C");
-                    JButton viewButton = new JButton("View Details");
-
-                    viewButton.addActionListener(ev ->
-                            loggedInFavouritesPageController.execute(report.getLocation()));
-
-                    row.add(label);
-                    row.add(viewButton);
-
-                    contentPanel.add(row);
-                }
-            }
-            this.revalidate();
-            this.repaint();
-        });
-
     }
 
     public void setFavouritesPageController(LoggedInFavouritesPageController controller) {
@@ -95,12 +69,36 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
     public String getViewName() {return viewName;}
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
+    public void actionPerformed(ActionEvent e) {}
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        contentPanel.removeAll();
 
+        List<WeatherReport> weatherReports = loggedInFavouritesPageViewModel.getState().getWeatherReports();
+        if (weatherReports.isEmpty()) {
+            JLabel emptyLabel = new JLabel("You have no favourites.");
+            emptyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            contentPanel.add(Box.createVerticalGlue());
+            contentPanel.add(emptyLabel);
+            contentPanel.add(Box.createVerticalGlue());
+        } else {
+            for (WeatherReport report : weatherReports) {
+                JPanel row = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+                JLabel label = new JLabel(report.getLocation() + ": " + report.getTemperature() + "°C");
+                JButton viewButton = new JButton("View Details");
+
+                viewButton.addActionListener(ev ->
+                        loggedInFavouritesPageController.execute(report.getLocation()));
+
+                row.add(label);
+                row.add(viewButton);
+
+                contentPanel.add(row);
+            }
+        }
+        this.revalidate();
+        this.repaint();
     }
 }

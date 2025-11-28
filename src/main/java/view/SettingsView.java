@@ -1,6 +1,8 @@
 package view;
 
 import data_access.FileUserDataAccessObjectWithLocations;
+import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
+import interface_adapter.settings.SettingsController;
 import interface_adapter.settings.SettingsViewModel;
 import interface_adapter.settings.SettingsState;
 
@@ -27,6 +29,7 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
     private SettingsChangePasswordController changePasswordController;
     private SettingsLogoutController logoutController;
     private SettingsDeleteAccountController deleteAccountController;
+    private SettingsController settingsController = null;
 
     // UI
 
@@ -41,6 +44,8 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
     private final JButton changePasswordButton = new JButton("Change Password");
     private final JButton logoutButton = new JButton("Log Out");
     private final JButton deleteAccountButton = new JButton("Delete Account");
+    private final JButton goBack;
+
 
     public SettingsView(SettingsViewModel settingsViewModel,
                         FileUserDataAccessObjectWithLocations fileUserDataAccessObjectWithLocations) {
@@ -128,6 +133,10 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
             );
         });
 
+        final JPanel buttons = new JPanel();
+        goBack = new JButton("Go back");
+        buttons.add(goBack);
+
         changePanel.add(pwRow1);
         changePanel.add(Box.createVerticalStrut(8));
         changePanel.add(passwordErrorLabel);
@@ -203,11 +212,16 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
         add(changePanel);
         add(Box.createVerticalStrut(16));
         add(accountPanel);
+        add(Box.createVerticalStrut(16));
+        add(buttons);
+
+        goBack.addActionListener(
+                e -> settingsController.goBack()
+        );
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
         if ("passwordError".equals(evt.getPropertyName())) {
             SettingsState state = (SettingsState) evt.getNewValue();
 
@@ -241,5 +255,9 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
 
     public void setDeleteAccountController(SettingsDeleteAccountController controller) {
         this.deleteAccountController = controller;
+    }
+
+    public void setSettingsController(SettingsController controller) {
+        this.settingsController = controller;
     }
 }
