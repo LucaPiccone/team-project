@@ -36,7 +36,7 @@ public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
             userPresenter.prepareFailView("two password don't match");}
 
         else if (password.equals(changePasswordInputData.getPassword())) {
-            userPresenter.prepareFailView("New password cannot be same");
+            userPresenter.prepareFailView("New password cannot be same as origin one");
 
 
         } else {

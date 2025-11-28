@@ -45,4 +45,9 @@ public class LoggedInHomePageInteractor implements LoggedInHomePageInputBoundary
         }
         userPresenter.switchToLoggedInFavouritesView(weatherReports);
     }
+
+    @Override
+    public void switchToSettings(String username) {
+        userPresenter.switchToSettings(username);
+    }
 }

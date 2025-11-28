@@ -8,4 +8,6 @@ public interface LoggedInHomePageOutputBoundary {
     void switchToLoggedInSearchView();
 
     void switchToLoggedInFavouritesView(List<WeatherReport> weatherReports);
+
+    void switchToSettings(String username);
 }

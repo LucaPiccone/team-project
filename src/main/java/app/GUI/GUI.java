@@ -21,6 +21,13 @@ import interface_adapter.loggedInSearchPage.LoggedInSearchPagePresenter;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.settings.SettingsViewModel;
+import interface_adapter.settings.change_password.SettingsChangePasswordController;
+import interface_adapter.settings.change_password.SettingsChangePasswordPresenter;
+import interface_adapter.settings.delete_account.SettingsDeleteAccountController;
+import interface_adapter.settings.delete_account.SettingsDeleteAccountPresenter;
+import interface_adapter.settings.logout.SettingsLogoutController;
+import interface_adapter.settings.logout.SettingsLogoutPresenter;
 import interface_adapter.signin.SignInController;
 import interface_adapter.signin.SignInPresenter;
 import interface_adapter.signin.SignInViewModel;
@@ -97,6 +104,9 @@ public class GUI {
 
     private WeatherReportView weatherReportView;
     private WeatherReportPageViewModel weatherReportPageViewModel;
+
+    private SettingsView settingsView;
+    private SettingsViewModel settingsViewModel;
 
     public GUI() {
         cardPanel.setLayout(cardLayout);
@@ -180,13 +190,21 @@ public class GUI {
         return this;
     }
 
+    public GUI addSettingsView() {
+        settingsViewModel = new SettingsViewModel();
+        settingsView = new SettingsView(settingsViewModel, userDataAccessObject);
+        cardPanel.add(settingsView, settingsView.getViewName());
+        return this;
+    }
+
     //**LOGGED IN HOME PAGE USE CASES **//
     public GUI addLoggedInHomePageUseCases() {
         final LoggedInHomePageOutputBoundary loggedInHomePageOutputBoundary = new LoggedInHomePagePresenter(
                 loggedInHomePageViewModel,
                 loggedInSearchPageViewModel,
                 loggedInFavouritesPageViewModel,
-                viewManagerModel);
+                viewManagerModel,
+                settingsViewModel);
         final LoggedInHomePageInputBoundary loggedInHomePageInputBoundary = new LoggedInHomePageInteractor(userDataAccessObject,
                 loggedInHomePageOutputBoundary);
 
@@ -279,6 +297,37 @@ public class GUI {
         LogoutController controller = new LogoutController(logoutInputBoundary);
         loggedInHomePageView.setLogoutController(controller);
         return this;
+    }
+
+    public GUI addSettingsUseCases() {
+        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new SettingsChangePasswordPresenter(settingsViewModel);
+        final ChangePasswordInteractor changePasswordInteractor = new ChangePasswordInteractor((ChangePasswordUserDataAccessInterface) userDataAccessObject,
+                changePasswordOutputBoundary,
+                userFactory,
+                (FileUserDataAccessObjectWithLocations)userDataAccessObject);
+        SettingsChangePasswordController controller = new SettingsChangePasswordController(changePasswordInteractor);
+
+        final DeleteAccountOutputBoundary deleteAccountOutputBoundary = new SettingsDeleteAccountPresenter();
+        final DeleteAccountInteractor deleteAccountInteractor = new DeleteAccountInteractor((DeleteAccountUserDataInterface) userDataAccessObject,
+                deleteAccountOutputBoundary);
+        SettingsDeleteAccountController settingsDeleteAccountController = new SettingsDeleteAccountController(deleteAccountInteractor);
+
+        final LogoutOutputBoundary  logoutOutputBoundary = new SettingsLogoutPresenter(viewManagerModel,
+                createAccountViewModel,
+                loggedInFavouritesPageViewModel,
+                loggedInHomePageViewModel,
+                loggedInSearchPageViewModel,
+                signInViewModel,
+                weatherReportPageViewModel);
+        final LogoutInteractor logoutInteractor = new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
+        SettingsLogoutController settingsLogoutController = new SettingsLogoutController(logoutInteractor);
+
+        settingsView.setChangePasswordController(controller);
+        settingsView.setLogoutController(settingsLogoutController);
+        settingsView.setDeleteAccountController(settingsDeleteAccountController);
+
+        return this;
+
     }
 
     //** Build JFrame **//

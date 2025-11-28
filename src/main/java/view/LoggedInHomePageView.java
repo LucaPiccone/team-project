@@ -23,16 +23,15 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
     private FileUserDataAccessObjectWithLocations fileUserDataAccessObjectWithLocations;
 
     private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JLabel passwordErrorField = new JLabel();
 
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
-    private final JLabel repeatPasswordErrorField = new JLabel();
 
     private final JButton toSearch;
     private final JButton toFavourites;
     private final JButton logout;
     private final JButton changePassword;
     private final JButton deleteAccount;
+    private final JButton settings;
 
     //** CONSTRUCTOR **//
     public LoggedInHomePageView(LoggedInHomePageViewModel loggedInHomePageViewModel,
@@ -50,11 +49,13 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
         toSearch = new JButton(LoggedInHomePageViewModel.TO_SEARCH_LABEL);
         toFavourites = new JButton(LoggedInHomePageViewModel.TO_FAVOURITES_LABEL);
         logout = new JButton(LoggedInHomePageViewModel.LOGOUT_LABEL);
+        settings = new JButton(LoggedInHomePageViewModel.SETTINGS_LABEL);
 
-        final JPanel buttonsRow = new JPanel(new GridLayout(1, 3, 12, 0));
+        final JPanel buttonsRow = new JPanel(new GridLayout(1, 4, 12, 0));
         buttonsRow.add(toSearch);
         buttonsRow.add(toFavourites);
         buttonsRow.add(logout);
+        buttonsRow.add(settings);
         buttonsRow.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonsRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
 
@@ -79,15 +80,11 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
         changePasswordInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         repeatPasswordInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         changePasswordRow.setAlignmentX(Component.CENTER_ALIGNMENT);
-        passwordErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        repeatPasswordErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 // Prevent stretching full width (keeps visual centering)
         changePasswordInfo.setMaximumSize(changePasswordInfo.getPreferredSize());
         repeatPasswordInfo.setMaximumSize(repeatPasswordInfo.getPreferredSize());
         changePasswordRow.setMaximumSize(changePasswordRow.getPreferredSize());
-        passwordErrorField.setMaximumSize(passwordErrorField.getPreferredSize());
-        repeatPasswordErrorField.setMaximumSize(repeatPasswordErrorField.getPreferredSize());
 
 // ===== Outer centering + spacing =====
         this.removeAll();
@@ -128,12 +125,10 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
 
         content.add(changePasswordInfo);
         content.add(Box.createVerticalStrut(6));
-        content.add(passwordErrorField);
 
         content.add(Box.createVerticalStrut(12));
         content.add(repeatPasswordInfo);
         content.add(Box.createVerticalStrut(6));
-        content.add(repeatPasswordErrorField);
 
         content.add(Box.createVerticalStrut(14));
         content.add(changePasswordRow);
@@ -150,11 +145,42 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
                 e -> loggedInHomePageController.switchToLoggedInFavouritesView()
         );
 
-        logout.addActionListener(
-                e -> logoutController.execute());
+        logout.addActionListener(e -> {
+            Object[] options = {"Yes", "No"};
+            int result = JOptionPane.showOptionDialog(
+                    this,
+                    "Are you sure you want to logout?",
+                    "Confirm Logout",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]
+            );
+
+            if (result == JOptionPane.YES_OPTION) {
+                logoutController.execute();
+            }
+        });
 
         changePassword.addActionListener(
                 e ->  {
+                    Object[] options = {"Yes", "No"};
+                    int result = JOptionPane.showOptionDialog(
+                            this,
+                            "Are you sure you want to change the password? This cannot be undone.",
+                            "Confirm Change",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            options,
+                            options[1]
+                    );
+
+                    if (result != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+
                     String password = passwordInputField.getText();
                     String repeatPassword = repeatPasswordInputField.getText();
                     loggedInHomePageController.changePassword(password, repeatPassword);
@@ -180,6 +206,11 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
                 loggedInHomePageController.deleteAccount(currentUserName);
                 logoutController.execute();
             }
+        });
+
+        settings.addActionListener(e -> {
+            LoggedInHomePageState state = loggedInHomePageViewModel.getState();
+            loggedInHomePageController.switchToSettings(state.getUsername());
         });
 
 
@@ -211,13 +242,18 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
 
         LoggedInHomePageState state = loggedInHomePageViewModel.getState();
 
-        passwordErrorField.setText(state.getPasswordError() == null ? "" : state.getPasswordError());
-        repeatPasswordErrorField.setText(state.getPasswordError() == null ? "" : state.getPasswordError());
+        String err = state.getPasswordError();
 
+        if (err != null && !err.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    err,
+                    "Change Password Failed",
+                    JOptionPane.ERROR_MESSAGE
+            );
 
-        if (state.getPasswordError() == null || state.getPasswordError().isEmpty()) {
-            passwordErrorField.setText("");
-            repeatPasswordErrorField.setText("");
+            state.setPasswordError("");
+            loggedInHomePageViewModel.setState(state);
         }
 
         revalidate();
