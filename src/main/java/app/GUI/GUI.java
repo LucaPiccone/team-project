@@ -290,19 +290,6 @@ public class GUI {
         return this;
     }
 
-    public GUI addLogoutUseCases() {
-        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
-                createAccountViewModel,
-                loggedInFavouritesPageViewModel,
-                loggedInHomePageViewModel,
-                loggedInSearchPageViewModel,
-                signInViewModel,
-                weatherReportPageViewModel);
-        final LogoutInputBoundary logoutInputBoundary= new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
-        LogoutController controller = new LogoutController(logoutInputBoundary);
-        loggedInHomePageView.setLogoutController(controller);
-        return this;
-    }
 
     public GUI addSettingsUseCases() {
         final ChangePasswordOutputBoundary changePasswordOutputBoundary = new SettingsChangePasswordPresenter(settingsViewModel);
@@ -323,7 +310,7 @@ public class GUI {
                 loggedInHomePageViewModel,
                 loggedInSearchPageViewModel,
                 signInViewModel,
-                weatherReportPageViewModel);
+                settingsViewModel);
         final LogoutInteractor logoutInteractor = new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
         SettingsLogoutController settingsLogoutController = new SettingsLogoutController(logoutInteractor);
 

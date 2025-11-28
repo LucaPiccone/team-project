@@ -10,6 +10,7 @@ public class LoggedInSearchPageState {
     // Current list of autocomplete suggestions
     private List<PlaceSuggestion> suggestions = new ArrayList<>();
     private String popUpMessage = "";
+    private int clear = 0;
 
     public void setSuggestions(List<PlaceSuggestion> suggestions) {
         this.suggestions = suggestions;
@@ -20,7 +21,9 @@ public class LoggedInSearchPageState {
     }
 
     public void clearSuggestions() {
+
         this.suggestions.clear();
+        clear ++;
     }
 
     public String getPopUpMessage() {

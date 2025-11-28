@@ -30,7 +30,6 @@ public class Main {
                 .addLoggedInFavouritePageUseCases()
                 .addLoggedInHomePageUseCases()
                 .addCurrentWeatherUseCases()
-                .addLogoutUseCases()
                 .addSettingsUseCases()
                 .build();
 

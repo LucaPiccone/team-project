@@ -1,3 +1,4 @@
+
 package interface_adapter.logout;
 
 import interface_adapter.ViewManagerModel;

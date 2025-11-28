@@ -9,6 +9,7 @@ public class SettingsState {
     private String newPassword = "";
     private String repeatPassword = "";
     private String passwordError = "";
+    private int clear = 0;
 
     public SettingsState(SettingsState copy) {
         username = copy.username;
@@ -57,5 +58,6 @@ public class SettingsState {
         newPassword = "";
         repeatPassword = "";
         passwordError = "";
+        clear ++;
     }
 }

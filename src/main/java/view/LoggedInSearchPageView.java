@@ -2,6 +2,7 @@ package view;
 
 import api.googlePlacesAPI.PlaceFetcher;
 import entity.placeSuggestions.PlaceSuggestion;
+import interface_adapter.loggedInHomePage.LoggedInHomePageState;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageState;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
@@ -108,6 +109,8 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
 
         });
         debounceTimer.setRepeats(false);
+
+
     }
 
     public void setSearchPageController(LoggedInSearchPageController controller) {
@@ -142,7 +145,15 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if ("clear".equals(evt.getPropertyName())) {
+            searchInputField.setText("");
+            return;
+        }
         LoggedInSearchPageState state = loggedInSearchPageViewModel.getState();
+
+        if (state.getPopUpMessage() == null) {
+            return;
+        }
         if (state.getPopUpMessage() != null && !state.getPopUpMessage().isEmpty()) {
             JOptionPane.showMessageDialog(null, state.getPopUpMessage());
             loggedInSearchPageController.resetPopUpMessage();
@@ -153,5 +164,8 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
             searchInputField.requestFocusInWindow();
             searchInputField.setCaretPosition(searchInputField.getText().length());
         });
+
+        this.revalidate();
+        this.repaint();
     }
 }

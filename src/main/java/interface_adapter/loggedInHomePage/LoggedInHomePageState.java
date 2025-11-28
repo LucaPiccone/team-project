@@ -6,6 +6,7 @@ public class LoggedInHomePageState {
     private String password = "";
     private String passwordError = "";
 
+
     public LoggedInHomePageState(LoggedInHomePageState copy) {
         username = copy.username;
         password = copy.password;

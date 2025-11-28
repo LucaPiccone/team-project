@@ -238,6 +238,11 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
             }
             return;
         }
+        if ("clear".equals(evt.getPropertyName())) {
+            newPasswordField.setText("");
+            repeatPasswordField.setText("");
+            passwordErrorLabel.setText("");
+        }
 
     }
 
