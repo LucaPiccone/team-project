@@ -45,6 +45,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     private final JButton backToHomeButton;
     private final JButton backToSearchButton;
     private final JButton addToFavouritesButton;
+    private final JButton removeFromFavouritesButton;
     private final JButton exportPdfButton;
     private final JButton exportExcelButton;
     private final JButton shareEmailButton;
@@ -82,6 +83,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         backToHomeButton = new JButton(WeatherReportPageViewModel.TO_HOME_LABEL);
         backToSearchButton = new JButton(WeatherReportPageViewModel.TO_SEARCH_LABEL);
         addToFavouritesButton = new JButton(WeatherReportPageViewModel.FAVOURITE_LABEL);
+        removeFromFavouritesButton = new JButton(WeatherReportPageViewModel.UNFAVOURITE_LABEL);
         exportPdfButton = new JButton("Export as PDF");
         exportExcelButton = new JButton("Export as Excel");
         shareEmailButton = new JButton("Share via Email");
@@ -107,6 +109,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         buttonsPanel.add(backToSearchButton);
         buttonsPanel.add(backToHomeButton);
         buttonsPanel.add(addToFavouritesButton);
+        buttonsPanel.add(removeFromFavouritesButton);
         JPanel exportButtonsPanel = new JPanel();
         exportButtonsPanel.add(exportPdfButton);
         exportButtonsPanel.add(exportExcelButton);
@@ -140,6 +143,15 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
                 notificationService.showError("Failed to add to favourites: " + ex.getMessage());
             } catch (Exception ex) {
                 notificationService.showError("Add to favourites failed: " + ex.getMessage());
+            }
+        });
+
+        removeFromFavouritesButton.addActionListener(e -> {
+            WeatherReportPageState state = weatherReportViewModel.getState();
+            try {
+                weatherReportController.removeFromFavourites();
+            } catch (Exception ex) {
+                notificationService.showError("Remove from favourites failed: " + ex.getMessage());
             }
         });
 
