@@ -19,7 +19,8 @@ public class LoggedInSearchPageController {
     }
 
     public void clearSuggestions() {
-
+        // Intentionally left empty: when there are no search suggestions,
+        // nothing needs to be cleared because fetchSuggestions() simply renders none.
     }
 
     public void execute(String query) {
