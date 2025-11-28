@@ -16,6 +16,7 @@ public class DeleteLocationPresenter implements DeleteLocationOutputBoundary {
     public void prepareSuccessView(DeleteLocationOutputData data) {
         // For example, update a list of favourites inside the WeatherReportPageState
         viewModel.getState().setFavouriteLocations(data.getRemainingLocations());
+        viewModel.getState().setPopUpMessage("This location was successfully removed!");
         viewModel.firePropertyChanged();
     }
 
