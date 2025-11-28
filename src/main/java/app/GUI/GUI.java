@@ -21,6 +21,8 @@ import interface_adapter.loggedInSearchPage.LoggedInSearchPagePresenter;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.settings.SettingsController;
+import interface_adapter.settings.SettingsPresenter;
 import interface_adapter.settings.SettingsViewModel;
 import interface_adapter.settings.change_password.SettingsChangePasswordController;
 import interface_adapter.settings.change_password.SettingsChangePasswordPresenter;
@@ -56,6 +58,9 @@ import use_case.loggedInSearchPage.LoggedInSearchPageOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.settings.SettingsInputBoundary;
+import use_case.settings.SettingsInteractor;
+import use_case.settings.SettingsOutputBoundary;
 import use_case.signIn.SignInInputBoundary;
 import use_case.signIn.SignInInteractor;
 import use_case.signIn.SignInOutputBoundary;
@@ -322,9 +327,13 @@ public class GUI {
         final LogoutInteractor logoutInteractor = new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
         SettingsLogoutController settingsLogoutController = new SettingsLogoutController(logoutInteractor);
 
-        settingsView.setChangePasswordController(controller);
+        final SettingsOutputBoundary settingsOutputBoundar = new SettingsPresenter(viewManagerModel, loggedInHomePageViewModel);
+        final SettingsInputBoundary settingsInputBoundary = new SettingsInteractor(settingsOutputBoundar);
+        SettingsController settingsController = new SettingsController(settingsInputBoundary);
+
         settingsView.setLogoutController(settingsLogoutController);
         settingsView.setDeleteAccountController(settingsDeleteAccountController);
+        settingsView.setSettingsController(settingsController);
 
         return this;
 
