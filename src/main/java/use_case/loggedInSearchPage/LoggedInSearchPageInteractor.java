@@ -1,7 +1,7 @@
 package use_case.loggedInSearchPage;
 
-import api.OpenWeatherApi.OpenWeatherApiDataFetcher;
-import api.OpenWeatherApi.WeatherDataFetcher;
+import api.openWeatherApi.OpenWeatherApiDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.CoordinatesFetcher;
 import api.geocodingapi.GeocodingApiCoordinatesFetcher;
 import api.googlePlacesAPI.GooglePlacesFetcher;
@@ -9,10 +9,7 @@ import api.googlePlacesAPI.PlaceFetcher;
 import entity.placeSuggestions.PlaceSuggestion;
 import entity.weatherReport.WeatherReport;
 import entity.weatherReport.WeatherReportFactory;
-import use_case.loggedInHomePage.LoggedInHomePageInputBoundary;
-import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class LoggedInSearchPageInteractor implements LoggedInSearchPageInputBoundary {

@@ -1,12 +1,8 @@
 package use_case.currentWeather;
 
-import api.OpenWeatherApi.OpenWeatherApiDataFetcher;
-import api.OpenWeatherApi.WeatherDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.CoordinatesFetcher;
-import api.geocodingapi.GeocodingApiCoordinatesFetcher;
 import data_access.UserDataAccessInterface;
-import entity.weatherReport.WeatherReport;
-import entity.weatherReport.WeatherReportFactory;
 
 import java.util.List;
 

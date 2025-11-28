@@ -1,12 +1,11 @@
 package use_case.loggedInFavouritesPage;
 
-import api.OpenWeatherApi.OpenWeatherApiDataFetcher;
-import api.OpenWeatherApi.WeatherDataFetcher;
+import api.openWeatherApi.OpenWeatherApiDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.CoordinatesFetcher;
 import api.geocodingapi.GeocodingApiCoordinatesFetcher;
 import entity.weatherReport.WeatherReport;
 import entity.weatherReport.WeatherReportFactory;
-import use_case.loggedInSearchPage.LoggedInSearchPageOutputBoundary;
 
 public class LoggedInFavouritesPageInteractor implements LoggedInFavouritesPageInputBoundary {
     private final LoggedInFavouritesPageOutputBoundary userPresenter;

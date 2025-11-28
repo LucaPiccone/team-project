@@ -4,7 +4,7 @@ import interface_adapter.weatherReportPage.WeatherReportPageController;
 import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
 import interface_adapter.weatherReportPage.WeatherReportPageState;
 import api.geocodingapi.CoordinatesFetcher;
-import api.OpenWeatherApi.WeatherDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import model.Location;
 import model.WeatherData;
 import service.ExportService;
