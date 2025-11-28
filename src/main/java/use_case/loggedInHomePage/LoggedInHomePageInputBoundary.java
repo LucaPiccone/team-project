@@ -4,4 +4,6 @@ public interface LoggedInHomePageInputBoundary {
     void switchToLoggedInSearchView();
 
     void switchToLoggedInFavouritesView();
+
+    void switchToSettings(String username);
 }

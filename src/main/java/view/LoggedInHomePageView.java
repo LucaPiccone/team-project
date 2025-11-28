@@ -31,6 +31,7 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
     private final JButton logout;
     private final JButton changePassword;
     private final JButton deleteAccount;
+    private final JButton settings;
 
     //** CONSTRUCTOR **//
     public LoggedInHomePageView(LoggedInHomePageViewModel loggedInHomePageViewModel,
@@ -48,11 +49,13 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
         toSearch = new JButton(LoggedInHomePageViewModel.TO_SEARCH_LABEL);
         toFavourites = new JButton(LoggedInHomePageViewModel.TO_FAVOURITES_LABEL);
         logout = new JButton(LoggedInHomePageViewModel.LOGOUT_LABEL);
+        settings = new JButton(LoggedInHomePageViewModel.SETTINGS_LABEL);
 
-        final JPanel buttonsRow = new JPanel(new GridLayout(1, 3, 12, 0));
+        final JPanel buttonsRow = new JPanel(new GridLayout(1, 4, 12, 0));
         buttonsRow.add(toSearch);
         buttonsRow.add(toFavourites);
         buttonsRow.add(logout);
+        buttonsRow.add(settings);
         buttonsRow.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonsRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
 
@@ -203,6 +206,11 @@ public class LoggedInHomePageView extends JPanel implements PropertyChangeListen
                 loggedInHomePageController.deleteAccount(currentUserName);
                 logoutController.execute();
             }
+        });
+
+        settings.addActionListener(e -> {
+            LoggedInHomePageState state = loggedInHomePageViewModel.getState();
+            loggedInHomePageController.switchToSettings(state.getUsername());
         });
 
 

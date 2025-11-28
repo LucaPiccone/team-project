@@ -5,6 +5,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageState;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
+import interface_adapter.settings.SettingsState;
+import interface_adapter.settings.SettingsViewModel;
 import use_case.changePassword.ChangePasswordOutputData;
 import use_case.loggedInHomePage.LoggedInHomePageOutputBoundary;
 import use_case.changePassword.ChangePasswordOutputBoundary;
@@ -19,15 +21,18 @@ public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary
     private final LoggedInSearchPageViewModel loggedInSearchPageViewModel;
     private final LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final SettingsViewModel settingsViewModel;
 
     public LoggedInHomePagePresenter(LoggedInHomePageViewModel loggedInHomePageViewModel,
                                      LoggedInSearchPageViewModel loggedInSearchPageViewModel,
                                      LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel,
-                                     ViewManagerModel viewManagerModel) {
+                                     ViewManagerModel viewManagerModel,
+                                     SettingsViewModel settingsViewModel) {
         this.loggedInHomePageViewModel = loggedInHomePageViewModel;
         this.loggedInSearchPageViewModel = loggedInSearchPageViewModel;
         this.loggedInFavouritesPageViewModel = loggedInFavouritesPageViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.settingsViewModel = settingsViewModel;
     }
 
     @Override
@@ -67,6 +72,15 @@ public class LoggedInHomePagePresenter implements LoggedInHomePageOutputBoundary
         // popup
         JOptionPane.showMessageDialog(null, "Account deleted: " + outputData.getUsername());
 
+    }
+
+    @Override
+    public void switchToSettings(String username) {
+        SettingsState state = settingsViewModel.getState();
+        state.setUsername(username);
+        settingsViewModel.firePropertyChanged();
+        viewManagerModel.setState(settingsViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
 }

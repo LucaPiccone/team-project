@@ -46,4 +46,8 @@ public class LoggedInHomePageController {
         final DeleteAccountInputData deleteAccountInputData = new DeleteAccountInputData(currentUserName);
         deleteAccountInputBoundary.execute(deleteAccountInputData);
     }
+
+    public void switchToSettings(String username) {
+        loggedInHomePageInputBoundary.switchToSettings(username);
+    }
 }
