@@ -26,20 +26,23 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     public HomePageView(HomePageViewModel homePageViewModel) {
         this.homePageViewModel = homePageViewModel;
 
+        //** Title**//
         final JLabel title = new JLabel(HomePageViewModel.WELCOME_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
 
         //** BUTTONS **//
         final JPanel buttons = new JPanel();
-
         createAccountButton = new JButton(HomePageViewModel.TO_CREATE_ACCOUNT_LABEL);
         buttons.add(createAccountButton);
-
         logInButton = new JButton(HomePageViewModel.TO_LOGIN_LABEL);
         buttons.add(logInButton);
+        // styles
+        createAccountButton.putClientProperty("JButton.buttonType", "roundRect");
+        logInButton.putClientProperty("JButton.buttonType", "roundRect");
 
 
+        //** View **//
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(Box.createVerticalStrut(20));
         this.add(title);

@@ -1,18 +1,19 @@
 package app;
 
 
-import api.googlePlacesAPI.GooglePlacesFetcher;
 import api.googlePlacesAPI.PlaceFetcher;
+import app.GUI.Flatlaf;
 import app.GUI.GUI;
-import entity.placeSuggestions.PlaceSuggestion;
-import view.CreateAccountView;
-import view.HomePageView;
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.IntelliJTheme;
 
 import javax.swing.*;
-import java.util.List;
+import java.awt.*;
 
 public class Main {
-    public static void main(String[] args) throws PlaceFetcher.PlaceNotFoundException {
+    public static void main(String[] args) {
+        Flatlaf.init();
         GUI gui = new GUI();
         JFrame application = gui
                 .addHomePageView()

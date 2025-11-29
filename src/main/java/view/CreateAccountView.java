@@ -15,6 +15,8 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
     private final String viewName = "create account";
 
     private final CreateAccountViewModel createAccountViewModel;
+    private CreateAccountController createAccountController = null;
+
     private final JTextField usernameInputField = new JTextField(15);
     private final JLabel usernameErrorField = new JLabel();
 
@@ -24,8 +26,6 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private final JLabel repeatPasswordErrorField = new JLabel();
 
-    private CreateAccountController createAccountController = null;
-
     private final JButton goBack;
     private final JButton createAccountButton;
 
@@ -33,51 +33,47 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
         this.createAccountViewModel = createAccountViewModel;
         createAccountViewModel.addPropertyChangeListener(this);
 
+        // TITLE
         final JLabel title = new JLabel(CreateAccountViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
 
+        // LABELS AND TEXT FIELDS
         final LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel(createAccountViewModel.USERNAME_LABEL), usernameInputField);
+                new JLabel(CreateAccountViewModel.USERNAME_LABEL), usernameInputField);
 
         final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel(createAccountViewModel.PASSWORD_LABEL), passwordInputField);
+                new JLabel(CreateAccountViewModel.PASSWORD_LABEL), passwordInputField);
 
         final LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
-                new JLabel(createAccountViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
+                new JLabel(CreateAccountViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
 
         usernameErrorField.setForeground(Color.RED);
         passwordErrorField.setForeground(Color.RED);
         repeatPasswordErrorField.setForeground(Color.RED);
 
+        // BUTTONS
         final JPanel buttons = new JPanel();
-        goBack = new JButton(createAccountViewModel.GO_BACK_BUTTON_LABEL);
-        createAccountButton = new  JButton(createAccountViewModel.SIGNUP_BUTTON_LABEL);
+        goBack = new JButton(CreateAccountViewModel.GO_BACK_BUTTON_LABEL);
+        createAccountButton = new  JButton(CreateAccountViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(goBack);
         buttons.add(createAccountButton);
 
-        createAccountButton.addActionListener(this);
-        goBack.addActionListener(this);
-
+        // VIEW
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(Box.createVerticalStrut(10));
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setMaximumSize(new Dimension(Integer.MAX_VALUE, title.getPreferredSize().height));
         this.add(title);
         this.add(Box.createVerticalStrut(10));
-
         this.add(usernameInfo);
         this.add(usernameErrorField);
-
         this.add(passwordInfo);
         this.add(passwordErrorField);
-
         this.add(repeatPasswordInfo);
         this.add(repeatPasswordErrorField);
-
-        this.add(Box.createVerticalGlue());
         this.add(buttons);
+
+        createAccountButton.addActionListener(this);
+        goBack.addActionListener(this);
     }
 
     public void setCreateController(CreateAccountController controller) {
