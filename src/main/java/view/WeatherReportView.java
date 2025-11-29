@@ -149,12 +149,17 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
                 weatherReportController.switchToLoggedInSearchView()
         );
 
-        backToFavouritesButton.addActionListener( e ->{
+        backToFavouritesButton.addActionListener( e -> {
             weatherReportController.switchToFavouritesPageView();
         });
 
         toWeatherForecast.addActionListener( e -> {
-            weatherReportController.switchToHourlyForecast();
+            WeatherReportPageState state = weatherReportViewModel.getState();
+            try {
+                weatherReportController.switchToHourlyForecast(state.getCityName());
+            } catch (CoordinatesFetcher.CityNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         checkOutfitButton.addActionListener(e -> {

@@ -15,5 +15,5 @@ public interface CurrentWeatherInputBoundary {
 
     void switchToFavouritesPageView();
 
-    void switchToHourlyForecast();
+    void switchToHourlyForecast(String cityName) throws CoordinatesFetcher.CityNotFoundException;
 }

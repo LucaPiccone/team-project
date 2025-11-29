@@ -1,15 +1,20 @@
 package use_case.currentWeather;
 
 import api.geocodingapi.GeocodingApiCoordinatesFetcher;
+import api.hourly_forecast_api.HourlyForecastApiDataFetcher;
+import api.hourly_forecast_api.HourlyForecastFetcher;
 import api.openWeatherApi.OpenWeatherApiDataFetcher;
 import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.CoordinatesFetcher;
 import data_access.UserDataAccessInterface;
+import entity.hourly_forecast_report.HourlyForecastReport;
 import entity.weatherReport.WeatherReport;
 import entity.weatherReport.WeatherReportFactory;
 import interface_adapter.weatherReportPage.WeatherReportPageState;
+import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
@@ -74,8 +79,12 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
     }
 
     @Override
-    public void switchToHourlyForecast() {
-        userPresenter.switchToHourlyForecast();
+    public void switchToHourlyForecast(String cityName) throws CoordinatesFetcher.CityNotFoundException {
+        CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
+        HashMap<String, Double> coordinates = coordinatesFetcher.getCoordinates(cityName);
+        HourlyForecastFetcher forecastFetcher = new HourlyForecastApiDataFetcher();
+        HourlyForecastReport report = forecastFetcher.getHourlyForecast(coordinates);
+        userPresenter.switchToHourlyForecast(report);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package interface_adapter.weatherReportPage;
 
+import entity.hourly_forecast_report.HourlyForecastReport;
 import entity.weatherReport.WeatherReport;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.checkOutfit.CheckOutfitState;
 import interface_adapter.checkOutfit.CheckOutfitViewModel;
+import interface_adapter.hourly_forecast.HourlyForecastState;
 import interface_adapter.hourly_forecast.HourlyForecastViewModel;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageState;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
@@ -94,7 +96,11 @@ public class WeatherReportPagePresenter implements CurrentWeatherOutputBoundary 
     }
 
     @Override
-    public void switchToHourlyForecast() {
+    public void switchToHourlyForecast(HourlyForecastReport report) {
+        HourlyForecastState hourlyForecastState = hourlyForecastViewModel.getState();
+        hourlyForecastState.setReport(report);
+        hourlyForecastViewModel.setState(hourlyForecastState);
+        hourlyForecastViewModel.firePropertyChanged();
         viewManagerModel.setState(hourlyForecastViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

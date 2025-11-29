@@ -1,5 +1,6 @@
 package use_case.currentWeather;
 
+import entity.hourly_forecast_report.HourlyForecastReport;
 import entity.weatherReport.WeatherReport;
 import interface_adapter.weatherReportPage.WeatherReportPageState;
 
@@ -20,5 +21,5 @@ public interface CurrentWeatherOutputBoundary {
 
      void switchToFavouritesPageView(List<WeatherReport> weatherReports);
 
-     void switchToHourlyForecast();
+     void switchToHourlyForecast(HourlyForecastReport report);
 }

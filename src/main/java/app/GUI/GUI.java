@@ -395,9 +395,14 @@ public class GUI {
     }
 
     public GUI addHourlyForecastUseCases() {
-        // final HourlyForecastOutputBoundary outputBoundary = new HourlyForecastPresenter();
-        // final HourlyForecastInputBoundary inputBoundary = new HourlyForecastInteractor();
-        final HourlyForecastController controller = new HourlyForecastController();
+        final HourlyForecastOutputBoundary outputBoundary = new HourlyForecastPresenter(
+                hourlyForecastViewModel,
+                loggedInHomePageViewModel,
+                weatherReportPageViewModel,
+                viewManagerModel
+        );
+        final HourlyForecastInputBoundary inputBoundary = new HourlyForecastInteractor(outputBoundary);
+        final HourlyForecastController controller = new HourlyForecastController(inputBoundary);
         hourlyForecastView.setHourlyForecastController(controller);
         return this;
     }

@@ -1,8 +1,8 @@
 package OpenWeatherAPI;
 
-import api.OpenWeatherApi.OpenWeatherApiDataFetcher;
-import api.OpenWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.GeocodingApiCoordinatesFetcher;
+import api.openWeatherApi.OpenWeatherApiDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import api.geocodingapi.CoordinatesFetcher;
@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OpenWeatherFetcherTest {
 
     @Test
-    void testValidLocationReturnsResults() throws WeatherDataFetcher.CityNotFoundException{
+    void testValidLocationReturnsResults() throws api.openWeatherApi.WeatherDataFetcher.CityNotFoundException {
         HashMap<String, Double> coordinates = new  HashMap<>();
         coordinates.put("lat", 0.0);
         coordinates.put("lon", 0.0);
-        WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
+        api.openWeatherApi.WeatherDataFetcher fetcher = new api.openWeatherApi.OpenWeatherApiDataFetcher();
         JSONObject weather = fetcher.getWeather(coordinates);
         String jsonString = """
                 {

@@ -54,7 +54,7 @@ public class WeatherReportPageController {
         currentWeatherInputBoundary.switchToFavouritesPageView();
     }
 
-    public void switchToHourlyForecast() {
-        currentWeatherInputBoundary.switchToHourlyForecast();
+    public void switchToHourlyForecast(String cityName) throws CoordinatesFetcher.CityNotFoundException {
+        currentWeatherInputBoundary.switchToHourlyForecast(cityName);
     }
 }
