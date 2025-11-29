@@ -1,6 +1,6 @@
 package use_case.currentWeather;
 
-import api.OpenWeatherApi.WeatherDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.CoordinatesFetcher;
 import interface_adapter.weatherReportPage.WeatherReportPageState;
 

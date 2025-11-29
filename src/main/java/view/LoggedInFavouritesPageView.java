@@ -83,19 +83,27 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
             contentPanel.add(emptyLabel);
             contentPanel.add(Box.createVerticalGlue());
         } else {
+            JPanel header = new JPanel(new GridLayout(1, 3));
+            header.add(new JLabel("Location", SwingConstants.CENTER));
+            header.add(new JLabel("Temperature", SwingConstants.CENTER));
+            header.add(new JLabel("", SwingConstants.CENTER));
+            contentPanel.add(header);
+            contentPanel.add(Box.createVerticalStrut(5));
             for (WeatherReport report : weatherReports) {
-                JPanel row = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
-                JLabel label = new JLabel(report.getLocation() + ": " + report.getTemperature() + "°C");
+                JPanel row = new JPanel(new GridLayout(1, 3, 10, 0)); // 1 row, 3 cols, 10px horizontal gap
+                JLabel locationLabel = new JLabel(report.getLocation(), SwingConstants.CENTER);
+                JLabel tempLabel = new JLabel(report.getTemperature() + "°C", SwingConstants.CENTER);
                 JButton viewButton = new JButton("View Details");
 
                 viewButton.addActionListener(ev ->
                         loggedInFavouritesPageController.execute(report.getLocation()));
 
-                row.add(label);
+                row.add(locationLabel);
+                row.add(tempLabel);
                 row.add(viewButton);
 
                 contentPanel.add(row);
+                contentPanel.add(Box.createVerticalStrut(5)); // space between rows
             }
         }
         this.revalidate();

@@ -36,14 +36,17 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
     private final JPasswordField newPasswordField = new JPasswordField(18);
     private final JPasswordField repeatPasswordField = new JPasswordField(18);
 
+    private JLabel title;
+    private JLabel user;
+
     // inline error
     private final JLabel passwordErrorLabel = new JLabel(" ");
     private final JLabel repeatErrorLabel = new JLabel(" ");
     private final JLabel usernameErrorLabel = new JLabel(" ");
 
-    private final JButton changePasswordButton = new JButton("Change Password");
-    private final JButton logoutButton = new JButton("Log Out");
-    private final JButton deleteAccountButton = new JButton("Delete Account");
+    private final JButton changePasswordButton;
+    private final JButton logoutButton;
+    private final JButton deleteAccountButton;
     private final JButton goBack;
 
 
@@ -53,26 +56,23 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
         this.settingsViewModel.addPropertyChangeListener(this);
 
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createEmptyBorder(18, 18, 18, 18));
-
         // Title
-        JLabel title = new JLabel("Settings");
+        title = new JLabel("Settings");
         title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // User
-        JLabel user = new JLabel("Logged in as:" );
-        settingsViewModel.addPropertyChangeListener(evt -> {
-            SettingsState state = settingsViewModel.getState();
-            user.setText("Logged in as:" + " " + state.getUsername());
-        });
+        user = new JLabel("Logged in as:" );
+
+        JPanel headerPanel = new JPanel(new GridLayout(2, 1));
+        headerPanel.setAlignmentX(Component.CENTER_ALIGNMENT); // <-- Center it horizontally
+        headerPanel.add(title);
+        headerPanel.add(user);
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        user.setHorizontalAlignment(SwingConstants.CENTER);
 
 
         // Change password panel
         JPanel changePanel = new JPanel();
-        changePanel.setLayout(new BoxLayout(changePanel, BoxLayout.Y_AXIS));
-        changePanel.setBorder(BorderFactory.createTitledBorder("Change Password"));
 
         JPanel pwRow1 = new JPanel(new BorderLayout(8, 0));
         pwRow1.add(new JLabel("New Password:"), BorderLayout.WEST);
@@ -89,22 +89,117 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
         passwordErrorLabel.setForeground(Color.RED);
         repeatErrorLabel.setForeground(Color.RED);
 
-        // Sync state while typing
-        DocumentListener syncListener = new DocumentListener() {
-            private void sync() {
-                SettingsState state = settingsViewModel.getState();
-                state.setNewPassword(new String(newPasswordField.getPassword()));
-                state.setRepeatPassword(new String(repeatPasswordField.getPassword()));
-                settingsViewModel.setState(state);
-            }
-            @Override public void insertUpdate(DocumentEvent e) { sync(); }
-            @Override public void removeUpdate(DocumentEvent e) { sync(); }
-            @Override public void changedUpdate(DocumentEvent e) { sync(); }
-        };
         newPasswordField.getDocument().addDocumentListener(syncListener);
         repeatPasswordField.getDocument().addDocumentListener(syncListener);
 
+        changePasswordButton = new JButton("Change Password");
         changePasswordButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        changePanel.setLayout(new BoxLayout(changePanel, BoxLayout.Y_AXIS));
+        changePanel.setBorder(
+                BorderFactory.createCompoundBorder(
+                        BorderFactory.createTitledBorder("Change Password"),
+                        BorderFactory.createEmptyBorder(10, 10, 10, 10)
+                )
+        );
+        changePanel.add(pwRow1);
+        changePanel.add(Box.createVerticalStrut(8));
+        changePanel.add(passwordErrorLabel);
+        changePanel.add(Box.createVerticalStrut(10));
+        changePanel.add(pwRow2);
+        changePanel.add(Box.createVerticalStrut(8));
+        changePanel.add(repeatErrorLabel);
+        changePanel.add(Box.createVerticalStrut(12));
+        changePanel.add(changePasswordButton);
+
+        // Account actions panel
+        JPanel accountPanel = new JPanel();
+
+        logoutButton = new JButton("Log Out");
+        logoutButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        deleteAccountButton = new JButton("Delete Account");
+        deleteAccountButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // styles
+        JPanel logoutWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        logoutWrapper.add(logoutButton);
+
+        JPanel deleteWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        deleteWrapper.add(deleteAccountButton);
+
+        accountPanel.setLayout(new BoxLayout(accountPanel, BoxLayout.Y_AXIS));
+        accountPanel.setBorder(BorderFactory.createTitledBorder("Account Actions"));
+        accountPanel.add(logoutWrapper);
+        accountPanel.add(Box.createVerticalStrut(10)); // space between buttons
+        accountPanel.add(deleteWrapper);
+
+
+        final JPanel buttons = new JPanel();
+        goBack = new JButton("Go back");
+        buttons.add(goBack);
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBorder(BorderFactory.createEmptyBorder(18, 18, 18, 18));
+        this.add(headerPanel);
+        this.add(Box.createVerticalStrut(16));
+        this.add(changePanel);
+        this.add(Box.createVerticalStrut(16));
+        this.add(accountPanel);
+        this.add(Box.createVerticalStrut(16));
+        this.add(buttons);
+
+        goBack.addActionListener(
+                e -> settingsController.goBack()
+        );
+
+        deleteAccountButton.addActionListener(e -> {
+            if (deleteAccountController == null) {
+                JOptionPane.showMessageDialog(this, "SettingsDeleteAccountController not set.");
+                return;
+            }
+
+            Object[] options = {"Yes", "No"};
+            int result = JOptionPane.showOptionDialog(
+                    this,
+                    "Are you sure you want to delete this account? This cannot be undone.",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]
+            );
+
+            if (result == JOptionPane.YES_OPTION) {
+                String currentUserName = fileUserDataAccessObjectWithLocations.getCurrentUsername();
+                deleteAccountController.deleteAccount(currentUserName);
+                logoutController.execute();
+            }
+        });
+
+        logoutButton.addActionListener(e -> {
+            if (logoutController == null) {
+                JOptionPane.showMessageDialog(this, "SettingsLogoutController not set.");
+                return;
+            }
+            Object[] options = {"Yes", "No"};
+            int result = JOptionPane.showOptionDialog(
+                    this,
+                    "Are you sure you want to logout?",
+                    "Confirm Logout",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]
+            );
+
+            if (result == JOptionPane.YES_OPTION) {
+                logoutController.execute();
+            }
+        });
+
         changePasswordButton.addActionListener(e -> {
             if (changePasswordController == null) {
                 JOptionPane.showMessageDialog(this, "SettingsChangePasswordController not set.");
@@ -132,92 +227,6 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
                     state.getRepeatPassword()
             );
         });
-
-        final JPanel buttons = new JPanel();
-        goBack = new JButton("Go back");
-        buttons.add(goBack);
-
-        changePanel.add(pwRow1);
-        changePanel.add(Box.createVerticalStrut(8));
-        changePanel.add(passwordErrorLabel);
-        changePanel.add(Box.createVerticalStrut(10));
-        changePanel.add(pwRow2);
-        changePanel.add(Box.createVerticalStrut(8));
-        changePanel.add(repeatErrorLabel);
-        changePanel.add(Box.createVerticalStrut(12));
-        changePanel.add(changePasswordButton);
-
-        // Account actions panel
-        JPanel accountPanel = new JPanel();
-        accountPanel.setLayout(new BoxLayout(accountPanel, BoxLayout.Y_AXIS));
-        accountPanel.setBorder(BorderFactory.createTitledBorder("Account Actions"));
-
-        logoutButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        logoutButton.addActionListener(e -> {
-            if (logoutController == null) {
-                JOptionPane.showMessageDialog(this, "SettingsLogoutController not set.");
-                return;
-            }
-            Object[] options = {"Yes", "No"};
-            int result = JOptionPane.showOptionDialog(
-                    this,
-                    "Are you sure you want to logout?",
-                    "Confirm Logout",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options,
-                    options[1]
-            );
-
-            if (result == JOptionPane.YES_OPTION) {
-                logoutController.execute();
-            }
-        });
-
-        deleteAccountButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        deleteAccountButton.addActionListener(e -> {
-            if (deleteAccountController == null) {
-                JOptionPane.showMessageDialog(this, "SettingsDeleteAccountController not set.");
-                return;
-            }
-
-            Object[] options = {"Yes", "No"};
-            int result = JOptionPane.showOptionDialog(
-                    this,
-                    "Are you sure you want to delete this account? This cannot be undone.",
-                    "Confirm Delete",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options,
-                    options[1]
-            );
-
-            if (result == JOptionPane.YES_OPTION) {
-                String currentUserName = fileUserDataAccessObjectWithLocations.getCurrentUsername();
-                deleteAccountController.deleteAccount(currentUserName);
-                logoutController.execute();
-            }
-        });
-
-        accountPanel.add(logoutButton);
-        accountPanel.add(Box.createVerticalStrut(10));
-        accountPanel.add(deleteAccountButton);
-
-        add(title);
-        add(Box.createVerticalStrut(10));
-        add(user);
-        add(Box.createVerticalStrut(16));
-        add(changePanel);
-        add(Box.createVerticalStrut(16));
-        add(accountPanel);
-        add(Box.createVerticalStrut(16));
-        add(buttons);
-
-        goBack.addActionListener(
-                e -> settingsController.goBack()
-        );
     }
 
     @Override
@@ -236,7 +245,9 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
             } else {
                 passwordErrorLabel.setText(state.getPasswordError());
             }
-            return;
+        } else {
+            SettingsState state = settingsViewModel.getState();
+            user.setText("Logged in as:" + " " + state.getUsername());
         }
         if ("clear".equals(evt.getPropertyName())) {
             newPasswordField.setText("");
@@ -245,6 +256,19 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
         }
 
     }
+
+    // Sync state while typing
+    DocumentListener syncListener = new DocumentListener() {
+        private void sync() {
+            SettingsState state = settingsViewModel.getState();
+            state.setNewPassword(new String(newPasswordField.getPassword()));
+            state.setRepeatPassword(new String(repeatPasswordField.getPassword()));
+            settingsViewModel.setState(state);
+        }
+        @Override public void insertUpdate(DocumentEvent e) { sync(); }
+        @Override public void removeUpdate(DocumentEvent e) { sync(); }
+        @Override public void changedUpdate(DocumentEvent e) { sync(); }
+    };
 
     public String getViewName() {
         return viewName;

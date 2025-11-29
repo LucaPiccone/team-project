@@ -1,4 +1,4 @@
-package use_case.SaveFavouriteLocation;
+package use_case.saveFavouriteLocation;
 
 import api.geocodingapi.CoordinatesFetcher;
 

@@ -4,7 +4,7 @@ import interface_adapter.weatherReportPage.WeatherReportPageController;
 import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
 import interface_adapter.weatherReportPage.WeatherReportPageState;
 import api.geocodingapi.CoordinatesFetcher;
-import api.OpenWeatherApi.WeatherDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import model.Location;
 import model.WeatherData;
 import service.ExportService;
@@ -45,6 +45,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     private final JButton backToHomeButton;
     private final JButton backToSearchButton;
     private final JButton addToFavouritesButton;
+    private final JButton removeFromFavouritesButton;
     private final JButton exportPdfButton;
     private final JButton exportExcelButton;
     private final JButton shareEmailButton;
@@ -84,6 +85,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         backToSearchButton = new JButton(WeatherReportPageViewModel.TO_SEARCH_LABEL);
         addToFavouritesButton = new JButton(WeatherReportPageViewModel.FAVOURITE_LABEL);
         checkOutfitButton = new JButton(WeatherReportPageViewModel.CHECK_OUTFIT_LABEL);
+        removeFromFavouritesButton = new JButton(WeatherReportPageViewModel.UNFAVOURITE_LABEL);
         exportPdfButton = new JButton("Export as PDF");
         exportExcelButton = new JButton("Export as Excel");
         shareEmailButton = new JButton("Share via Email");
@@ -110,6 +112,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         buttonsPanel.add(backToHomeButton);
         buttonsPanel.add(addToFavouritesButton);
         buttonsPanel.add(checkOutfitButton);
+        buttonsPanel.add(removeFromFavouritesButton);
         JPanel exportButtonsPanel = new JPanel();
         exportButtonsPanel.add(exportPdfButton);
         exportButtonsPanel.add(exportExcelButton);
@@ -152,6 +155,15 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         });
 
 
+
+        removeFromFavouritesButton.addActionListener(e -> {
+            WeatherReportPageState state = weatherReportViewModel.getState();
+            try {
+                weatherReportController.removeFromFavourites();
+            } catch (Exception ex) {
+                notificationService.showError("Remove from favourites failed: " + ex.getMessage());
+            }
+        });
 
         // export PDF
         exportPdfButton.addActionListener(e -> {

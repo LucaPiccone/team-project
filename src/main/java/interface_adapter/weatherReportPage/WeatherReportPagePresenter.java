@@ -55,7 +55,7 @@ public class WeatherReportPagePresenter implements CurrentWeatherOutputBoundary 
     @Override
     public void addToFavouriteSuccess(CurrentWeatherOutputData outputData) {
         WeatherReportPageState state = weatherReportPageViewModel.getState();
-        state.setPopUpMessage(outputData.getCityName() + " Successfully added to favourites.");
+        state.setPopUpMessage(outputData.getCityName() + " successfully added to favourites.");
         weatherReportPageViewModel.firePropertyChanged();
     }
 

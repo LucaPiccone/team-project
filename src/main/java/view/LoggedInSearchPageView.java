@@ -53,10 +53,13 @@ public class LoggedInSearchPageView extends JPanel implements ActionListener, Pr
         //** Build View **//
         JPanel row = new JPanel();
         row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
+        row.add(Box.createHorizontalStrut(10)); // 10px space
+
         row.add(searchInput);
         row.add(buttons);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBorder(BorderFactory.createEmptyBorder(18, 18, 18, 18));
         this.add(Box.createVerticalStrut(20));
         this.add(title);
         this.add(Box.createVerticalStrut(20)); // spacing under title

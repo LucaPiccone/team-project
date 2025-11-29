@@ -1,4 +1,4 @@
-package use_case.SearchLocation;
+package use_case.searchLocation;
 
 /**
  * Input Boundary for actions which are related to searching

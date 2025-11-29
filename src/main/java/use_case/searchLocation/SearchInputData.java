@@ -1,4 +1,4 @@
-package use_case.SearchLocation;
+package use_case.searchLocation;
 
 /**
  * the Input Data for the Search Use Case

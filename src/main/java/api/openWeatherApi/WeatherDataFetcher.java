@@ -1,4 +1,4 @@
-package api.OpenWeatherApi;
+package api.openWeatherApi;
 
 
 import org.json.JSONObject;
