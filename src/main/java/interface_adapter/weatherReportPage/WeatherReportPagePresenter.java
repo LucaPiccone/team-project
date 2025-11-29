@@ -1,30 +1,41 @@
 package interface_adapter.weatherReportPage;
 
+import entity.weatherReport.WeatherReport;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.checkOutfit.CheckOutfitState;
 import interface_adapter.checkOutfit.CheckOutfitViewModel;
+import interface_adapter.hourly_forecast.HourlyForecastViewModel;
+import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageState;
+import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import use_case.currentWeather.CurrentWeatherOutputBoundary;
 import use_case.currentWeather.CurrentWeatherOutputData;
 
+import java.util.List;
+
 public class WeatherReportPagePresenter implements CurrentWeatherOutputBoundary {
     private final WeatherReportPageViewModel weatherReportPageViewModel;
     private final LoggedInHomePageViewModel loggedInHomePageViewModel;
     private final LoggedInSearchPageViewModel loggedInSearchPageViewModel;
-    private final ViewManagerModel viewManagerModel;
     private final CheckOutfitViewModel checkOutfitViewModel;
+    private final LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel;
+    private final HourlyForecastViewModel hourlyForecastViewModel;
+    private final ViewManagerModel viewManagerModel;
 
     public WeatherReportPagePresenter(WeatherReportPageViewModel weatherReportPageViewModel,
                                       LoggedInSearchPageViewModel loggedInSearchPageViewModel,
                                       LoggedInHomePageViewModel loggedInHomePageViewModel,
-                                      ViewManagerModel viewManagerModel,
-                                      CheckOutfitViewModel checkOutfitViewModel) {
+                                      CheckOutfitViewModel checkOutfitViewModel,
+                                      LoggedInFavouritesPageViewModel loggedInFavouritesPageViewModel, HourlyForecastViewModel hourlyForecastViewModel,
+                                      ViewManagerModel viewManagerModel) {
         this.weatherReportPageViewModel = weatherReportPageViewModel;
         this.loggedInSearchPageViewModel = loggedInSearchPageViewModel;
         this.loggedInHomePageViewModel = loggedInHomePageViewModel;
-        this.viewManagerModel = viewManagerModel;
         this.checkOutfitViewModel = checkOutfitViewModel;
+        this.loggedInFavouritesPageViewModel = loggedInFavouritesPageViewModel;
+        this.hourlyForecastViewModel = hourlyForecastViewModel;
+        this.viewManagerModel = viewManagerModel;
     }
 
     @Override
@@ -70,5 +81,21 @@ public class WeatherReportPagePresenter implements CurrentWeatherOutputBoundary 
     public void resetPopUpMessage() {
         WeatherReportPageState state = weatherReportPageViewModel.getState();
         state.setPopUpMessage("");
+    }
+
+    @Override
+    public void switchToFavouritesPageView(List<WeatherReport> weatherReports) {
+        LoggedInFavouritesPageState state = loggedInFavouritesPageViewModel.getState();
+        state.setWeatherReports(weatherReports);
+        loggedInFavouritesPageViewModel.setState(state);
+        loggedInFavouritesPageViewModel.firePropertyChanged();
+        viewManagerModel.setState(loggedInFavouritesPageViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchToHourlyForecast() {
+        viewManagerModel.setState(hourlyForecastViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }

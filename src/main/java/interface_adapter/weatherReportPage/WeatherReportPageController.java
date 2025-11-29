@@ -49,4 +49,12 @@ public class WeatherReportPageController {
     public void switchToCheckOutfitView(WeatherReportPageState state) {
         currentWeatherInputBoundary.switchToCheckOutfitView(state);
     }
+
+    public void switchToFavouritesPageView() {
+        currentWeatherInputBoundary.switchToFavouritesPageView();
+    }
+
+    public void switchToHourlyForecast() {
+        currentWeatherInputBoundary.switchToHourlyForecast();
+    }
 }

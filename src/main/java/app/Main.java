@@ -25,6 +25,7 @@ public class Main {
                 .addLoggedInSearchPageView()
                 .addWeatherReportView()
                 .addSettingsView()
+                .addHourlyForecastView()
                 .addCreateAccountUseCases()
                 .addHomePageUseCase()
                 .addSignInViewUseCase()
@@ -34,6 +35,7 @@ public class Main {
                 .addCurrentWeatherUseCases()
                 .addSettingsUseCases()
                 .addCheckOutfitUseCases()
+                .addHourlyForecastUseCases()
                 .build();
 
         application.pack();

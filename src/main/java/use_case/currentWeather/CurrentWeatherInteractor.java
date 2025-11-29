@@ -1,5 +1,7 @@
 package use_case.currentWeather;
 
+import api.geocodingapi.GeocodingApiCoordinatesFetcher;
+import api.openWeatherApi.OpenWeatherApiDataFetcher;
 import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.CoordinatesFetcher;
 import data_access.UserDataAccessInterface;
@@ -7,6 +9,7 @@ import entity.weatherReport.WeatherReport;
 import entity.weatherReport.WeatherReportFactory;
 import interface_adapter.weatherReportPage.WeatherReportPageState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
@@ -48,6 +51,31 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
     @Override
     public void resetPopUpMessage() {
         userPresenter.resetPopUpMessage();
+    }
+
+    @Override
+    public void switchToFavouritesPageView() {
+        // All favourite locations of the user
+        List<String> locations = userDataAccessInterface.getLocations();
+        List<WeatherReport> weatherReports = new ArrayList<>();
+        CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
+        WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
+        WeatherReportFactory factory = new WeatherReportFactory(fetcher, coordinatesFetcher);
+        for (String location : locations) {
+            try {
+                WeatherReport weatherReport = factory.create(location);
+                weatherReports.add(weatherReport);
+            } catch (WeatherDataFetcher.CityNotFoundException |
+                     CoordinatesFetcher.CityNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        userPresenter.switchToFavouritesPageView(weatherReports);
+    }
+
+    @Override
+    public void switchToHourlyForecast() {
+        userPresenter.switchToHourlyForecast();
     }
 
     @Override
