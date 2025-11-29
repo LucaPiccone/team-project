@@ -110,9 +110,10 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.add(backToSearchButton);
         buttonsPanel.add(backToHomeButton);
-        buttonsPanel.add(addToFavouritesButton);
         buttonsPanel.add(checkOutfitButton);
+        buttonsPanel.add(addToFavouritesButton);
         buttonsPanel.add(removeFromFavouritesButton);
+
         JPanel exportButtonsPanel = new JPanel();
         exportButtonsPanel.add(exportPdfButton);
         exportButtonsPanel.add(exportExcelButton);
