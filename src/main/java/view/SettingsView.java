@@ -85,6 +85,9 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
         // make fields not tiny under BoxLayout
         newPasswordField.setMaximumSize(new Dimension(Integer.MAX_VALUE, newPasswordField.getPreferredSize().height));
         repeatPasswordField.setMaximumSize(new Dimension(Integer.MAX_VALUE, repeatPasswordField.getPreferredSize().height));
+// Prevent tall row
+        pwRow1.setMaximumSize(new Dimension(Integer.MAX_VALUE, pwRow1.getPreferredSize().height));
+        pwRow2.setMaximumSize(new Dimension(Integer.MAX_VALUE, pwRow2.getPreferredSize().height));
 
         passwordErrorLabel.setForeground(Color.RED);
         repeatErrorLabel.setForeground(Color.RED);
@@ -93,7 +96,7 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
         repeatPasswordField.getDocument().addDocumentListener(syncListener);
 
         changePasswordButton = new JButton("Change Password");
-        changePasswordButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        changePasswordButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         changePanel.setLayout(new BoxLayout(changePanel, BoxLayout.Y_AXIS));
         changePanel.setBorder(
@@ -102,6 +105,7 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
                         BorderFactory.createEmptyBorder(10, 10, 10, 10)
                 )
         );
+        changePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         changePanel.add(pwRow1);
         changePanel.add(Box.createVerticalStrut(8));
         changePanel.add(passwordErrorLabel);
@@ -111,6 +115,7 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
         changePanel.add(repeatErrorLabel);
         changePanel.add(Box.createVerticalStrut(12));
         changePanel.add(changePasswordButton);
+
 
         // Account actions panel
         JPanel accountPanel = new JPanel();
