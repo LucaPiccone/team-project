@@ -1,23 +1,11 @@
 package entity.weatherReport;
 
 public class WeatherReport {
-    //String latitude;
-    //String longitude;
     private String location;
-    // cloudy, rainy, sunny...
     private String weather; // (main in api)
     private String temperature;
     private String feelsLike;
-    // String temp_min;
-    // String temp_max; // String pressure;
     private String humidity;
-    // String sea_level;
-    // String ground_level;
-    //String wind_speed;
-    //String wind_deg;
-    //String wind_gust;
-    //String country;
-    //String timezone;
 
     public WeatherReport(String location, String weather, String temperature,
                          String humidity, String feelsLike) {

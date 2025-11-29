@@ -17,7 +17,7 @@ public class SignInInteractorTest {
         // We add the goodUser to the data access repository before we log in.
         UserFactory factory = new UserFactory();
         // TODO Ask if we should be having a default token (so removed from factory, but included in entity)
-        User goodUser = factory.create("goodUsername", "goodPassword", "token");
+        User goodUser = factory.create("goodUsername", "goodPassword");
         userRepository.save(goodUser);
 
         SignInOutputBoundary successPresenter = new SignInOutputBoundary() {
@@ -50,7 +50,7 @@ public class SignInInteractorTest {
         SignInUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         UserFactory factory = new UserFactory();
-        User user = factory.create("goodUsername", "goodPassword", "token");
+        User user = factory.create("goodUsername", "goodPassword");
         userRepository.save(user);
 
         SignInOutputBoundary failurePresenter = new SignInOutputBoundary() {

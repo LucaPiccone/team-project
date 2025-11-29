@@ -51,6 +51,9 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     private final JButton shareEmailButton;
     private final JButton shareFacebookButton;
     private final JButton checkOutfitButton;
+    private final JButton backToFavouritesButton;
+    private final JButton toWeatherForecast;
+
 
 
     public WeatherReportView(WeatherReportPageViewModel weatherReportViewModel) {
@@ -86,6 +89,9 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         addToFavouritesButton = new JButton(WeatherReportPageViewModel.FAVOURITE_LABEL);
         checkOutfitButton = new JButton(WeatherReportPageViewModel.CHECK_OUTFIT_LABEL);
         removeFromFavouritesButton = new JButton(WeatherReportPageViewModel.UNFAVOURITE_LABEL);
+        backToFavouritesButton = new JButton(WeatherReportPageViewModel.GO_FAVOURITES);
+        toWeatherForecast = new JButton(WeatherReportPageViewModel.TO_HOURLY_FORECAST);
+
         exportPdfButton = new JButton("Export as PDF");
         exportExcelButton = new JButton("Export as Excel");
         shareEmailButton = new JButton("Share via Email");
@@ -107,12 +113,16 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         mainPanel.add(humidity);
         mainPanel.add(Box.createVerticalStrut(15));
 
+        JPanel buttonsPanel2 = new JPanel();
+        buttonsPanel2.add(toWeatherForecast);
+        buttonsPanel2.add(checkOutfitButton);
+        buttonsPanel2.add(addToFavouritesButton);
+        buttonsPanel2.add(removeFromFavouritesButton);
+
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.add(backToSearchButton);
         buttonsPanel.add(backToHomeButton);
-        buttonsPanel.add(checkOutfitButton);
-        buttonsPanel.add(addToFavouritesButton);
-        buttonsPanel.add(removeFromFavouritesButton);
+        buttonsPanel.add(backToFavouritesButton);
 
         JPanel exportButtonsPanel = new JPanel();
         exportButtonsPanel.add(exportPdfButton);
@@ -124,6 +134,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(mainPanel);
+        this.add(buttonsPanel2);
         this.add(buttonsPanel);
         this.add(exportButtonsPanel);
         this.add(Box.createVerticalGlue());
@@ -138,6 +149,24 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
                 weatherReportController.switchToLoggedInSearchView()
         );
 
+        backToFavouritesButton.addActionListener( e -> {
+            weatherReportController.switchToFavouritesPageView();
+        });
+
+        toWeatherForecast.addActionListener( e -> {
+            WeatherReportPageState state = weatherReportViewModel.getState();
+            try {
+                weatherReportController.switchToHourlyForecast(state.getCityName());
+            } catch (CoordinatesFetcher.CityNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        checkOutfitButton.addActionListener(e -> {
+            WeatherReportPageState state = weatherReportViewModel.getState();
+            weatherReportController.switchToCheckOutfitView(state);
+        });
+
 
         addToFavouritesButton.addActionListener(e -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
@@ -149,12 +178,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
                 notificationService.showError("Add to favourites failed: " + ex.getMessage());
             }
         });
-
-        checkOutfitButton.addActionListener(e -> {
-            WeatherReportPageState state = weatherReportViewModel.getState();
-            weatherReportController.switchToCheckOutfitView(state);
-        });
-
 
 
         removeFromFavouritesButton.addActionListener(e -> {

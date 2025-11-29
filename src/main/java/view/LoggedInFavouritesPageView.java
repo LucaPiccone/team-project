@@ -49,6 +49,7 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
 
         //** Build View **//
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBorder(BorderFactory.createEmptyBorder(18, 18, 18, 18));
         this.add(Box.createVerticalStrut(20));
         this.add(title);
         this.add(Box.createVerticalStrut(20));
@@ -76,6 +77,8 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
         contentPanel.removeAll();
 
         List<WeatherReport> weatherReports = loggedInFavouritesPageViewModel.getState().getWeatherReports();
+        int numRows = weatherReports.isEmpty() ? 1 : weatherReports.size() + 1;
+        contentPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20*numRows));
         if (weatherReports.isEmpty()) {
             JLabel emptyLabel = new JLabel("You have no favourites.");
             emptyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -87,6 +90,7 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
             header.add(new JLabel("Location", SwingConstants.CENTER));
             header.add(new JLabel("Temperature", SwingConstants.CENTER));
             header.add(new JLabel("", SwingConstants.CENTER));
+            header.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
             contentPanel.add(header);
             contentPanel.add(Box.createVerticalStrut(5));
             for (WeatherReport report : weatherReports) {
@@ -98,6 +102,8 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
                 viewButton.addActionListener(ev ->
                         loggedInFavouritesPageController.execute(report.getLocation()));
 
+
+                row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
                 row.add(locationLabel);
                 row.add(tempLabel);
                 row.add(viewButton);

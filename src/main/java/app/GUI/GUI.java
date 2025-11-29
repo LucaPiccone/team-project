@@ -14,6 +14,9 @@ import interface_adapter.deleteFavouriteLocation.DeleteLocationPresenter;
 import interface_adapter.homepage.HomePageController;
 import interface_adapter.homepage.HomePagePresenter;
 import interface_adapter.homepage.HomePageViewModel;
+import interface_adapter.hourly_forecast.HourlyForecastController;
+import interface_adapter.hourly_forecast.HourlyForecastPresenter;
+import interface_adapter.hourly_forecast.HourlyForecastViewModel;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageController;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPagePresenter;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
@@ -57,6 +60,9 @@ import use_case.deleteFavouriteLocation.DeleteLocationUserDataAccessInterface;
 import use_case.homePage.HomePageInputBoundary;
 import use_case.homePage.HomePageInteractor;
 import use_case.homePage.HomePageOutputBoundary;
+import use_case.hourly_forecast.HourlyForecastInputBoundary;
+import use_case.hourly_forecast.HourlyForecastInteractor;
+import use_case.hourly_forecast.HourlyForecastOutputBoundary;
 import use_case.loggedInFavouritesPage.LoggedInFavouritesPageInputBoundary;
 import use_case.loggedInFavouritesPage.LoggedInFavouritesPageInteractor;
 import use_case.loggedInFavouritesPage.LoggedInFavouritesPageOutputBoundary;
@@ -127,6 +133,9 @@ public class GUI {
     private CheckOutfitView checkOutfitView;
     private CheckOutfitViewModel checkOutfitViewModel;
 
+    private HourlyForecastView hourlyForecastView;
+    private HourlyForecastViewModel hourlyForecastViewModel;
+
     public GUI() {
         cardPanel.setLayout(cardLayout);
     }
@@ -139,12 +148,6 @@ public class GUI {
         return this;
     }
 
-    public GUI addCheckOutfitView() {
-        checkOutfitViewModel = new CheckOutfitViewModel();
-        checkOutfitView = new CheckOutfitView(checkOutfitViewModel);
-        cardPanel.add(checkOutfitView, checkOutfitView.getViewName());
-        return this;
-    }
 
     //** HOME PAGE USE CASES **//
     public GUI addHomePageUseCase() {
@@ -213,13 +216,6 @@ public class GUI {
         loggedInHomePageViewModel = new LoggedInHomePageViewModel();
         loggedInHomePageView = new LoggedInHomePageView(loggedInHomePageViewModel, userDataAccessObject);
         cardPanel.add(loggedInHomePageView, loggedInHomePageView.getViewName());
-        return this;
-    }
-
-    public GUI addSettingsView() {
-        settingsViewModel = new SettingsViewModel();
-        settingsView = new SettingsView(settingsViewModel, userDataAccessObject);
-        cardPanel.add(settingsView, settingsView.getViewName());
         return this;
     }
 
@@ -297,13 +293,16 @@ public class GUI {
         cardPanel.add(weatherReportView, weatherReportView.getViewName());
         return this;
     }
+
     public GUI addCurrentWeatherUseCases() {
         final CurrentWeatherOutputBoundary currentWeatherOutputBoundary = new WeatherReportPagePresenter(
                 weatherReportPageViewModel,
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
-                viewManagerModel,
-                checkOutfitViewModel
+                checkOutfitViewModel,
+                loggedInFavouritesPageViewModel,
+                hourlyForecastViewModel,
+                viewManagerModel
                 );
         final CurrentWeatherInputBoundary currentWeatherInputBoundary = new CurrentWeatherInteractor(
                 userDataAccessObject, currentWeatherOutputBoundary);
@@ -325,6 +324,14 @@ public class GUI {
         return this;
     }
 
+
+    // SETTINGS
+    public GUI addSettingsView() {
+        settingsViewModel = new SettingsViewModel();
+        settingsView = new SettingsView(settingsViewModel, userDataAccessObject);
+        cardPanel.add(settingsView, settingsView.getViewName());
+        return this;
+    }
 
     public GUI addSettingsUseCases() {
         final ChangePasswordOutputBoundary changePasswordOutputBoundary = new SettingsChangePasswordPresenter(settingsViewModel);
@@ -359,7 +366,14 @@ public class GUI {
         settingsView.setChangePasswordController(controller);
 
         return this;
+    }
 
+    // CHECK OUTFIT PAGE
+    public GUI addCheckOutfitView() {
+        checkOutfitViewModel = new CheckOutfitViewModel();
+        checkOutfitView = new CheckOutfitView(checkOutfitViewModel);
+        cardPanel.add(checkOutfitView, checkOutfitView.getViewName());
+        return this;
     }
 
     public GUI addCheckOutfitUseCases() {
@@ -372,13 +386,34 @@ public class GUI {
         return this;
     }
 
+    // HOURLY FORECAST PAGE
+    public GUI addHourlyForecastView() {
+        hourlyForecastViewModel = new HourlyForecastViewModel();
+        hourlyForecastView = new HourlyForecastView(hourlyForecastViewModel);
+        cardPanel.add(hourlyForecastView, hourlyForecastView.getViewName());
+        return this;
+    }
+
+    public GUI addHourlyForecastUseCases() {
+        final HourlyForecastOutputBoundary outputBoundary = new HourlyForecastPresenter(
+                hourlyForecastViewModel,
+                loggedInHomePageViewModel,
+                weatherReportPageViewModel,
+                viewManagerModel
+        );
+        final HourlyForecastInputBoundary inputBoundary = new HourlyForecastInteractor(outputBoundary);
+        final HourlyForecastController controller = new HourlyForecastController(inputBoundary);
+        hourlyForecastView.setHourlyForecastController(controller);
+        return this;
+    }
+
     //** Build JFrame **//
     public JFrame build() {
         final JFrame application = new JFrame("Sophisticated Weather App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        application.setMinimumSize(new Dimension(1200, 700));
+
         //** View on Start Up. **//
         viewManagerModel.setState(homePageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

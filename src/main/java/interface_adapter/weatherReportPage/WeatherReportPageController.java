@@ -49,4 +49,12 @@ public class WeatherReportPageController {
     public void switchToCheckOutfitView(WeatherReportPageState state) {
         currentWeatherInputBoundary.switchToCheckOutfitView(state);
     }
+
+    public void switchToFavouritesPageView() {
+        currentWeatherInputBoundary.switchToFavouritesPageView();
+    }
+
+    public void switchToHourlyForecast(String cityName) throws CoordinatesFetcher.CityNotFoundException {
+        currentWeatherInputBoundary.switchToHourlyForecast(cityName);
+    }
 }

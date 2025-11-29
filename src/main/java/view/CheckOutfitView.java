@@ -166,7 +166,7 @@ public class CheckOutfitView extends JPanel implements ActionListener, PropertyC
 
     private ImageIcon loadOutfitIcon(String resourcePath, int w, int h) {
         try {
-            System.out.println("URL=" + getClass().getResource("/outfits/HOODIE.png"));
+//            System.out.println("URL=" + getClass().getResource("/outfits/HOODIE.png"));
 
             var url = getClass().getResource(resourcePath);
             if (url == null) return null;
