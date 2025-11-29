@@ -317,7 +317,7 @@ public class GUI {
 
         WeatherReportPageController controller = new WeatherReportPageController(
                 weatherReportPageViewModel,
-                currentWeatherInteractor,
+                currentWeatherInputBoundary,
                 deleteLocationInteractor
         );
         weatherReportView.setWeatherReportController(controller);
