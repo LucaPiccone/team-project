@@ -74,13 +74,18 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
         // Change password panel
         JPanel changePanel = new JPanel();
 
-        JPanel pwRow1 = new JPanel(new BorderLayout(8, 0));
-        pwRow1.add(new JLabel("New Password:"), BorderLayout.WEST);
-        pwRow1.add(newPasswordField, BorderLayout.CENTER);
+        JPanel pwRow1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 0));
+        pwRow1.add(new JLabel("New Password:"));
+        pwRow1.add(newPasswordField);
 
-        JPanel pwRow2 = new JPanel(new BorderLayout(8, 0));
-        pwRow2.add(new JLabel("Repeat Password:"), BorderLayout.WEST);
-        pwRow2.add(repeatPasswordField, BorderLayout.CENTER);
+        JPanel pwRow2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 0));
+        pwRow2.add(new JLabel("Repeat Password:"));
+        pwRow2.add(repeatPasswordField);
+
+        Dimension fieldSize = new Dimension(240, 28);
+        newPasswordField.setPreferredSize(fieldSize);
+        repeatPasswordField.setPreferredSize(fieldSize);
+
 
         // make fields not tiny under BoxLayout
         newPasswordField.setMaximumSize(new Dimension(Integer.MAX_VALUE, newPasswordField.getPreferredSize().height));

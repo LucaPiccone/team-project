@@ -1,5 +1,7 @@
 package OpenWeatherAPI;
 
+import api.openWeatherApi.OpenWeatherApiDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.GeocodingApiCoordinatesFetcher;
 import api.openWeatherApi.OpenWeatherApiDataFetcher;
 import api.openWeatherApi.WeatherDataFetcher;

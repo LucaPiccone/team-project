@@ -26,7 +26,7 @@ The system integrates external APIs for accurate geolocation and up-to-date weat
 ### Account-Related User Stories
 | User Story | Responsible |
 |-----------|-------------|
-| As a user, I want to create an account so that I can access personalized features. | *Luca* |
+| As a user, I want to create an account so that I can access personalized features. | *Luca Piccone* |
 | As a user, I want to log in so that I can access my saved locations and settings. | *Jincheng* |
 | As a user, I want to log out so that I can securely end my session. | *Jincheng* |
 | As a user, I want to delete my account so that I can remove my data permanently. | *Jincheng* |
@@ -35,14 +35,16 @@ The system integrates external APIs for accurate geolocation and up-to-date weat
 ### Weather-Related User Stories
 | User Story | Responsible |
 |-----------|-------------|
-| As a user, I want to navigate between different pages of the application so that I can access the features I need.| *Luca* |
+| As a user, I want to navigate between different pages of the application so that I can access the features I need.| *Luca Piccone* |
 | As a user, I want to search locations by city name so that I can quickly find weather information for that place. | *Kate* |
-| As a user, I want to see search suggestions so that I can select accurate city names easily. | *Luca (API and Backend)* and *Jincheng (Front-end)* |
+| As a user, I want to see search suggestions so that I can select accurate city names easily. | *Luca Piccone (API and Backend)* and *Jincheng (Front-end)* |
 | As a user, I want to view a place's weather report so that I can understand current conditions. | *Kate* |
 | As a user, I want my search converted to longitude and latitude so that the system can retrieve accurate weather data. | *Kate* and *Denise (API)* |
-| As a user, I want to save locations to my favourites so that I can access them quickly in the future. | *Luca* |
+| As a user, I want to save locations to my favourites so that I can access them quickly in the future. | *Luca Piccone* |
 | As a user, I want to remove locations from my favourites so that I can manage my saved list. | *Denise* |
 | As a user, I want to export the current weather report so that I can share it via Facebook, email, or save it as a PDF/screenshot. | *Liu Can* |
+| As a user, I want to see the upcoming weather for the next 6 hours so I can plan my day accordingly. | *Luca Piccone* |
+| As a user, I want to see suggested outfits to wear so I can be comfortable when I go outside. | *Jincheng* |
 
 Although specific responsibilities were assigned for each user story, all group members contributed to design discussions, problem-solving, and implementation support throughout the project.
 ---
