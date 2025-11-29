@@ -11,6 +11,8 @@ import interface_adapter.loggedInHomePage.LoggedInHomePageState;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageState;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
+import interface_adapter.settings.SettingsState;
+import interface_adapter.settings.SettingsViewModel;
 import interface_adapter.signin.SignInState;
 import interface_adapter.signin.SignInViewModel;
 import interface_adapter.weatherReportPage.WeatherReportPageState;
@@ -28,7 +30,7 @@ public class SettingsLogoutPresenter implements LogoutOutputBoundary {
     private LoggedInHomePageViewModel loggedInHomePageViewModel;
     private LoggedInSearchPageViewModel loggedInSearchPageViewModel;
     private SignInViewModel signInViewModel;
-    private WeatherReportPageViewModel weatherReportPageViewModel;
+    private SettingsViewModel settingsViewModel;
     private ViewManagerModel viewManagerModel;
 
     public SettingsLogoutPresenter(ViewManagerModel viewManagerModel,
@@ -37,14 +39,14 @@ public class SettingsLogoutPresenter implements LogoutOutputBoundary {
                            LoggedInHomePageViewModel loggedInHomePageViewModel,
                            LoggedInSearchPageViewModel  loggedInSearchPageViewModel,
                            SignInViewModel  signInViewModel,
-                           WeatherReportPageViewModel weatherReportPageViewModel) {
+                                   SettingsViewModel settingsViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.createAccountViewModel = createAccountViewModel;
         this.loggedInFavouritesPageViewModel = loggedInFavouritesPageViewModel;
         this.loggedInHomePageViewModel = loggedInHomePageViewModel;
         this.loggedInSearchPageViewModel = loggedInSearchPageViewModel;
         this.signInViewModel = signInViewModel;
-        this.weatherReportPageViewModel = weatherReportPageViewModel;
+        this.settingsViewModel = settingsViewModel;
     }
 
     @Override
@@ -55,22 +57,20 @@ public class SettingsLogoutPresenter implements LogoutOutputBoundary {
         final LoggedInHomePageState state3 = loggedInHomePageViewModel.getState();
         final LoggedInSearchPageState state4 = loggedInSearchPageViewModel.getState();
         final SignInState state5 = signInViewModel.getState();
-        final WeatherReportPageState state6 = weatherReportPageViewModel.getState();
+        final SettingsState state7 = settingsViewModel.getState();
 
         state1.clearState();
-        createAccountViewModel.firePropertyChanged();
+        createAccountViewModel.firePropertyChanged("clear");
 
         state2.clearState();
-        loggedInFavouritesPageViewModel.firePropertyChanged();
 
         state3.clearState();
-        loggedInHomePageViewModel.firePropertyChanged();
 
         state4.clearSuggestions();
-        loggedInSearchPageViewModel.firePropertyChanged();
+        loggedInSearchPageViewModel.firePropertyChanged("clear");
 
-        state6.clearState();
-        loggedInFavouritesPageViewModel.firePropertyChanged();
+        state7.clearState();
+        settingsViewModel.firePropertyChanged("clear");
 
         state5.setUsername(response.getUsername());
         state5.setPassword("");

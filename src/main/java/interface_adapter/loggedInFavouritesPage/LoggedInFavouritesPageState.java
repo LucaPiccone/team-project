@@ -8,6 +8,7 @@ import java.util.List;
 public class LoggedInFavouritesPageState {
     private List<WeatherReport> weatherReports = new ArrayList<>();
 
+
     public List<WeatherReport> getWeatherReports() {
         return weatherReports;
     }

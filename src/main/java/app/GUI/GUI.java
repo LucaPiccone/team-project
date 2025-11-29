@@ -4,6 +4,9 @@ import api.googlePlacesAPI.GooglePlacesFetcher;
 import data_access.FileUserDataAccessObjectWithLocations;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.checkOutfit.CheckOutfitController;
+import interface_adapter.checkOutfit.CheckOutfitPresenter;
+import interface_adapter.checkOutfit.CheckOutfitViewModel;
 import interface_adapter.createAccount.CreateAccountController;
 import interface_adapter.createAccount.CreateAccountPresenter;
 import interface_adapter.createAccount.CreateAccountViewModel;
@@ -37,6 +40,9 @@ import interface_adapter.signin.SignInViewModel;
 import interface_adapter.weatherReportPage.WeatherReportPageController;
 import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
 import use_case.changePassword.*;
+import use_case.checkOutfit.CheckOutfitInputBoundary;
+import use_case.checkOutfit.CheckOutfitInteractor;
+import use_case.checkOutfit.CheckOutfitOutputBoundary;
 import use_case.createAccount.CreateAccountInputBoundary;
 import use_case.createAccount.CreateAccountInteractor;
 import use_case.createAccount.CreateAccountOutputBoundary;
@@ -118,6 +124,9 @@ public class GUI {
     private SettingsView settingsView;
     private SettingsViewModel settingsViewModel;
 
+    private CheckOutfitView checkOutfitView;
+    private CheckOutfitViewModel checkOutfitViewModel;
+
     public GUI() {
         cardPanel.setLayout(cardLayout);
     }
@@ -127,6 +136,13 @@ public class GUI {
         homePageViewModel = new HomePageViewModel();
         homePageView = new HomePageView(homePageViewModel);
         cardPanel.add(homePageView, homePageView.getViewName());
+        return this;
+    }
+
+    public GUI addCheckOutfitView() {
+        checkOutfitViewModel = new CheckOutfitViewModel();
+        checkOutfitView = new CheckOutfitView(checkOutfitViewModel);
+        cardPanel.add(checkOutfitView, checkOutfitView.getViewName());
         return this;
     }
 
@@ -286,8 +302,10 @@ public class GUI {
                 weatherReportPageViewModel,
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
-                viewManagerModel);
-        CurrentWeatherInputBoundary currentWeatherInteractor = new CurrentWeatherInteractor(
+                viewManagerModel,
+                checkOutfitViewModel
+                );
+        final CurrentWeatherInputBoundary currentWeatherInputBoundary = new CurrentWeatherInteractor(
                 userDataAccessObject, currentWeatherOutputBoundary);
 
         // Delete Favourite Location Use Case
@@ -307,19 +325,6 @@ public class GUI {
         return this;
     }
 
-    public GUI addLogoutUseCases() {
-        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
-                createAccountViewModel,
-                loggedInFavouritesPageViewModel,
-                loggedInHomePageViewModel,
-                loggedInSearchPageViewModel,
-                signInViewModel,
-                weatherReportPageViewModel);
-        final LogoutInputBoundary logoutInputBoundary= new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
-        LogoutController controller = new LogoutController(logoutInputBoundary);
-        loggedInHomePageView.setLogoutController(controller);
-        return this;
-    }
 
     public GUI addSettingsUseCases() {
         final ChangePasswordOutputBoundary changePasswordOutputBoundary = new SettingsChangePasswordPresenter(settingsViewModel);
@@ -340,20 +345,31 @@ public class GUI {
                 loggedInHomePageViewModel,
                 loggedInSearchPageViewModel,
                 signInViewModel,
-                weatherReportPageViewModel);
+                settingsViewModel);
         final LogoutInteractor logoutInteractor = new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
         SettingsLogoutController settingsLogoutController = new SettingsLogoutController(logoutInteractor);
 
-        final SettingsOutputBoundary settingsOutputBoundar = new SettingsPresenter(viewManagerModel, loggedInHomePageViewModel);
-        final SettingsInputBoundary settingsInputBoundary = new SettingsInteractor(settingsOutputBoundar);
+        final SettingsOutputBoundary settingsOutputBoundary = new SettingsPresenter(viewManagerModel, loggedInHomePageViewModel);
+        final SettingsInputBoundary settingsInputBoundary = new SettingsInteractor(settingsOutputBoundary);
         SettingsController settingsController = new SettingsController(settingsInputBoundary);
 
         settingsView.setLogoutController(settingsLogoutController);
         settingsView.setDeleteAccountController(settingsDeleteAccountController);
         settingsView.setSettingsController(settingsController);
+        settingsView.setChangePasswordController(controller);
 
         return this;
 
+    }
+
+    public GUI addCheckOutfitUseCases() {
+        final CheckOutfitOutputBoundary checkOutfitOutputBoundary = new CheckOutfitPresenter(checkOutfitViewModel,
+                weatherReportPageViewModel,
+                viewManagerModel);
+        final CheckOutfitInputBoundary checkOutfitInteractor = new CheckOutfitInteractor(checkOutfitOutputBoundary);
+        final CheckOutfitController checkOutfitController = new CheckOutfitController(checkOutfitInteractor);
+        checkOutfitView.setController(checkOutfitController);
+        return this;
     }
 
     //** Build JFrame **//

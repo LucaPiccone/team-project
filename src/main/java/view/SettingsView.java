@@ -249,6 +249,11 @@ public class SettingsView extends JPanel implements PropertyChangeListener {
             SettingsState state = settingsViewModel.getState();
             user.setText("Logged in as:" + " " + state.getUsername());
         }
+        if ("clear".equals(evt.getPropertyName())) {
+            newPasswordField.setText("");
+            repeatPasswordField.setText("");
+            passwordErrorLabel.setText("");
+        }
 
     }
 

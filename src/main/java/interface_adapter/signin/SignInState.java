@@ -29,10 +29,5 @@ public class SignInState {
 
     public void setPassword(String password) { this.password = password; }
 
-    public void clearState() {
-        SigninError = "";
-        username = "";
-        password = "";
-    }
 
 }

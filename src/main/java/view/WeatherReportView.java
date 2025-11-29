@@ -50,6 +50,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     private final JButton exportExcelButton;
     private final JButton shareEmailButton;
     private final JButton shareFacebookButton;
+    private final JButton checkOutfitButton;
 
 
     public WeatherReportView(WeatherReportPageViewModel weatherReportViewModel) {
@@ -83,6 +84,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         backToHomeButton = new JButton(WeatherReportPageViewModel.TO_HOME_LABEL);
         backToSearchButton = new JButton(WeatherReportPageViewModel.TO_SEARCH_LABEL);
         addToFavouritesButton = new JButton(WeatherReportPageViewModel.FAVOURITE_LABEL);
+        checkOutfitButton = new JButton(WeatherReportPageViewModel.CHECK_OUTFIT_LABEL);
         removeFromFavouritesButton = new JButton(WeatherReportPageViewModel.UNFAVOURITE_LABEL);
         exportPdfButton = new JButton("Export as PDF");
         exportExcelButton = new JButton("Export as Excel");
@@ -109,6 +111,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         buttonsPanel.add(backToSearchButton);
         buttonsPanel.add(backToHomeButton);
         buttonsPanel.add(addToFavouritesButton);
+        buttonsPanel.add(checkOutfitButton);
         buttonsPanel.add(removeFromFavouritesButton);
         JPanel exportButtonsPanel = new JPanel();
         exportButtonsPanel.add(exportPdfButton);
@@ -145,6 +148,13 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
                 notificationService.showError("Add to favourites failed: " + ex.getMessage());
             }
         });
+
+        checkOutfitButton.addActionListener(e -> {
+            WeatherReportPageState state = weatherReportViewModel.getState();
+            weatherReportController.switchToCheckOutfitView(state);
+        });
+
+
 
         removeFromFavouritesButton.addActionListener(e -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
@@ -266,5 +276,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {}
+
 }
 

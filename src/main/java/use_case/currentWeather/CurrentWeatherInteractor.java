@@ -3,6 +3,9 @@ package use_case.currentWeather;
 import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.CoordinatesFetcher;
 import data_access.UserDataAccessInterface;
+import entity.weatherReport.WeatherReport;
+import entity.weatherReport.WeatherReportFactory;
+import interface_adapter.weatherReportPage.WeatherReportPageState;
 
 import java.util.List;
 
@@ -45,5 +48,10 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
     @Override
     public void resetPopUpMessage() {
         userPresenter.resetPopUpMessage();
+    }
+
+    @Override
+    public void switchToCheckOutfitView(WeatherReportPageState state) {
+        userPresenter.switchToCheckOutfitView(state);
     }
 }

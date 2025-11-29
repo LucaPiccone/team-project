@@ -10,6 +10,8 @@ public class CreateAccountState {
     private String passwordError;
     private String repeatPasswordError;
 
+    private int clear = 0;
+
     public CreateAccountState() {
     }
 
@@ -20,6 +22,7 @@ public class CreateAccountState {
         this.usernameError = copy.usernameError;
         this.passwordError = copy.passwordError;
         this.repeatPasswordError = copy.repeatPasswordError;
+        this.clear = copy.clear;
     }
 
     public String getUsername() {
@@ -79,5 +82,8 @@ public class CreateAccountState {
         // reset errors
         this.usernameError = null;
         this.passwordError = null;
-        this.repeatPasswordError = null;}
+        this.repeatPasswordError = null;
+
+        clear ++;
+    }
 }
