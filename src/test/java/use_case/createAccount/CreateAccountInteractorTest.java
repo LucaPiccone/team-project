@@ -75,7 +75,7 @@ class CreateAccountInteractorTest {
 
         // Add username to the repo so that they already exist
         UserFactory factory = new UserFactory();
-        User user = factory.create("username", "password", "token");
+        User user = factory.create("username", "password");
         userRepository.save(user);
 
         CreateAccountOutputBoundary failurePresenter = new CreateAccountOutputBoundary() {

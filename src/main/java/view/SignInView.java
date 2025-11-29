@@ -6,6 +6,7 @@ import interface_adapter.signin.SignInState;
 import interface_adapter.signin.SignInController;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,54 +35,74 @@ public class SignInView extends JPanel implements ActionListener, PropertyChange
         this.signInViewModel = signInViewModel;
         this.signInViewModel.addPropertyChangeListener(this);
 
-        // ----- Title -----
-        final JLabel title = new JLabel("Sign In");
+        setLayout(new BorderLayout());
+
+        JPanel content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        content.setBorder(new EmptyBorder(20, 20, 20, 20));
+        add(content, BorderLayout.CENTER);
+
+        JLabel title = new JLabel("Sign In");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
 
-        // ----- Username row -----
         JLabel usernameLabel = new JLabel("Username: ");
-        JPanel usernamePanel = new JPanel();
+        JPanel usernamePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         usernamePanel.add(usernameLabel);
         usernamePanel.add(usernameInputField);
-        usernameErrorLabel.setForeground(Color.RED);
 
-        // ----- Password row -----
+        usernameErrorLabel.setForeground(Color.RED);
+        usernameErrorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JLabel passwordLabel = new JLabel("Password: ");
-        JPanel passwordPanel = new JPanel();
+        JPanel passwordPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         passwordPanel.add(passwordLabel);
         passwordPanel.add(passwordInputField);
-        passwordErrorLabel.setForeground(Color.RED);
 
-        // ----- Buttons -----
+        passwordErrorLabel.setForeground(Color.RED);
+        passwordErrorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         signInButton = new JButton("Sign in");
         backToHomeButton = new JButton("Go back");
-
-        // -- BUTTON EVENT LISTENER.
         signInButton.addActionListener(this);
         backToHomeButton.addActionListener(this);
 
-        JPanel buttonsPanel = new JPanel();
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonsPanel.add(signInButton);
         buttonsPanel.add(backToHomeButton);
 
-        // ----- Layout -----
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(Box.createVerticalStrut(20));
-        this.add(title);
-        this.add(Box.createVerticalStrut(15));
+        // IMPORTANT: keep panels centered in BoxLayout
+        usernamePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        passwordPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        this.add(usernamePanel);
-        this.add(usernameErrorLabel);
-        this.add(Box.createVerticalStrut(10));
+        usernameErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        passwordErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        this.add(passwordPanel);
-        this.add(passwordErrorLabel);
-        this.add(Box.createVerticalStrut(10));
+        // make BoxLayout NOT stretch these vertically
+        lockHeight(usernamePanel);
+        lockHeight(passwordPanel);
+        lockHeight(buttonsPanel);
+        lockHeight(usernameErrorLabel);
+        lockHeight(passwordErrorLabel);
 
-        this.add(buttonsPanel);
-        this.add(Box.createVerticalGlue());
+        content.add(title);
+        content.add(Box.createVerticalStrut(15));
+        content.add(usernamePanel);
+        content.add(usernameErrorLabel);
+        content.add(Box.createVerticalStrut(10));
+        content.add(passwordPanel);
+        content.add(passwordErrorLabel);
+        content.add(Box.createVerticalStrut(10));
+        content.add(buttonsPanel);
+        content.add(Box.createVerticalGlue());
     }
+
+    private static void lockHeight(JComponent c) {
+        Dimension pref = c.getPreferredSize();
+        c.setMaximumSize(new Dimension(Integer.MAX_VALUE, pref.height));
+    }
+
 
     public String getViewName() {
         return viewName;

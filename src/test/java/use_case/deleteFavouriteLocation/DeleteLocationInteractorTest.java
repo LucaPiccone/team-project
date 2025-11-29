@@ -16,7 +16,7 @@ class DeleteLocationInteractorTest {
     void successfulDeletionTest() {
         // Create a test user with 2 saved locations
         UserFactory factory = new UserFactory();
-        User user = factory.create("username", "password", "token");
+        User user = factory.create("username", "password");
         user.addLocation("Toronto");
         user.addLocation("London");
 

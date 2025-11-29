@@ -1,7 +1,7 @@
 package OpenWeatherAPI;
 
-import api.OpenWeatherApi.OpenWeatherApiDataFetcher;
-import api.OpenWeatherApi.WeatherDataFetcher;
+import api.openWeatherApi.OpenWeatherApiDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.GeocodingApiCoordinatesFetcher;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
