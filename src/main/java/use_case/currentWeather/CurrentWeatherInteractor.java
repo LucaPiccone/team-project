@@ -46,4 +46,11 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
     public void resetPopUpMessage() {
         userPresenter.resetPopUpMessage();
     }
+
+    @Override
+    public void switchToCheckOutfitView() {
+        userPresenter.switchToCheckOutfitView();
+    }
+
+
 }

@@ -45,4 +45,12 @@ public class WeatherReportPageController {
     public void resetPopUpMessage() {
         currentWeatherInputBoundary.resetPopUpMessage();
     }
+
+    public void switchToCheckOutfitView() {
+        currentWeatherInputBoundary.switchToCheckOutfitView();
+    }
+
+//    public void switchToHourlyForecastView() {
+//        currentWeatherInputBoundary
+//    }
 }

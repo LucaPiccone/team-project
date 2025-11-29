@@ -2,6 +2,7 @@ package interface_adapter.weatherReportPage;
 
 import entity.weatherReport.WeatherReport;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.check_outfit.CheckOutfitViewModel;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import use_case.currentWeather.CurrentWeatherOutputBoundary;
@@ -11,15 +12,17 @@ public class WeatherReportPagePresenter implements CurrentWeatherOutputBoundary 
     private final WeatherReportPageViewModel weatherReportPageViewModel;
     private final LoggedInHomePageViewModel loggedInHomePageViewModel;
     private final LoggedInSearchPageViewModel loggedInSearchPageViewModel;
+    private final CheckOutfitViewModel checkOutfitViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public WeatherReportPagePresenter(WeatherReportPageViewModel weatherReportPageViewModel,
                                       LoggedInSearchPageViewModel loggedInSearchPageViewModel,
-                                      LoggedInHomePageViewModel loggedInHomePageViewModel,
+                                      LoggedInHomePageViewModel loggedInHomePageViewModel, CheckOutfitViewModel checkOutfitViewModel,
                                       ViewManagerModel viewManagerModel) {
         this.weatherReportPageViewModel = weatherReportPageViewModel;
         this.loggedInSearchPageViewModel = loggedInSearchPageViewModel;
         this.loggedInHomePageViewModel = loggedInHomePageViewModel;
+        this.checkOutfitViewModel = checkOutfitViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
@@ -53,5 +56,11 @@ public class WeatherReportPagePresenter implements CurrentWeatherOutputBoundary 
     public void resetPopUpMessage() {
         WeatherReportPageState state = weatherReportPageViewModel.getState();
         state.setPopUpMessage("");
+    }
+
+    @Override
+    public void switchToCheckOutfitView() {
+        viewManagerModel.setState(checkOutfitViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }

@@ -10,4 +10,6 @@ public interface CurrentWeatherInputBoundary {
     void addToFavourites(CurrentWeatherInputData inputData) throws CoordinatesFetcher.CityNotFoundException, WeatherDataFetcher.CityNotFoundException;
 
     void resetPopUpMessage();
+
+    void switchToCheckOutfitView();
 }

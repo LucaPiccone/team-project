@@ -12,4 +12,6 @@ public interface CurrentWeatherOutputBoundary {
     void addToFavouriteFail(CurrentWeatherOutputData outputData);
 
     void resetPopUpMessage();
+
+    void switchToCheckOutfitView();
 }

@@ -5,6 +5,7 @@ import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
 import interface_adapter.weatherReportPage.WeatherReportPageState;
 import api.geocodingapi.CoordinatesFetcher;
 import api.openWeatherApi.WeatherDataFetcher;
+
 import model.Location;
 import model.WeatherData;
 import service.ExportService;
@@ -26,7 +27,7 @@ import java.beans.PropertyChangeEvent;
 public class WeatherReportView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "Weather Report View";
     private final WeatherReportPageViewModel weatherReportViewModel;
-    private WeatherReportPageController weatherReportController;
+    private WeatherReportPageController weatherReportPageController;
 
     // Service
     private final ExportService exportService;
@@ -46,6 +47,8 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     private final JButton backToSearchButton;
     private final JButton addToFavouritesButton;
     private final JButton removeFromFavouritesButton;
+    private final JButton checkOutfit;
+    private final JButton hourlyForecast;
     private final JButton exportPdfButton;
     private final JButton exportExcelButton;
     private final JButton shareEmailButton;
@@ -84,6 +87,8 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         backToSearchButton = new JButton(WeatherReportPageViewModel.TO_SEARCH_LABEL);
         addToFavouritesButton = new JButton(WeatherReportPageViewModel.FAVOURITE_LABEL);
         removeFromFavouritesButton = new JButton(WeatherReportPageViewModel.UNFAVOURITE_LABEL);
+        checkOutfit = new JButton(WeatherReportPageViewModel.CHECKOUTFIT_LABEL);
+        hourlyForecast = new JButton(WeatherReportPageViewModel.HOURLY_FORECASE_LABEL);
         exportPdfButton = new JButton("Export as PDF");
         exportExcelButton = new JButton("Export as Excel");
         shareEmailButton = new JButton("Share via Email");
@@ -106,15 +111,21 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         mainPanel.add(Box.createVerticalStrut(15));
 
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.add(backToSearchButton);
-        buttonsPanel.add(backToHomeButton);
+        buttonsPanel.add(hourlyForecast);
+        buttonsPanel.add(checkOutfit);
         buttonsPanel.add(addToFavouritesButton);
         buttonsPanel.add(removeFromFavouritesButton);
+
         JPanel exportButtonsPanel = new JPanel();
         exportButtonsPanel.add(exportPdfButton);
         exportButtonsPanel.add(exportExcelButton);
         exportButtonsPanel.add(shareEmailButton);
         exportButtonsPanel.add(shareFacebookButton);
+
+        JPanel navigationPanel = new JPanel();
+        buttonsPanel.add(backToSearchButton);
+        buttonsPanel.add(backToHomeButton);
+
 
         // -----Layout-----
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -122,23 +133,32 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         this.add(mainPanel);
         this.add(buttonsPanel);
         this.add(exportButtonsPanel);
+        this.add(navigationPanel);
         this.add(Box.createVerticalGlue());
+
+        checkOutfit.addActionListener(e-> {
+            weatherReportPageController.switchToCheckOutfitView();
+        });
+
+//        hourlyForecast.addActionListener(e->{
+//           weatherReportPageController.switchToHourlyForecastView();
+//        });
 
 
         backToHomeButton.addActionListener(e ->
-                weatherReportController.switchToLoggedInHomePageView()
+                weatherReportPageController.switchToLoggedInHomePageView()
         );
 
 
         backToSearchButton.addActionListener(e ->
-                weatherReportController.switchToLoggedInSearchView()
+                weatherReportPageController.switchToLoggedInSearchView()
         );
 
 
         addToFavouritesButton.addActionListener(e -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
             try {
-                weatherReportController.addToFavourites(state);
+                weatherReportPageController.addToFavourites(state);
             } catch (CoordinatesFetcher.CityNotFoundException | WeatherDataFetcher.CityNotFoundException ex) {
                 notificationService.showError("Failed to add to favourites: " + ex.getMessage());
             } catch (Exception ex) {
@@ -149,7 +169,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         removeFromFavouritesButton.addActionListener(e -> {
             WeatherReportPageState state = weatherReportViewModel.getState();
             try {
-                weatherReportController.removeFromFavourites();
+                weatherReportPageController.removeFromFavourites();
             } catch (Exception ex) {
                 notificationService.showError("Remove from favourites failed: " + ex.getMessage());
             }
@@ -215,19 +235,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
             }
         });
 
-
-        weatherReportViewModel.addPropertyChangeListener(evt -> {
-            WeatherReportPageState state = weatherReportViewModel.getState();
-            cityName.setText("City Name: " + state.getCityName());
-            weather.setText("Weather: " + state.getWeather());
-            temperature.setText("Temperature: " + state.getTemperature());
-            feelsLike.setText("Feels Like: " + state.getFeelsLike());
-            humidity.setText("Humidity: " + state.getHumidity());
-            if (state.getPopUpMessage() != null && !state.getPopUpMessage().isEmpty()) {
-                JOptionPane.showMessageDialog(null, state.getPopUpMessage());
-                weatherReportController.resetPopUpMessage();
-            }
-        });
     }
 
 
@@ -256,7 +263,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
 
 
     public void setWeatherReportController(WeatherReportPageController weatherReportController) {
-        this.weatherReportController = weatherReportController;
+        this.weatherReportPageController = weatherReportController;
     }
 
     public String getViewName() {return viewName; }
@@ -265,6 +272,17 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     public void actionPerformed(ActionEvent e) {}
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {}
+    public void propertyChange(PropertyChangeEvent evt) {
+        WeatherReportPageState state = weatherReportViewModel.getState();
+        cityName.setText("City Name: " + state.getCityName());
+        weather.setText("Weather: " + state.getWeather());
+        temperature.setText("Temperature: " + state.getTemperature());
+        feelsLike.setText("Feels Like: " + state.getFeelsLike());
+        humidity.setText("Humidity: " + state.getHumidity());
+        if (state.getPopUpMessage() != null && !state.getPopUpMessage().isEmpty()) {
+            JOptionPane.showMessageDialog(null, state.getPopUpMessage());
+            weatherReportPageController.resetPopUpMessage();
+        }
+    }
 }
 

@@ -4,6 +4,7 @@ import api.googlePlacesAPI.GooglePlacesFetcher;
 import data_access.FileUserDataAccessObjectWithLocations;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.check_outfit.CheckOutfitViewModel;
 import interface_adapter.createAccount.CreateAccountController;
 import interface_adapter.createAccount.CreateAccountPresenter;
 import interface_adapter.createAccount.CreateAccountViewModel;
@@ -114,6 +115,9 @@ public class GUI {
 
     private WeatherReportView weatherReportView;
     private WeatherReportPageViewModel weatherReportPageViewModel;
+
+    private CheckOutfitView checkOutfitView;
+    private CheckOutfitViewModel checkOutfitViewModel;
 
     private SettingsView settingsView;
     private SettingsViewModel settingsViewModel;
@@ -281,11 +285,13 @@ public class GUI {
         cardPanel.add(weatherReportView, weatherReportView.getViewName());
         return this;
     }
+
     public GUI addCurrentWeatherUseCases() {
         final CurrentWeatherOutputBoundary currentWeatherOutputBoundary = new WeatherReportPagePresenter(
                 weatherReportPageViewModel,
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
+                checkOutfitViewModel,
                 viewManagerModel);
         CurrentWeatherInputBoundary currentWeatherInteractor = new CurrentWeatherInteractor(
                 userDataAccessObject, currentWeatherOutputBoundary);
@@ -318,6 +324,13 @@ public class GUI {
         final LogoutInputBoundary logoutInputBoundary= new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
         LogoutController controller = new LogoutController(logoutInputBoundary);
         loggedInHomePageView.setLogoutController(controller);
+        return this;
+    }
+
+    public GUI addCheckOutfitView() {
+        checkOutfitViewModel = new CheckOutfitViewModel();
+        checkOutfitView = new CheckOutfitView(checkOutfitViewModel);
+        cardPanel.add(checkOutfitView, checkOutfitView.getViewName());
         return this;
     }
 

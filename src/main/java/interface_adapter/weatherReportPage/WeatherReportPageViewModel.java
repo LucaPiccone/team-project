@@ -7,6 +7,8 @@ public class WeatherReportPageViewModel extends ViewModel<WeatherReportPageState
     public static final String TO_HOME_LABEL = "Go to Home";
     public static final String FAVOURITE_LABEL = "Add to Favourites";
     public static final String UNFAVOURITE_LABEL = "Remove from Favourites";
+    public static final String CHECKOUTFIT_LABEL = "Check Outfit";
+    public static final String HOURLY_FORECASE_LABEL = "Hourly Forecast";
 
     public WeatherReportPageViewModel() {
         super("Weather Report View");

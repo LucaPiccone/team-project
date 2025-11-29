@@ -23,6 +23,7 @@ public class Main {
                 .addLoggedInSearchPageView()
                 .addWeatherReportView()
                 .addSettingsView()
+                .addCheckOutfitView()
                 .addCreateAccountUseCases()
                 .addHomePageUseCase()
                 .addSignInViewUseCase()
