@@ -37,9 +37,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         buttons.add(createAccountButton);
         logInButton = new JButton(HomePageViewModel.TO_LOGIN_LABEL);
         buttons.add(logInButton);
-        // styles
-        createAccountButton.putClientProperty("JButton.buttonType", "roundRect");
-        logInButton.putClientProperty("JButton.buttonType", "roundRect");
+
 
 
         //** View **//
