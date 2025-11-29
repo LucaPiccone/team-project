@@ -80,3 +80,14 @@ Documentation: https://openweathermap.org/api/geocoding-api
 ### Setting Page
 
 ---
+
+## 📦 Dependencies
+
+This application leverages several external libraries to enhance functionality and improve the user experience:
+
+- **FlatLaf** – Delivers a modern and visually polished look-and-feel for all Swing components, ensuring a clean and consistent UI across the application.
+
+- **OpenCSV** – Enables reliable reading and writing of CSV files, supporting features such as account storage, login validation, and exporting weather data.
+
+These libraries help provide a smoother interface and robust data handling throughout the system.
+
