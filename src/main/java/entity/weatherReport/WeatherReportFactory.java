@@ -1,8 +1,7 @@
 package entity.weatherReport;
 
-import api.OpenWeatherApi.*;
+import api.openWeatherApi.*;
 import api.geocodingapi.CoordinatesFetcher;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.HashMap;
 

@@ -1,8 +1,6 @@
-package use_case.SearchLocation;
+package use_case.searchLocation;
 
 import entity.location.Location;
-import entity.location.LocationFactory;
-import entity.weatherReport.WeatherReport;
 
 /**
  * The Search Interactor

@@ -7,6 +7,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.createAccount.CreateAccountController;
 import interface_adapter.createAccount.CreateAccountPresenter;
 import interface_adapter.createAccount.CreateAccountViewModel;
+import interface_adapter.deleteFavouriteLocation.DeleteLocationPresenter;
 import interface_adapter.homepage.HomePageController;
 import interface_adapter.homepage.HomePagePresenter;
 import interface_adapter.homepage.HomePageViewModel;
@@ -43,6 +44,10 @@ import use_case.deleteAccount.DeleteAccountInputBoundary;
 import use_case.deleteAccount.DeleteAccountInteractor;
 import use_case.deleteAccount.DeleteAccountOutputBoundary;
 import use_case.deleteAccount.DeleteAccountUserDataInterface;
+import use_case.deleteFavouriteLocation.DeleteLocationInputBoundary;
+import use_case.deleteFavouriteLocation.DeleteLocationInteractor;
+import use_case.deleteFavouriteLocation.DeleteLocationOutputBoundary;
+import use_case.deleteFavouriteLocation.DeleteLocationUserDataAccessInterface;
 import use_case.homePage.HomePageInputBoundary;
 import use_case.homePage.HomePageInteractor;
 import use_case.homePage.HomePageOutputBoundary;
@@ -213,10 +218,10 @@ public class GUI {
         final LoggedInHomePageInputBoundary loggedInHomePageInputBoundary = new LoggedInHomePageInteractor(userDataAccessObject,
                 loggedInHomePageOutputBoundary);
 
-        final ChangePasswordInputBoundary changePasswordInputBoundary = new ChangePasswordInteractor((ChangePasswordUserDataAccessInterface) userDataAccessObject,
+        final ChangePasswordInputBoundary changePasswordInputBoundary = new ChangePasswordInteractor(userDataAccessObject,
                 (ChangePasswordOutputBoundary)loggedInHomePageOutputBoundary,
                 userFactory,
-                (FileUserDataAccessObjectWithLocations) userDataAccessObject);
+                userDataAccessObject);
 
         final DeleteAccountInputBoundary deleteAccountInputBoundary = new DeleteAccountInteractor((DeleteAccountUserDataInterface) userDataAccessObject, (DeleteAccountOutputBoundary) loggedInHomePageOutputBoundary);
 
@@ -282,11 +287,23 @@ public class GUI {
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
                 viewManagerModel);
-        final CurrentWeatherInputBoundary currentWeatherInputBoundary = new CurrentWeatherInteractor(
+        CurrentWeatherInputBoundary currentWeatherInteractor = new CurrentWeatherInteractor(
                 userDataAccessObject, currentWeatherOutputBoundary);
 
-        WeatherReportPageController controller = new WeatherReportPageController(currentWeatherInputBoundary);
+        // Delete Favourite Location Use Case
+        DeleteLocationOutputBoundary deleteLocationPresenter = new DeleteLocationPresenter(weatherReportPageViewModel);
+        DeleteLocationInputBoundary deleteLocationInteractor = new DeleteLocationInteractor(
+                deleteLocationPresenter,
+                userDataAccessObject
+        );
+
+        WeatherReportPageController controller = new WeatherReportPageController(
+                weatherReportPageViewModel,
+                currentWeatherInteractor,
+                deleteLocationInteractor
+        );
         weatherReportView.setWeatherReportController(controller);
+
         return this;
     }
 
@@ -306,14 +323,14 @@ public class GUI {
 
     public GUI addSettingsUseCases() {
         final ChangePasswordOutputBoundary changePasswordOutputBoundary = new SettingsChangePasswordPresenter(settingsViewModel);
-        final ChangePasswordInteractor changePasswordInteractor = new ChangePasswordInteractor((ChangePasswordUserDataAccessInterface) userDataAccessObject,
+        final ChangePasswordInteractor changePasswordInteractor = new ChangePasswordInteractor(userDataAccessObject,
                 changePasswordOutputBoundary,
                 userFactory,
-                (FileUserDataAccessObjectWithLocations)userDataAccessObject);
+                userDataAccessObject);
         SettingsChangePasswordController controller = new SettingsChangePasswordController(changePasswordInteractor);
 
         final DeleteAccountOutputBoundary deleteAccountOutputBoundary = new SettingsDeleteAccountPresenter();
-        final DeleteAccountInteractor deleteAccountInteractor = new DeleteAccountInteractor((DeleteAccountUserDataInterface) userDataAccessObject,
+        final DeleteAccountInteractor deleteAccountInteractor = new DeleteAccountInteractor(userDataAccessObject,
                 deleteAccountOutputBoundary);
         SettingsDeleteAccountController settingsDeleteAccountController = new SettingsDeleteAccountController(deleteAccountInteractor);
 

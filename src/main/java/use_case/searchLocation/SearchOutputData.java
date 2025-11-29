@@ -1,4 +1,4 @@
-package use_case.SearchLocation;
+package use_case.searchLocation;
 
 /**
  * Output Data for the Search Use Case

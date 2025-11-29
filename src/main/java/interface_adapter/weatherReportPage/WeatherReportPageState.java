@@ -1,5 +1,8 @@
 package interface_adapter.weatherReportPage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WeatherReportPageState {
     private String cityName = "";
     private String weather = "";
@@ -7,6 +10,8 @@ public class WeatherReportPageState {
     private String humidity = "";
     private String feelsLike = "";
     private String popUpMessage = "";
+    private List<String> favouriteLocations = new ArrayList<>();
+
 
     public WeatherReportPageState(WeatherReportPageState copy) {
         cityName = copy.cityName;
@@ -27,6 +32,10 @@ public class WeatherReportPageState {
 
     public String getFeelsLike() { return feelsLike;}
 
+    public List<String> getFavouriteLocations() {
+        return favouriteLocations;
+    }
+
     public String getPopUpMessage() {return popUpMessage;}
 
     public void setCityName(String cityName) { this.cityName = cityName;}
@@ -38,6 +47,10 @@ public class WeatherReportPageState {
     public void setHumidity(String humidity) { this.humidity = humidity;}
 
     public void setFeelsLike(String feelsLike) {this.feelsLike = feelsLike;}
+
+    public void setFavouriteLocations(List<String> favouriteLocations) {
+        this.favouriteLocations = favouriteLocations;
+    }
 
     public void setPopUpMessage(String popUpMessage) {this.popUpMessage = popUpMessage;}
 

@@ -8,13 +8,15 @@ import entity.user.UserFactory;
 import use_case.changePassword.ChangePasswordUserDataAccessInterface;
 import use_case.createAccount.CreateAccountUserDataAccessInterface;
 import use_case.deleteAccount.DeleteAccountUserDataInterface;
+import use_case.deleteFavouriteLocation.DeleteLocationUserDataAccessInterface;
 import use_case.signIn.SignInUserDataAccessInterface;
 
 import java.io.*;
 import java.util.*;
 
 public class FileUserDataAccessObjectWithLocations implements CreateAccountUserDataAccessInterface,
-        SignInUserDataAccessInterface, UserDataAccessInterface, ChangePasswordUserDataAccessInterface, DeleteAccountUserDataInterface {
+        SignInUserDataAccessInterface, UserDataAccessInterface, ChangePasswordUserDataAccessInterface, DeleteAccountUserDataInterface,
+        DeleteLocationUserDataAccessInterface {
 
     // CSV header
     private static final String[] HEADER = {"username", "password", "locations"};
