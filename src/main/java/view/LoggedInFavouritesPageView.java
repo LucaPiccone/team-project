@@ -49,6 +49,7 @@ public class LoggedInFavouritesPageView extends JPanel implements ActionListener
 
         //** Build View **//
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBorder(BorderFactory.createEmptyBorder(18, 18, 18, 18));
         this.add(Box.createVerticalStrut(20));
         this.add(title);
         this.add(Box.createVerticalStrut(20));

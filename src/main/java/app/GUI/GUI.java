@@ -378,7 +378,7 @@ public class GUI {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        application.setMinimumSize(new Dimension(1200, 700));
+
         //** View on Start Up. **//
         viewManagerModel.setState(homePageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
