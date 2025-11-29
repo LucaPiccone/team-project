@@ -29,4 +29,8 @@ public class WeatherReportPageController {
     public void resetPopUpMessage() {
         currentWeatherInputBoundary.resetPopUpMessage();
     }
+
+    public void switchToCheckOutfitView(WeatherReportPageState state) {
+        currentWeatherInputBoundary.switchToCheckOutfitView(state);
+    }
 }

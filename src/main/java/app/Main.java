@@ -16,6 +16,7 @@ public class Main {
         GUI gui = new GUI();
         JFrame application = gui
                 .addHomePageView()
+                .addCheckOutfitView()
                 .addCreateAccountView()
                 .addSignInView()
                 .addLoggedInFavouritePageView()
@@ -31,6 +32,7 @@ public class Main {
                 .addLoggedInHomePageUseCases()
                 .addCurrentWeatherUseCases()
                 .addSettingsUseCases()
+                .addCheckOutfitUseCases()
                 .build();
 
         application.pack();
