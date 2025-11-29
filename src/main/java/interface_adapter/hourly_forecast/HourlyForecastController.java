@@ -9,8 +9,8 @@ public class HourlyForecastController {
         this.hourlyForecastInputBoundary = hourlyForecastInputBoundary;
     }
 
-    public void switchToWeatherReportView(String cityName) {
-        hourlyForecastInputBoundary.switchToWeatherReportView(cityName);
+    public void switchToWeatherReportView() {
+        hourlyForecastInputBoundary.switchToWeatherReportView();
 
     }
 }

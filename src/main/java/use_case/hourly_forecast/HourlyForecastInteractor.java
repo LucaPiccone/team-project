@@ -15,17 +15,7 @@ public class HourlyForecastInteractor implements HourlyForecastInputBoundary {
     }
 
     @Override
-    public void switchToWeatherReportView(String cityName) {
-        WeatherReport weatherReport;
-        CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
-        WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
-        WeatherReportFactory factory = new WeatherReportFactory(fetcher, coordinatesFetcher);
-        try {
-            weatherReport = factory.create(cityName);
-        } catch (WeatherDataFetcher.CityNotFoundException | CoordinatesFetcher.CityNotFoundException e) {
-            presenter.prepareFailGoBack(cityName);
-            throw new RuntimeException(e);
-        }
-        presenter.switchToWeatherReportView(weatherReport);
+    public void switchToWeatherReportView() {
+        presenter.switchToWeatherReportView();
     }
 }

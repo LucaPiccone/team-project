@@ -20,15 +20,7 @@ public class HourlyForecastPresenter implements HourlyForecastOutputBoundary {
     }
 
     @Override
-    public void switchToWeatherReportView(WeatherReport weatherReport) {
-        final WeatherReportPageState state = weatherReportPageViewModel.getState();
-        state.setCityName(weatherReport.getLocation());
-        state.setWeather(weatherReport.getWeather());
-        state.setTemperature(weatherReport.getTemperature());
-        state.setHumidity(weatherReport.getHumidity());
-        state.setFeelsLike(weatherReport.getFeelsLike());
-        weatherReportPageViewModel.setState(state);
-        weatherReportPageViewModel.firePropertyChanged();
+    public void switchToWeatherReportView() {
         viewManagerModel.setState(weatherReportPageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

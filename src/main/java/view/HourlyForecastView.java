@@ -40,8 +40,7 @@ public class HourlyForecastView extends JPanel implements PropertyChangeListener
         this.add(buttons);
 
         goBack.addActionListener(e -> {
-            HourlyForecastState state = hourlyForecastViewModel.getState();
-            hourlyForecastController.switchToWeatherReportView(state.getCityName());
+            hourlyForecastController.switchToWeatherReportView();
         });
     }
 

@@ -5,7 +5,7 @@ import view.WeatherReportView;
 
 public interface HourlyForecastOutputBoundary {
 
-    void switchToWeatherReportView(WeatherReport weatherReport);
+    void switchToWeatherReportView();
 
     void prepareFailGoBack(String cityName);
 }
