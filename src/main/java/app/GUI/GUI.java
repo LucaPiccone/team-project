@@ -12,6 +12,9 @@ import interface_adapter.deleteFavouriteLocation.DeleteLocationPresenter;
 import interface_adapter.homepage.HomePageController;
 import interface_adapter.homepage.HomePagePresenter;
 import interface_adapter.homepage.HomePageViewModel;
+import interface_adapter.hourly_forecast.HourlyForecastController;
+import interface_adapter.hourly_forecast.HourlyForecastPresenter;
+import interface_adapter.hourly_forecast.HourlyForecastViewModel;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageController;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPagePresenter;
 import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
@@ -52,6 +55,8 @@ import use_case.deleteFavouriteLocation.DeleteLocationUserDataAccessInterface;
 import use_case.homePage.HomePageInputBoundary;
 import use_case.homePage.HomePageInteractor;
 import use_case.homePage.HomePageOutputBoundary;
+import use_case.hourly_forecast.HourlyForecastInteractor;
+import use_case.hourly_forecast.HourlyForecastOutputBoundary;
 import use_case.loggedInFavouritesPage.LoggedInFavouritesPageInputBoundary;
 import use_case.loggedInFavouritesPage.LoggedInFavouritesPageInteractor;
 import use_case.loggedInFavouritesPage.LoggedInFavouritesPageOutputBoundary;
@@ -118,6 +123,9 @@ public class GUI {
 
     private CheckOutfitView checkOutfitView;
     private CheckOutfitViewModel checkOutfitViewModel;
+
+    private HourlyForecastView hourlyForecastView;
+    private HourlyForecastViewModel hourlyForecastViewModel;
 
     private SettingsView settingsView;
     private SettingsViewModel settingsViewModel;
@@ -292,6 +300,7 @@ public class GUI {
                 loggedInSearchPageViewModel,
                 loggedInHomePageViewModel,
                 checkOutfitViewModel,
+                hourlyForecastViewModel,
                 viewManagerModel);
         CurrentWeatherInputBoundary currentWeatherInteractor = new CurrentWeatherInteractor(
                 userDataAccessObject, currentWeatherOutputBoundary);
@@ -334,6 +343,26 @@ public class GUI {
         return this;
     }
 
+    //** HOURLY FORECAST **//
+    public GUI addHourlyForecastView() {
+        hourlyForecastViewModel = new HourlyForecastViewModel();
+        hourlyForecastView = new HourlyForecastView(hourlyForecastViewModel);
+        cardPanel.add(hourlyForecastView, hourlyForecastView.getViewName());
+        return this;
+    }
+
+    public GUI addHourlyForecastUseCases() {
+        final HourlyForecastOutputBoundary outputBoundary = new HourlyForecastPresenter(
+                hourlyForecastViewModel,
+                weatherReportPageViewModel,
+                viewManagerModel
+        );
+        final HourlyForecastInteractor interactor = new HourlyForecastInteractor(outputBoundary);
+        HourlyForecastController controller = new HourlyForecastController(interactor);
+        hourlyForecastView.setHourlyForecastController(controller);
+        return this;
+    }
+
     public GUI addSettingsUseCases() {
         final ChangePasswordOutputBoundary changePasswordOutputBoundary = new SettingsChangePasswordPresenter(settingsViewModel);
         final ChangePasswordInteractor changePasswordInteractor = new ChangePasswordInteractor(userDataAccessObject,
@@ -357,8 +386,8 @@ public class GUI {
         final LogoutInteractor logoutInteractor = new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
         SettingsLogoutController settingsLogoutController = new SettingsLogoutController(logoutInteractor);
 
-        final SettingsOutputBoundary settingsOutputBoundar = new SettingsPresenter(viewManagerModel, loggedInHomePageViewModel);
-        final SettingsInputBoundary settingsInputBoundary = new SettingsInteractor(settingsOutputBoundar);
+        final SettingsOutputBoundary settingsOutputBoundary = new SettingsPresenter(viewManagerModel, loggedInHomePageViewModel);
+        final SettingsInputBoundary settingsInputBoundary = new SettingsInteractor(settingsOutputBoundary);
         SettingsController settingsController = new SettingsController(settingsInputBoundary);
 
         settingsView.setLogoutController(settingsLogoutController);

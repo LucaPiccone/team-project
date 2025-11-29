@@ -50,7 +50,7 @@ public class WeatherReportPageController {
         currentWeatherInputBoundary.switchToCheckOutfitView();
     }
 
-//    public void switchToHourlyForecastView() {
-//        currentWeatherInputBoundary
-//    }
+    public void switchToHourlyForecastView(String cityName) {
+        currentWeatherInputBoundary.switchToHourlyForecastView(cityName);
+    }
 }

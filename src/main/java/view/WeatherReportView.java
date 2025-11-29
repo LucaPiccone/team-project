@@ -137,12 +137,14 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         this.add(Box.createVerticalGlue());
 
         checkOutfit.addActionListener(e-> {
+            WeatherReportPageState state = weatherReportViewModel.getState();
             weatherReportPageController.switchToCheckOutfitView();
         });
 
-//        hourlyForecast.addActionListener(e->{
-//           weatherReportPageController.switchToHourlyForecastView();
-//        });
+        hourlyForecast.addActionListener(e->{
+            WeatherReportPageState state = weatherReportViewModel.getState();
+           weatherReportPageController.switchToHourlyForecastView(state.getCityName());
+        });
 
 
         backToHomeButton.addActionListener(e ->

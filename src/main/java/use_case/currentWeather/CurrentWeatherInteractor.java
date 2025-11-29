@@ -52,5 +52,10 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
         userPresenter.switchToCheckOutfitView();
     }
 
+    @Override
+    public void switchToHourlyForecastView(String cityName) {
+        userPresenter.switchToHourlyForecastView(cityName);
+    }
+
 
 }

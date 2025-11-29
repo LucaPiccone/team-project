@@ -1,6 +1,7 @@
 package interface_adapter.check_outfit;
 
 import interface_adapter.ViewModel;
+import interface_adapter.weatherReportPage.WeatherReportPageState;
 
 public class CheckOutfitViewModel extends ViewModel<CheckOutfitState> {
     public static final String GO_BACK_LABEL = "Go Back";
@@ -8,5 +9,6 @@ public class CheckOutfitViewModel extends ViewModel<CheckOutfitState> {
 
     public CheckOutfitViewModel() {
         super("Check Outfit View");
+        setState(new CheckOutfitState());
     }
 }

@@ -3,6 +3,8 @@ package interface_adapter.weatherReportPage;
 import entity.weatherReport.WeatherReport;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.check_outfit.CheckOutfitViewModel;
+import interface_adapter.hourly_forecast.HourlyForecastState;
+import interface_adapter.hourly_forecast.HourlyForecastViewModel;
 import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
 import use_case.currentWeather.CurrentWeatherOutputBoundary;
@@ -13,16 +15,20 @@ public class WeatherReportPagePresenter implements CurrentWeatherOutputBoundary 
     private final LoggedInHomePageViewModel loggedInHomePageViewModel;
     private final LoggedInSearchPageViewModel loggedInSearchPageViewModel;
     private final CheckOutfitViewModel checkOutfitViewModel;
+    private final HourlyForecastViewModel hourlyForecastViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public WeatherReportPagePresenter(WeatherReportPageViewModel weatherReportPageViewModel,
                                       LoggedInSearchPageViewModel loggedInSearchPageViewModel,
-                                      LoggedInHomePageViewModel loggedInHomePageViewModel, CheckOutfitViewModel checkOutfitViewModel,
+                                      LoggedInHomePageViewModel loggedInHomePageViewModel,
+                                      CheckOutfitViewModel checkOutfitViewModel,
+                                      HourlyForecastViewModel hourlyForecastViewModel,
                                       ViewManagerModel viewManagerModel) {
         this.weatherReportPageViewModel = weatherReportPageViewModel;
         this.loggedInSearchPageViewModel = loggedInSearchPageViewModel;
         this.loggedInHomePageViewModel = loggedInHomePageViewModel;
         this.checkOutfitViewModel = checkOutfitViewModel;
+        this.hourlyForecastViewModel = hourlyForecastViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
@@ -61,6 +67,16 @@ public class WeatherReportPagePresenter implements CurrentWeatherOutputBoundary 
     @Override
     public void switchToCheckOutfitView() {
         viewManagerModel.setState(checkOutfitViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchToHourlyForecastView(String cityName) {
+        HourlyForecastState hourlyForecastState = hourlyForecastViewModel.getState();
+        hourlyForecastState.setCityName(cityName);
+        hourlyForecastViewModel.setState(hourlyForecastState);
+        hourlyForecastViewModel.firePropertyChanged();
+        viewManagerModel.setState(hourlyForecastViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

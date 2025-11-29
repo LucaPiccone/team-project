@@ -26,6 +26,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     public HomePageView(HomePageViewModel homePageViewModel) {
         this.homePageViewModel = homePageViewModel;
 
+        //** Title** //
         final JLabel title = new JLabel(HomePageViewModel.WELCOME_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));

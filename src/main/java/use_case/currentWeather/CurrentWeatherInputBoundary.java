@@ -12,4 +12,6 @@ public interface CurrentWeatherInputBoundary {
     void resetPopUpMessage();
 
     void switchToCheckOutfitView();
+
+    void switchToHourlyForecastView(String cityName);
 }
