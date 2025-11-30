@@ -1,4 +1,4 @@
-package OpenWeatherAPI;
+package api.OpenWeatherAPI;
 
 import api.openWeatherApi.OpenWeatherApiDataFetcher;
 import api.openWeatherApi.WeatherDataFetcher;

@@ -6,6 +6,7 @@ import interface_adapter.homepage.HomePageViewModel;
 import interface_adapter.hourly_forecast.HourlyForecastController;
 import interface_adapter.hourly_forecast.HourlyForecastState;
 import interface_adapter.hourly_forecast.HourlyForecastViewModel;
+import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class HourlyForecastView extends JPanel implements PropertyChangeListener
     HourlyForecastViewModel hourlyForecastViewModel;
     private HourlyForecastController hourlyForecastController = null;
 
+    JLabel title;
     JPanel contentPanel;
     JButton goBack;
     JButton goHome;
@@ -30,7 +32,7 @@ public class HourlyForecastView extends JPanel implements PropertyChangeListener
         hourlyForecastViewModel.addPropertyChangeListener(this);
 
         //** Title**//
-        final JLabel title = new JLabel(HourlyForecastViewModel.TITLE_LABEL);
+        title = new JLabel(HourlyForecastViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
 
@@ -65,6 +67,7 @@ public class HourlyForecastView extends JPanel implements PropertyChangeListener
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         HourlyForecastState state = hourlyForecastViewModel.getState();
+        title.setText(LoggedInHomePageViewModel.WELCOME_LABEL + " for " + state.getCityName());
         HourlyForecastReport report = state.getReport();
         contentPanel.removeAll();
         // Create the grid panel for the forecast

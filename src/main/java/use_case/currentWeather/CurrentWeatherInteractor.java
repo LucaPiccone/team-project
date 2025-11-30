@@ -84,7 +84,7 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
         HashMap<String, Double> coordinates = coordinatesFetcher.getCoordinates(cityName);
         HourlyForecastFetcher forecastFetcher = new HourlyForecastApiDataFetcher();
         HourlyForecastReport report = forecastFetcher.getHourlyForecast(coordinates);
-        userPresenter.switchToHourlyForecast(report);
+        userPresenter.switchToHourlyForecast(report, cityName);
     }
 
     @Override

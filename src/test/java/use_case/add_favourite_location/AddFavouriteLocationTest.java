@@ -42,6 +42,12 @@ public class AddFavouriteLocationTest {
 
             @Override
             public void switchToFavouritesPageView(List<WeatherReport> weatherReports) {}
+
+            @Override
+            public void switchToHourlyForecast(HourlyForecastReport report, String cityName) {
+
+            }
+
             @Override
             public void switchToLoggedInSearchView() {}
             @Override
@@ -50,8 +56,6 @@ public class AddFavouriteLocationTest {
             public void switchToCheckOutfitView(WeatherReportPageState state) {}
             @Override
             public void resetPopUpMessage() {}
-            @Override
-            public void switchToHourlyForecast(HourlyForecastReport report) {}
         };
         CurrentWeatherInputBoundary interactor = new CurrentWeatherInteractor(userRepository, presenter);
         interactor.addToFavourites(inputData);
@@ -89,7 +93,7 @@ public class AddFavouriteLocationTest {
             @Override
             public void resetPopUpMessage() {}
             @Override
-            public void switchToHourlyForecast(HourlyForecastReport report) {}
+            public void switchToHourlyForecast(HourlyForecastReport report, String cityName) {}
         };
         CurrentWeatherInputBoundary interactor = new CurrentWeatherInteractor(userRepository, presenter);
         interactor.addToFavourites(inputData);

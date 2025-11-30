@@ -21,5 +21,5 @@ public interface CurrentWeatherOutputBoundary {
 
      void switchToFavouritesPageView(List<WeatherReport> weatherReports);
 
-     void switchToHourlyForecast(HourlyForecastReport report);
+     void switchToHourlyForecast(HourlyForecastReport report, String cityName);
 }
