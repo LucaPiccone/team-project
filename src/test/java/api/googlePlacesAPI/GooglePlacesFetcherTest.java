@@ -13,7 +13,17 @@ class GooglePlacesFetcherTest {
     @Test
     void testGetPlace_validPlace() throws PlaceFetcher.PlaceNotFoundException {
         GooglePlacesFetcher fetcher = new GooglePlacesFetcher();
-        List<PlaceSuggestion> result = fetcher.getPlace("''");
-        System.out.println(result);
+        List<PlaceSuggestion> result = fetcher.getPlace("Tor");
+
+        // Check that the result is not null
+        assertNotNull(result, "Result should not be null");
+
+        // Check that the list has at least one suggestion
+        assertFalse(result.isEmpty(), "Result should contain at least one place suggestion");
+
+
+        assertNotNull(result.get(0).getMainText(), "Place name should not be null");
+        assertTrue(result.get(0).getMainText().toLowerCase().contains("tor"), "First place name should contain 'tor'");
+
     }
 }

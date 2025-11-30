@@ -1,4 +1,4 @@
-package GeocodingAPI;
+package api.GeocodingAPI;
 
 import api.geocodingapi.CoordinatesFetcher;
 import api.geocodingapi.GeocodingApiCoordinatesFetcher;
