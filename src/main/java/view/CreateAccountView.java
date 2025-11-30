@@ -34,46 +34,92 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
         createAccountViewModel.addPropertyChangeListener(this);
 
         // TITLE
-        final JLabel title = new JLabel(CreateAccountViewModel.TITLE_LABEL);
+        JLabel title = new JLabel(CreateAccountViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
 
-        // LABELS AND TEXT FIELDS
-        final LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel(CreateAccountViewModel.USERNAME_LABEL), usernameInputField);
+        // USERNAME PANEL
+        JLabel usernameLabel = new JLabel(CreateAccountViewModel.USERNAME_LABEL);
+        JPanel usernamePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        usernamePanel.add(usernameLabel);
+        usernamePanel.add(usernameInputField);
 
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel(CreateAccountViewModel.PASSWORD_LABEL), passwordInputField);
-
-        final LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
-                new JLabel(CreateAccountViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
-
+        // ERROR LABELS
         usernameErrorField.setForeground(Color.RED);
+        usernameErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        usernameErrorField.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // PASSWORD PANEL
+        JLabel passwordLabel = new JLabel(CreateAccountViewModel.PASSWORD_LABEL);
+        JPanel passwordPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        passwordPanel.add(passwordLabel);
+        passwordPanel.add(passwordInputField);
+
         passwordErrorField.setForeground(Color.RED);
+        passwordErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        passwordErrorField.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // REPEAT PASSWORD PANEL
+        JLabel repeatPasswordLabel = new JLabel(CreateAccountViewModel.REPEAT_PASSWORD_LABEL);
+        JPanel repeatPasswordPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        repeatPasswordPanel.add(repeatPasswordLabel);
+        repeatPasswordPanel.add(repeatPasswordInputField);
+
         repeatPasswordErrorField.setForeground(Color.RED);
+        repeatPasswordErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        repeatPasswordErrorField.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // BUTTONS
-        final JPanel buttons = new JPanel();
+        // BUTTON PANEL
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         goBack = new JButton(CreateAccountViewModel.GO_BACK_BUTTON_LABEL);
-        createAccountButton = new  JButton(CreateAccountViewModel.SIGNUP_BUTTON_LABEL);
-        buttons.add(goBack);
-        buttons.add(createAccountButton);
+        createAccountButton = new JButton(CreateAccountViewModel.SIGNUP_BUTTON_LABEL);
+        buttonsPanel.add(createAccountButton);
+        buttonsPanel.add(goBack);
 
-        // VIEW
+        // IMPORTANT: Center panels in BoxLayout
+        usernamePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        passwordPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        repeatPasswordPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // LOCK HEIGHT (so BoxLayout doesn't stretch panels)
+        lockHeight(usernamePanel);
+        lockHeight(passwordPanel);
+        lockHeight(repeatPasswordPanel);
+        lockHeight(buttonsPanel);
+        lockHeight(usernameErrorField);
+        lockHeight(passwordErrorField);
+        lockHeight(repeatPasswordErrorField);
+
+        // ADD COMPONENTS TO VIEW
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(Box.createVerticalStrut(10));
         this.add(title);
-        this.add(Box.createVerticalStrut(10));
-        this.add(usernameInfo);
+        this.add(Box.createVerticalStrut(15));
+
+        this.add(usernamePanel);
         this.add(usernameErrorField);
-        this.add(passwordInfo);
+        this.add(Box.createVerticalStrut(10));
+
+        this.add(passwordPanel);
         this.add(passwordErrorField);
-        this.add(repeatPasswordInfo);
+        this.add(Box.createVerticalStrut(10));
+
+        this.add(repeatPasswordPanel);
         this.add(repeatPasswordErrorField);
-        this.add(buttons);
+        this.add(Box.createVerticalStrut(10));
+
+        this.add(buttonsPanel);
+        this.add(Box.createVerticalGlue());
+
 
         createAccountButton.addActionListener(this);
         goBack.addActionListener(this);
+    }
+
+    private void lockHeight(JComponent c) {
+        Dimension pref = c.getPreferredSize();
+        c.setMaximumSize(new Dimension(Integer.MAX_VALUE, pref.height));
     }
 
     public void setCreateController(CreateAccountController controller) {
@@ -100,7 +146,7 @@ public class CreateAccountView extends JPanel implements ActionListener, Propert
                     state.getUsername(),
                     state.getPassword(),
                     state.getRepeatPassword()
-                );
+            );
         } else if (source == goBack) {
             createAccountController.switchToHomePage();
         }
