@@ -171,13 +171,7 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         addToFavouritesButton.addActionListener(
                 e -> {
                     WeatherReportPageState state = weatherReportViewModel.getState();
-                    try {
-                        weatherReportController.addToFavourites(state);
-                    } catch (CoordinatesFetcher.CityNotFoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (WeatherDataFetcher.CityNotFoundException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    weatherReportController.addToFavourites(state);
                 });
 
 
