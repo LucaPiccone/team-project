@@ -1,9 +1,9 @@
 package use_case.loggedInFavouritesPage;
 
-import api.openWeatherApi.OpenWeatherApiDataFetcher;
-import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.CoordinatesFetcher;
 import api.geocodingapi.GeocodingApiCoordinatesFetcher;
+import api.openWeatherApi.OpenWeatherApiDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import entity.weatherReport.WeatherReport;
 import entity.weatherReport.WeatherReportFactory;
 
@@ -21,13 +21,14 @@ public class LoggedInFavouritesPageInteractor implements LoggedInFavouritesPageI
 
     @Override
     public void execute(String location) {
-        WeatherReport weatherReport;
-        CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
-        WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
-        WeatherReportFactory factory = new WeatherReportFactory(fetcher, coordinatesFetcher);
+        final WeatherReport weatherReport;
+        final CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
+        final WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
+        final WeatherReportFactory factory = new WeatherReportFactory(fetcher, coordinatesFetcher);
         try {
             weatherReport = factory.create(location);
-        } catch (WeatherDataFetcher.CityNotFoundException | CoordinatesFetcher.CityNotFoundException e) {
+        }
+        catch (WeatherDataFetcher.CityNotFoundException | CoordinatesFetcher.CityNotFoundException e) {
             throw new RuntimeException(e);
         }
         userPresenter.switchToWeatherReportView(weatherReport);

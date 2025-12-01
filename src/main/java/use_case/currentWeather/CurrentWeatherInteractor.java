@@ -4,20 +4,19 @@ import api.geocodingapi.GeocodingApiCoordinatesFetcher;
 import api.hourly_forecast_api.HourlyForecastApiDataFetcher;
 import api.hourly_forecast_api.HourlyForecastFetcher;
 import api.openWeatherApi.OpenWeatherApiDataFetcher;
-import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.CoordinatesFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import data_access.UserDataAccessInterface;
 import entity.hourly_forecast_report.HourlyForecastReport;
 import entity.weatherReport.WeatherReport;
 import entity.weatherReport.WeatherReportFactory;
 import interface_adapter.weatherReportPage.WeatherReportPageState;
-import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
+public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary {
     private final UserDataAccessInterface userDataAccessInterface;
     private final CurrentWeatherOutputBoundary userPresenter;
 
@@ -38,16 +37,18 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
     }
 
     @Override
-    public void addToFavourites(CurrentWeatherInputData inputData) throws CoordinatesFetcher.CityNotFoundException, WeatherDataFetcher.CityNotFoundException {
-        String cityName = inputData.getCityName();
-        List<String> locations = userDataAccessInterface.getLocations();
-        boolean alreadyExists = locations.contains(cityName);
+    public void addToFavourites(CurrentWeatherInputData inputData) throws CoordinatesFetcher.CityNotFoundException,
+            WeatherDataFetcher.CityNotFoundException {
+        final String cityName = inputData.getCityName();
+        final List<String> locations = userDataAccessInterface.getLocations();
+        final boolean alreadyExists = locations.contains(cityName);
 
-        CurrentWeatherOutputData outputData = new CurrentWeatherOutputData(cityName);
+        final CurrentWeatherOutputData outputData = new CurrentWeatherOutputData(cityName);
 
         if (alreadyExists) {
             userPresenter.addToFavouriteFail(outputData);
-        } else {
+        }
+        else {
             userDataAccessInterface.addLocation(cityName);
             userPresenter.addToFavouriteSuccess(outputData);
         }
@@ -61,16 +62,17 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
     @Override
     public void switchToFavouritesPageView() {
         // All favourite locations of the user
-        List<String> locations = userDataAccessInterface.getLocations();
-        List<WeatherReport> weatherReports = new ArrayList<>();
-        CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
-        WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
-        WeatherReportFactory factory = new WeatherReportFactory(fetcher, coordinatesFetcher);
+        final List<String> locations = userDataAccessInterface.getLocations();
+        final List<WeatherReport> weatherReports = new ArrayList<>();
+        final CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
+        final WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
+        final WeatherReportFactory factory = new WeatherReportFactory(fetcher, coordinatesFetcher);
         for (String location : locations) {
             try {
                 WeatherReport weatherReport = factory.create(location);
                 weatherReports.add(weatherReport);
-            } catch (WeatherDataFetcher.CityNotFoundException |
+            }
+            catch (WeatherDataFetcher.CityNotFoundException |
                      CoordinatesFetcher.CityNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -80,10 +82,10 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary{
 
     @Override
     public void switchToHourlyForecast(String cityName) throws CoordinatesFetcher.CityNotFoundException {
-        CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
-        HashMap<String, Double> coordinates = coordinatesFetcher.getCoordinates(cityName);
-        HourlyForecastFetcher forecastFetcher = new HourlyForecastApiDataFetcher();
-        HourlyForecastReport report = forecastFetcher.getHourlyForecast(coordinates);
+        final CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
+        final HashMap<String, Double> coordinates = coordinatesFetcher.getCoordinates(cityName);
+        final HourlyForecastFetcher forecastFetcher = new HourlyForecastApiDataFetcher();
+        final HourlyForecastReport report = forecastFetcher.getHourlyForecast(coordinates);
         userPresenter.switchToHourlyForecast(report, cityName);
     }
 
