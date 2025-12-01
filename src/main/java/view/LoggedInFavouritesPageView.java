@@ -1,11 +1,8 @@
 package view;
 
-import entity.weatherReport.WeatherReport;
-import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageController;
-import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageState;
-import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
-import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
-import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
+import entity.weather_report.WeatherReport;
+import interface_adapter.logged_in_favourites_page.LoggedInFavouritesPageController;
+import interface_adapter.logged_in_favourites_page.LoggedInFavouritesPageViewModel;
 
 import javax.swing.*;
 import java.awt.*;

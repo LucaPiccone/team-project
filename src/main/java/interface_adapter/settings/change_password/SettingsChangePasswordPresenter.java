@@ -1,8 +1,8 @@
 package interface_adapter.settings.change_password;
 
 import interface_adapter.settings.SettingsViewModel;
-import use_case.changePassword.ChangePasswordOutputBoundary;
-import use_case.changePassword.ChangePasswordOutputData;
+import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.change_password.ChangePasswordOutputData;
 
 import javax.swing.*;
 

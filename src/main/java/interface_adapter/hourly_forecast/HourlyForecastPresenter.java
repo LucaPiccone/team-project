@@ -1,8 +1,8 @@
 package interface_adapter.hourly_forecast;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
-import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
+import interface_adapter.logged_in_home_page.LoggedInHomePageViewModel;
+import interface_adapter.weather_report_page.WeatherReportPageViewModel;
 import use_case.hourly_forecast.HourlyForecastOutputBoundary;
 
 public class HourlyForecastPresenter implements HourlyForecastOutputBoundary {

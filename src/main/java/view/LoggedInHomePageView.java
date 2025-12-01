@@ -1,16 +1,13 @@
 package view;
 
 import data_access.FileUserDataAccessObjectWithLocations;
-import entity.user.User;
-import interface_adapter.loggedInHomePage.LoggedInHomePageController;
-import interface_adapter.loggedInHomePage.LoggedInHomePageState;
-import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
+import interface_adapter.logged_in_home_page.LoggedInHomePageController;
+import interface_adapter.logged_in_home_page.LoggedInHomePageState;
+import interface_adapter.logged_in_home_page.LoggedInHomePageViewModel;
 import interface_adapter.logout.LogoutController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 

@@ -1,8 +1,7 @@
 package interface_adapter.settings.delete_account;
 
-import interface_adapter.ViewManagerModel;
-import use_case.deleteAccount.DeleteAccountOutputBoundary;
-import use_case.deleteAccount.DeleteAccountOutputData;
+import use_case.delete_account.DeleteAccountOutputBoundary;
+import use_case.delete_account.DeleteAccountOutputData;
 
 import javax.swing.*;
 

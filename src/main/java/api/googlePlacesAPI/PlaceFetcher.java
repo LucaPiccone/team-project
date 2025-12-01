@@ -1,7 +1,6 @@
 package api.googlePlacesAPI;
 
-import entity.placeSuggestions.PlaceSuggestion;
-import org.json.JSONObject;
+import entity.place_suggestions.PlaceSuggestion;
 
 import java.util.List;
 

@@ -6,10 +6,10 @@ import api.hourly_forecast_api.HourlyForecastApiDataFetcher;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.UserDataAccessInterface;
 import entity.hourly_forecast_report.HourlyForecastReport;
-import entity.weatherReport.WeatherReport;
-import interface_adapter.weatherReportPage.WeatherReportPageState;
+import entity.weather_report.WeatherReport;
+import interface_adapter.weather_report_page.WeatherReportPageState;
 import org.junit.jupiter.api.Test;
-import use_case.currentWeather.*;
+import use_case.current_weather.*;
 
 import java.util.HashMap;
 import java.util.List;

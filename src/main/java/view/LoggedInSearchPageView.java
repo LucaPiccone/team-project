@@ -1,11 +1,10 @@
 package view;
 
 import api.googlePlacesAPI.PlaceFetcher;
-import entity.placeSuggestions.PlaceSuggestion;
-import interface_adapter.loggedInHomePage.LoggedInHomePageState;
-import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
-import interface_adapter.loggedInSearchPage.LoggedInSearchPageState;
-import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
+import entity.place_suggestions.PlaceSuggestion;
+import interface_adapter.logged_in_search_page.LoggedInSearchPageController;
+import interface_adapter.logged_in_search_page.LoggedInSearchPageState;
+import interface_adapter.logged_in_search_page.LoggedInSearchPageViewModel;
 
 import javax.swing.*;
 import java.awt.*;

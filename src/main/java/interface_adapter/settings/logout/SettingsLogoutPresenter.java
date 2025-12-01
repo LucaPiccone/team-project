@@ -1,22 +1,18 @@
 package interface_adapter.settings.logout;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.createAccount.CreateAccountState;
-import interface_adapter.createAccount.CreateAccountViewModel;
-import interface_adapter.homepage.HomePageState;
-import interface_adapter.homepage.HomePageViewModel;
-import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageState;
-import interface_adapter.loggedInFavouritesPage.LoggedInFavouritesPageViewModel;
-import interface_adapter.loggedInHomePage.LoggedInHomePageState;
-import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
-import interface_adapter.loggedInSearchPage.LoggedInSearchPageState;
-import interface_adapter.loggedInSearchPage.LoggedInSearchPageViewModel;
+import interface_adapter.create_account.CreateAccountState;
+import interface_adapter.create_account.CreateAccountViewModel;
+import interface_adapter.logged_in_favourites_page.LoggedInFavouritesPageState;
+import interface_adapter.logged_in_favourites_page.LoggedInFavouritesPageViewModel;
+import interface_adapter.logged_in_home_page.LoggedInHomePageState;
+import interface_adapter.logged_in_home_page.LoggedInHomePageViewModel;
+import interface_adapter.logged_in_search_page.LoggedInSearchPageState;
+import interface_adapter.logged_in_search_page.LoggedInSearchPageViewModel;
 import interface_adapter.settings.SettingsState;
 import interface_adapter.settings.SettingsViewModel;
-import interface_adapter.signin.SignInState;
-import interface_adapter.signin.SignInViewModel;
-import interface_adapter.weatherReportPage.WeatherReportPageState;
-import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
+import interface_adapter.sign_in.SignInState;
+import interface_adapter.sign_in.SignInViewModel;
 import use_case.logout.LogoutOutputBoundary;
 import use_case.logout.LogoutOutputData;
 

@@ -1,6 +1,6 @@
 package api.googlePlacesAPI;
 
-import entity.placeSuggestions.PlaceSuggestion;
+import entity.place_suggestions.PlaceSuggestion;
 import okhttp3.*;
 
 import org.json.JSONArray;

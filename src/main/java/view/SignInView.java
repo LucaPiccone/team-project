@@ -1,9 +1,8 @@
 package view;
 
-import interface_adapter.logout.LogoutController;
-import interface_adapter.signin.SignInViewModel;
-import interface_adapter.signin.SignInState;
-import interface_adapter.signin.SignInController;
+import interface_adapter.sign_in.SignInViewModel;
+import interface_adapter.sign_in.SignInState;
+import interface_adapter.sign_in.SignInController;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

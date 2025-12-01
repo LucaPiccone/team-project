@@ -1,8 +1,8 @@
 package view;
 
-import interface_adapter.weatherReportPage.WeatherReportPageController;
-import interface_adapter.weatherReportPage.WeatherReportPageViewModel;
-import interface_adapter.weatherReportPage.WeatherReportPageState;
+import interface_adapter.weather_report_page.WeatherReportPageController;
+import interface_adapter.weather_report_page.WeatherReportPageViewModel;
+import interface_adapter.weather_report_page.WeatherReportPageState;
 import api.geocodingapi.CoordinatesFetcher;
 import api.openWeatherApi.WeatherDataFetcher;
 import model.Location;

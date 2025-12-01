@@ -1,10 +1,7 @@
 package api.hourly_forecast_api;
 
-import api.googlePlacesAPI.PlaceFetcher;
-import api.openWeatherApi.WeatherDataFetcher;
 import entity.hourly_forecast_report.HourlyForecastFactory;
 import entity.hourly_forecast_report.HourlyForecastReport;
-import entity.placeSuggestions.PlaceSuggestion;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

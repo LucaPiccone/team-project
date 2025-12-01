@@ -1,12 +1,10 @@
 package view;
 
 import entity.hourly_forecast_report.HourlyForecastReport;
-import interface_adapter.homepage.HomePageController;
-import interface_adapter.homepage.HomePageViewModel;
 import interface_adapter.hourly_forecast.HourlyForecastController;
 import interface_adapter.hourly_forecast.HourlyForecastState;
 import interface_adapter.hourly_forecast.HourlyForecastViewModel;
-import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
+import interface_adapter.logged_in_home_page.LoggedInHomePageViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
