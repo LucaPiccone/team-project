@@ -1,9 +1,9 @@
 package use_case.loggedInHomePage;
 
-import api.openWeatherApi.OpenWeatherApiDataFetcher;
-import api.openWeatherApi.WeatherDataFetcher;
 import api.geocodingapi.CoordinatesFetcher;
 import api.geocodingapi.GeocodingApiCoordinatesFetcher;
+import api.openWeatherApi.OpenWeatherApiDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import data_access.UserDataAccessInterface;
 import entity.weatherReport.WeatherReport;
 import entity.weatherReport.WeatherReportFactory;
@@ -15,7 +15,8 @@ public class LoggedInHomePageInteractor implements LoggedInHomePageInputBoundary
     private final UserDataAccessInterface userDataAccessInterface;
     private final LoggedInHomePageOutputBoundary userPresenter;
 
-    public LoggedInHomePageInteractor(UserDataAccessInterface userDataAccessInterface, LoggedInHomePageOutputBoundary loggedInHomePageOutputBoundary) {
+    public LoggedInHomePageInteractor(UserDataAccessInterface userDataAccessInterface,
+                                      LoggedInHomePageOutputBoundary loggedInHomePageOutputBoundary) {
         this.userDataAccessInterface = userDataAccessInterface;
         this.userPresenter = loggedInHomePageOutputBoundary;
     }
@@ -28,16 +29,17 @@ public class LoggedInHomePageInteractor implements LoggedInHomePageInputBoundary
     @Override
     public void switchToLoggedInFavouritesView() {
         // All favourite locations of the user
-        List<String> locations = userDataAccessInterface.getLocations();
-        List<WeatherReport> weatherReports = new ArrayList<>();
-        CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
-        WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
-        WeatherReportFactory factory = new WeatherReportFactory(fetcher, coordinatesFetcher);
+        final List<String> locations = userDataAccessInterface.getLocations();
+        final List<WeatherReport> weatherReports = new ArrayList<>();
+        final CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
+        final WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
+        final WeatherReportFactory factory = new WeatherReportFactory(fetcher, coordinatesFetcher);
         for (String location : locations) {
             try {
-                WeatherReport weatherReport = factory.create(location);
+                final WeatherReport weatherReport = factory.create(location);
                 weatherReports.add(weatherReport);
-            } catch (WeatherDataFetcher.CityNotFoundException |
+            }
+            catch (WeatherDataFetcher.CityNotFoundException |
                      CoordinatesFetcher.CityNotFoundException e) {
                 throw new RuntimeException(e);
             }
