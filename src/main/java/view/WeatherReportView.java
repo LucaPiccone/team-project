@@ -168,16 +168,17 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
         });
 
 
-        addToFavouritesButton.addActionListener(e -> {
-            WeatherReportPageState state = weatherReportViewModel.getState();
-            try {
-                weatherReportController.addToFavourites(state);
-            } catch (CoordinatesFetcher.CityNotFoundException | WeatherDataFetcher.CityNotFoundException ex) {
-                notificationService.showError("Failed to add to favourites: " + ex.getMessage());
-            } catch (Exception ex) {
-                notificationService.showError("Add to favourites failed: " + ex.getMessage());
-            }
-        });
+        addToFavouritesButton.addActionListener(
+                e -> {
+                    WeatherReportPageState state = weatherReportViewModel.getState();
+                    try {
+                        weatherReportController.addToFavourites(state);
+                    } catch (CoordinatesFetcher.CityNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (WeatherDataFetcher.CityNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
 
 
         removeFromFavouritesButton.addActionListener(e -> {
@@ -248,20 +249,6 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
                 notificationService.showError(ex.getMessage());
             }
         });
-
-
-        weatherReportViewModel.addPropertyChangeListener(evt -> {
-            WeatherReportPageState state = weatherReportViewModel.getState();
-            cityName.setText("City Name: " + state.getCityName());
-            weather.setText("Weather: " + state.getWeather());
-            temperature.setText("Temperature: " + state.getTemperature());
-            feelsLike.setText("Feels Like: " + state.getFeelsLike());
-            humidity.setText("Humidity: " + state.getHumidity());
-            if (state.getPopUpMessage() != null && !state.getPopUpMessage().isEmpty()) {
-                JOptionPane.showMessageDialog(null, state.getPopUpMessage());
-                weatherReportController.resetPopUpMessage();
-            }
-        });
     }
 
 
@@ -299,7 +286,18 @@ public class WeatherReportView extends JPanel implements ActionListener, Propert
     public void actionPerformed(ActionEvent e) {}
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {}
+    public void propertyChange(PropertyChangeEvent evt) {
+        WeatherReportPageState state = weatherReportViewModel.getState();
+        cityName.setText("City Name: " + state.getCityName());
+        weather.setText("Weather: " + state.getWeather());
+        temperature.setText("Temperature: " + state.getTemperature());
+        feelsLike.setText("Feels Like: " + state.getFeelsLike());
+        humidity.setText("Humidity: " + state.getHumidity());
+        if (state.getPopUpMessage() != null && !state.getPopUpMessage().isEmpty()) {
+            JOptionPane.showMessageDialog(null, state.getPopUpMessage());
+            weatherReportController.resetPopUpMessage();
+        }
+    }
 
 }
 
