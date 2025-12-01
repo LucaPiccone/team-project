@@ -3,7 +3,7 @@ package use_case.searchLocation;
 import entity.location.Location;
 
 /**
- * The Search Interactor
+ * The Search Interactor.
  */
 public class SearchInteractor implements SearchInputBoundary {
     private final SearchUserDataAccessInterface userDataAccessObject;
@@ -14,13 +14,14 @@ public class SearchInteractor implements SearchInputBoundary {
         this.userDataAccessObject = userDataAccessInterface;
         this.searchPresenter = searchOutputBoundary;
     }
+
     @Override
-    public void execute(SearchInputData searchInputData){
+    public void execute(SearchInputData searchInputData) {
         final String cityName = searchInputData.getCityName();
-        if (cityName == null || cityName.isEmpty()){
+        if (cityName == null || cityName.isEmpty()) {
             searchPresenter.prepareFailView("please enter a city name");
         }
-        // elif city does not exist
+
         else {
             final Location location = userDataAccessObject.get(searchInputData.getCityName());
             userDataAccessObject.setCurrentCityName(cityName);

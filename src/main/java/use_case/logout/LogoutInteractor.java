@@ -1,7 +1,6 @@
 package use_case.logout;
 
 import data_access.UserDataAccessInterface;
-import entity.user.User;
 
 /**
  * The Logout Interactor.

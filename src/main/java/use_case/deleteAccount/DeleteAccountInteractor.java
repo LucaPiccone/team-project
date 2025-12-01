@@ -12,7 +12,7 @@ public class DeleteAccountInteractor implements DeleteAccountInputBoundary {
 
     @Override
     public void execute(DeleteAccountInputData inputData) {
-        String username = inputData.getUsername();
+        final String username = inputData.getUsername();
 
         userDataAccess.deleteByName(username);
         presenter.prepareSuccessView(new DeleteAccountOutputData(username));

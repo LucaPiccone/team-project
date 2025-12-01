@@ -13,7 +13,6 @@ public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
     private final UserFactory userFactory;
     private FileUserDataAccessObjectWithLocations fileUserDataAccessObjectWithLocations;
 
-
     public ChangePasswordInteractor(ChangePasswordUserDataAccessInterface changePasswordDataAccessInterface,
                                     ChangePasswordOutputBoundary changePasswordOutputBoundary,
                                     UserFactory userFactory,
@@ -26,20 +25,20 @@ public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
 
     @Override
     public void execute(ChangePasswordInputData changePasswordInputData) {
-        String userName = fileUserDataAccessObjectWithLocations.getCurrentUsername();
-        User currentUser = fileUserDataAccessObjectWithLocations.get(userName);
-        String password = currentUser.getPassword();
+        final String userName = fileUserDataAccessObjectWithLocations.getCurrentUsername();
+        final User currentUser = fileUserDataAccessObjectWithLocations.get(userName);
+        final String password = currentUser.getPassword();
         if ("".equals(changePasswordInputData.getPassword())) {
             userPresenter.prepareFailView("New password cannot be empty");
         }
         else if (!changePasswordInputData.getPassword().equals(changePasswordInputData.getRepeatPassword())) {
-            userPresenter.prepareFailView("two password don't match");}
+            userPresenter.prepareFailView("two password don't match");
+        }
 
         else if (password.equals(changePasswordInputData.getPassword())) {
             userPresenter.prepareFailView("New password cannot be same as origin one");
-
-
-        } else {
+        }
+        else {
             final User user = userFactory.create(userName,
                     changePasswordInputData.getPassword());
 
