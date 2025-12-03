@@ -29,7 +29,7 @@ public class WeatherReportPageController {
         currentWeatherInputBoundary.switchToLoggedInHomePageView();
     }
 
-    public void addToFavourites(WeatherReportPageState state) throws CoordinatesFetcher.CityNotFoundException, WeatherDataFetcher.CityNotFoundException {
+    public void addToFavourites(WeatherReportPageState state) {
         CurrentWeatherInputData inputData = new CurrentWeatherInputData(
                 state.getCityName()
         );
