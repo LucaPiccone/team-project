@@ -1,7 +1,7 @@
 package interface_adapter.settings.delete_account;
 
-import use_case.deleteAccount.DeleteAccountInputBoundary;
-import use_case.deleteAccount.DeleteAccountInputData;
+import use_case.delete_account.DeleteAccountInputBoundary;
+import use_case.delete_account.DeleteAccountInputData;
 
 public class SettingsDeleteAccountController {
     private final DeleteAccountInputBoundary deleteAccountInputBoundary;

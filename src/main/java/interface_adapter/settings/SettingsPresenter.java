@@ -1,7 +1,7 @@
 package interface_adapter.settings;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
+import interface_adapter.logged_in_home_page.LoggedInHomePageViewModel;
 import use_case.settings.SettingsOutputBoundary;
 
 public class SettingsPresenter implements SettingsOutputBoundary {

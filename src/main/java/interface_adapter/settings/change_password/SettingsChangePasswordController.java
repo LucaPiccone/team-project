@@ -1,7 +1,7 @@
 package interface_adapter.settings.change_password;
 
-import use_case.changePassword.ChangePasswordInputBoundary;
-import use_case.changePassword.ChangePasswordInputData;
+import use_case.change_password.ChangePasswordInputBoundary;
+import use_case.change_password.ChangePasswordInputData;
 
 public class SettingsChangePasswordController {
     private final ChangePasswordInputBoundary userChangePasswordUseCaseInteractor;

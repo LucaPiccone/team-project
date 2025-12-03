@@ -1,8 +1,8 @@
 package view;
 
-import interface_adapter.createAccount.CreateAccountController;
-import interface_adapter.createAccount.CreateAccountState;
-import interface_adapter.createAccount.CreateAccountViewModel;
+import interface_adapter.create_account.CreateAccountController;
+import interface_adapter.create_account.CreateAccountState;
+import interface_adapter.create_account.CreateAccountViewModel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,15 +1,11 @@
 package view;
 
 
-import interface_adapter.homepage.HomePageController;
-import interface_adapter.homepage.HomePageViewModel;
-import interface_adapter.loggedInHomePage.LoggedInHomePageViewModel;
+import interface_adapter.home_page.HomePageController;
+import interface_adapter.home_page.HomePageViewModel;
 
-import javax.imageio.plugins.tiff.TIFFTag;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 

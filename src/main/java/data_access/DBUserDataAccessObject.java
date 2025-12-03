@@ -6,9 +6,9 @@ import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 //import use_case.change_password.ChangePasswordUserDataAccessInterface;
-import use_case.createAccount.CreateAccountUserDataAccessInterface;
-import use_case.signIn.SignInUserDataAccessInterface;
-import use_case.deleteFavouriteLocation.DeleteLocationUserDataAccessInterface;
+import use_case.create_account.CreateAccountUserDataAccessInterface;
+import use_case.sign_in.SignInUserDataAccessInterface;
+import use_case.delete_favourite_location.DeleteLocationUserDataAccessInterface;
 
 import java.io.IOException;
 

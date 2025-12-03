@@ -1,7 +1,6 @@
 package view;
 
 import data_access.FileUserDataAccessObjectWithLocations;
-import interface_adapter.loggedInSearchPage.LoggedInSearchPageController;
 import interface_adapter.settings.SettingsController;
 import interface_adapter.settings.SettingsViewModel;
 import interface_adapter.settings.SettingsState;

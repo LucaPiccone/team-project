@@ -1,8 +1,5 @@
 package interface_adapter.settings;
 
-import interface_adapter.ViewModel;
-import interface_adapter.loggedInHomePage.LoggedInHomePageState;
-
 public class SettingsState {
     private String username = "";
 

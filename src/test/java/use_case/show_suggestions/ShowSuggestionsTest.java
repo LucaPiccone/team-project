@@ -1,14 +1,13 @@
 package use_case.show_suggestions;
 
-import api.geocodingapi.GeocodingApiCoordinatesFetcher;
 import api.googlePlacesAPI.GooglePlacesFetcher;
 import api.googlePlacesAPI.PlaceFetcher;
-import entity.placeSuggestions.PlaceSuggestion;
-import entity.weatherReport.WeatherReport;
+import entity.place_suggestions.PlaceSuggestion;
+import entity.weather_report.WeatherReport;
 import org.junit.jupiter.api.Test;
-import use_case.loggedInSearchPage.LoggedInSearchPageInputBoundary;
-import use_case.loggedInSearchPage.LoggedInSearchPageInteractor;
-import use_case.loggedInSearchPage.LoggedInSearchPageOutputBoundary;
+import use_case.logged_in_search_page.LoggedInSearchPageInputBoundary;
+import use_case.logged_in_search_page.LoggedInSearchPageInteractor;
+import use_case.logged_in_search_page.LoggedInSearchPageOutputBoundary;
 
 import java.util.List;
 

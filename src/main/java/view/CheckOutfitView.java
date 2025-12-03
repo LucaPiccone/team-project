@@ -1,8 +1,8 @@
 package view;
 
-import interface_adapter.checkOutfit.CheckOutfitController;
-import interface_adapter.checkOutfit.CheckOutfitViewModel;
-import interface_adapter.checkOutfit.CheckOutfitState;
+import interface_adapter.check_outfit.CheckOutfitController;
+import interface_adapter.check_outfit.CheckOutfitViewModel;
+import interface_adapter.check_outfit.CheckOutfitState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,8 +14,6 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import static com.sun.scenario.effect.impl.prism.PrEffectHelper.render;
 
 public class CheckOutfitView extends JPanel implements ActionListener, PropertyChangeListener {
 
