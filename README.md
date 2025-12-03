@@ -57,7 +57,7 @@ Documentation: https://developers.google.com/maps/documentation/places/web-servi
 
 ### OpenWeather Current Weather Data API  
 Retrieves real-time weather for a given set of coordinates.  
-Documentation: https://openweathermap.org/current
+Documentation: https://openweathermap.org/current and https://openweathermap.org/api/hourly-forecast
 
 ### OpenWeather Geocoding API  
 Converts city names into latitude/longitude values used for weather lookup.  
