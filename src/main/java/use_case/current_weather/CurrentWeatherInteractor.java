@@ -37,8 +37,7 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary {
     }
 
     @Override
-    public void addToFavourites(CurrentWeatherInputData inputData) throws CoordinatesFetcher.CityNotFoundException,
-            WeatherDataFetcher.CityNotFoundException {
+    public void addToFavourites(CurrentWeatherInputData inputData) {
         final String cityName = inputData.getCityName();
         final List<String> locations = userDataAccessInterface.getLocations();
         final boolean alreadyExists = locations.contains(cityName);
