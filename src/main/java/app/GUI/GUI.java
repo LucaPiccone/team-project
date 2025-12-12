@@ -1,6 +1,12 @@
 package app.GUI;
 
+import api.geocodingapi.CoordinatesFetcher;
+import api.geocodingapi.GeocodingApiCoordinatesFetcher;
 import api.googlePlacesAPI.GooglePlacesFetcher;
+import api.hourly_forecast_api.HourlyForecastApiDataFetcher;
+import api.hourly_forecast_api.HourlyForecastFetcher;
+import api.openWeatherApi.OpenWeatherApiDataFetcher;
+import api.openWeatherApi.WeatherDataFetcher;
 import data_access.FileUserDataAccessObjectWithLocations;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
@@ -100,6 +106,9 @@ public class GUI {
 
     //API
     private final GooglePlacesFetcher googlePlacesFetcher = new GooglePlacesFetcher();
+    private final CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
+    private final WeatherDataFetcher weatherDataFetcher = new OpenWeatherApiDataFetcher();
+    private final HourlyForecastFetcher hourlyForecastFetcher = new HourlyForecastApiDataFetcher();
 
     // VIEWS
     private HomePageView homePageView;
@@ -301,7 +310,11 @@ public class GUI {
                 viewManagerModel
                 );
         final CurrentWeatherInputBoundary currentWeatherInputBoundary = new CurrentWeatherInteractor(
-                userDataAccessObject, currentWeatherOutputBoundary);
+                userDataAccessObject,
+                coordinatesFetcher,
+                weatherDataFetcher,
+                hourlyForecastFetcher,
+                currentWeatherOutputBoundary);
 
         // Delete Favourite Location Use Case
         DeleteLocationOutputBoundary deleteLocationPresenter = new DeleteLocationPresenter(weatherReportPageViewModel);
