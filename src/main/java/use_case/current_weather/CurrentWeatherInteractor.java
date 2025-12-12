@@ -18,11 +18,17 @@ import java.util.List;
 
 public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary {
     private final UserDataAccessInterface userDataAccessInterface;
+    private final CoordinatesFetcher coordinatesFetcher;
+    private final WeatherDataFetcher weatherDataFetcher;
+    private final HourlyForecastFetcher hourlyForecastFetcher;
     private final CurrentWeatherOutputBoundary userPresenter;
 
-    public CurrentWeatherInteractor(UserDataAccessInterface userDataAccessInterface,
+    public CurrentWeatherInteractor(UserDataAccessInterface userDataAccessInterface, CoordinatesFetcher coordinatesFetcher, WeatherDataFetcher weatherDataFetcher, HourlyForecastFetcher hourlyForecastFetcher,
                                     CurrentWeatherOutputBoundary currentWeatherOutputBoundary) {
         this.userDataAccessInterface = userDataAccessInterface;
+        this.coordinatesFetcher = coordinatesFetcher;
+        this.weatherDataFetcher = weatherDataFetcher;
+        this.hourlyForecastFetcher = hourlyForecastFetcher;
         this.userPresenter = currentWeatherOutputBoundary;
     }
 
@@ -38,17 +44,13 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary {
 
     @Override
     public void addToFavourites(CurrentWeatherInputData inputData) {
-        final String cityName = inputData.getCityName();
+        final CurrentWeatherOutputData outputData = new CurrentWeatherOutputData(inputData.getCityName());
         final List<String> locations = userDataAccessInterface.getLocations();
-        final boolean alreadyExists = locations.contains(cityName);
-
-        final CurrentWeatherOutputData outputData = new CurrentWeatherOutputData(cityName);
-
-        if (alreadyExists) {
+        if (locations.contains(inputData.getCityName())) {
             userPresenter.addToFavouriteFail(outputData);
         }
         else {
-            userDataAccessInterface.addLocation(cityName);
+            userDataAccessInterface.addLocation(inputData.getCityName());
             userPresenter.addToFavouriteSuccess(outputData);
         }
     }
@@ -61,11 +63,9 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary {
     @Override
     public void switchToFavouritesPageView() {
         // All favourite locations of the user
-        final List<String> locations = userDataAccessInterface.getLocations();
         final List<WeatherReport> weatherReports = new ArrayList<>();
-        final CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
-        final WeatherDataFetcher fetcher = new OpenWeatherApiDataFetcher();
-        final WeatherReportFactory factory = new WeatherReportFactory(fetcher, coordinatesFetcher);
+        final WeatherReportFactory factory = new WeatherReportFactory(weatherDataFetcher, coordinatesFetcher);
+        final List<String> locations = userDataAccessInterface.getLocations();
         for (String location : locations) {
             try {
                 WeatherReport weatherReport = factory.create(location);
@@ -81,11 +81,10 @@ public class CurrentWeatherInteractor implements CurrentWeatherInputBoundary {
 
     @Override
     public void switchToHourlyForecast(String cityName) throws CoordinatesFetcher.CityNotFoundException {
-        final CoordinatesFetcher coordinatesFetcher = new GeocodingApiCoordinatesFetcher();
         final HashMap<String, Double> coordinates = coordinatesFetcher.getCoordinates(cityName);
-        final HourlyForecastFetcher forecastFetcher = new HourlyForecastApiDataFetcher();
-        final HourlyForecastReport report = forecastFetcher.getHourlyForecast(coordinates);
+        final HourlyForecastReport report = hourlyForecastFetcher.getHourlyForecast(coordinates);
         userPresenter.switchToHourlyForecast(report, cityName);
+        // add alternative use case.
     }
 
     @Override
